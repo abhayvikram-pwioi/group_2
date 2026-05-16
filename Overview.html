@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="overview.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <title>Gym Dashboard</title>
+</head>
+<body>
+    <section id="overview_tab">
+        <header>
+            <div class="welcome"">
+                <div>Welcome back <span id="user_name"></span></div>
+                <div id="greeting"></div>
+            </div>
+            <div id="head_sec">
+                <div style="width: 50%;">Member Overview</div>
+                <div><span class="bi bi-person-circle"></span></div>
+            </div>
+        </header>
+
+        <div class="card_parent">
+            <div class="card" id="subs_card">
+                <div></div>
+                <div></div>
+            </div>
+            <div class="card" id="renewal_card">
+                <div style="font-size: 30px;"> <span class="bi bi-calendar3"></span></div>
+                <div style="font-size: 14px;">Renewal Date</div>
+                <div style="font-weight: bolder; font-size: 17px;" id="Renewal_date"> June 15 2025</div>
+                <div><input style="width: 90%;" type="range"></div>
+                <div style="font-size: 12px;" id="rem_date"> 23 days remaining</div>
+            </div>
+        </div>
+        <div class="card_parent">
+            <div class="card" id="sessions_card"></div>
+            <div class="card" id="reward_card"></div>
+        </div>
+
+
+        <div class="action_parent">
+            <div style="background-color: #1a1b4d;" class="action_card" id="book_card">
+                <div></div>
+                <div></div>
+            </div>
+            <div style="background-color: #2a296f;" class="action_card" id="schedule_card"></div>
+            <div style="background-color: #3a367f;" class="action_card" id="upgrade_card"></div>
+            <div class="action_card" id="support_card"></div>
+        </div>
+
+        <div></div>
+    </section>
+
+
+
+
+    <script src="overview.js"></script>
+</body>
+</html>
