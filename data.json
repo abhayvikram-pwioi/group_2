@@ -7,6 +7,7 @@
             "weight": 78,
             "gender": "Male",
             "membership": "Premium",
+            "renewalDate": "2026-06-10",
             "daysRemainingForRenewal": 24,
             "targetWeight": 72
         },
@@ -17,6 +18,7 @@
             "weight": 85,
             "gender": "Male",
             "membership": "Basic",
+            "renewalDate": "2026-05-26",
             "daysRemainingForRenewal": 10,
             "targetWeight": 75
         },
@@ -27,6 +29,7 @@
             "weight": 58,
             "gender": "Female",
             "membership": "Gold",
+            "renewalDate": "2026-06-31",
             "daysRemainingForRenewal": 45,
             "targetWeight": 54
         },
@@ -37,6 +40,7 @@
             "weight": 90,
             "gender": "Male",
             "membership": "Premium",
+            "renewalDate": "2026-05-31",
             "daysRemainingForRenewal": 15,
             "targetWeight": 82
         },
@@ -47,6 +51,7 @@
             "weight": 52,
             "gender": "Female",
             "membership": "Basic",
+            "renewalDate": "2026-05-21",
             "daysRemainingForRenewal": 7,
             "targetWeight": 50
         },
@@ -57,6 +62,7 @@
             "weight": 73,
             "gender": "Male",
             "membership": "Gold",
+            "renewalDate": "2026-06-15",
             "daysRemainingForRenewal": 30,
             "targetWeight": 70
         },
@@ -67,6 +73,7 @@
             "weight": 61,
             "gender": "Female",
             "membership": "Premium",
+            "renewalDate": "2026-06-03",
             "daysRemainingForRenewal": 18,
             "targetWeight": 57
         },
@@ -77,6 +84,7 @@
             "weight": 95,
             "gender": "Male",
             "membership": "Basic",
+            "renewalDate": "2026-05-19",
             "daysRemainingForRenewal": 5,
             "targetWeight": 85
         },
@@ -87,6 +95,7 @@
             "weight": 56,
             "gender": "Female",
             "membership": "Gold",
+            "renewalDate": "2026-06-25",
             "daysRemainingForRenewal": 40,
             "targetWeight": 53
         },
@@ -97,6 +106,7 @@
             "weight": 88,
             "gender": "Male",
             "membership": "Premium",
+            "renewalDate": "2026-05-28",
             "daysRemainingForRenewal": 12,
             "targetWeight": 80
         }
