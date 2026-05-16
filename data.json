@@ -1,0 +1,104 @@
+{
+    "members": [
+        {
+            "username": "Utkarsh",
+            "age": 19,
+            "height": 178,
+            "weight": 78,
+            "gender": "Male",
+            "membership": "Premium",
+            "daysRemainingForRenewal": 24,
+            "targetWeight": 72
+        },
+        {
+            "username": "Aman",
+            "age": 22,
+            "height": 172,
+            "weight": 85,
+            "gender": "Male",
+            "membership": "Basic",
+            "daysRemainingForRenewal": 10,
+            "targetWeight": 75
+        },
+        {
+            "username": "Riya",
+            "age": 21,
+            "height": 165,
+            "weight": 58,
+            "gender": "Female",
+            "membership": "Gold",
+            "daysRemainingForRenewal": 45,
+            "targetWeight": 54
+        },
+        {
+            "username": "Karan",
+            "age": 25,
+            "height": 181,
+            "weight": 90,
+            "gender": "Male",
+            "membership": "Premium",
+            "daysRemainingForRenewal": 15,
+            "targetWeight": 82
+        },
+        {
+            "username": "Sneha",
+            "age": 20,
+            "height": 160,
+            "weight": 52,
+            "gender": "Female",
+            "membership": "Basic",
+            "daysRemainingForRenewal": 7,
+            "targetWeight": 50
+        },
+        {
+            "username": "Rahul",
+            "age": 24,
+            "height": 176,
+            "weight": 73,
+            "gender": "Male",
+            "membership": "Gold",
+            "daysRemainingForRenewal": 30,
+            "targetWeight": 70
+        },
+        {
+            "username": "Priya",
+            "age": 23,
+            "height": 168,
+            "weight": 61,
+            "gender": "Female",
+            "membership": "Premium",
+            "daysRemainingForRenewal": 18,
+            "targetWeight": 57
+        },
+        {
+            "username": "Arjun",
+            "age": 26,
+            "height": 183,
+            "weight": 95,
+            "gender": "Male",
+            "membership": "Basic",
+            "daysRemainingForRenewal": 5,
+            "targetWeight": 85
+        },
+        {
+            "username": "Neha",
+            "age": 22,
+            "height": 162,
+            "weight": 56,
+            "gender": "Female",
+            "membership": "Gold",
+            "daysRemainingForRenewal": 40,
+            "targetWeight": 53
+        },
+        {
+            "username": "Vikram",
+            "age": 28,
+            "height": 180,
+            "weight": 88,
+            "gender": "Male",
+            "membership": "Premium",
+            "daysRemainingForRenewal": 12,
+            "targetWeight": 80
+        }
+    ]
+}
