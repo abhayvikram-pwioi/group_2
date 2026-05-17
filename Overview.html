@@ -10,89 +10,89 @@
 </head>
 
 <body>
-    <section id="overview_tab">
+    <!-- <section id="overview_tab">
         <header>
-            <div class="welcome">
+            <div class="welcome"> -->
 
-                <header>
+    <header>
 
-                    <div class="heading">
-                        <div id="head_sec">
-                            <div>Member Overview</div>
-                            <div>
-                                <div><span class="bi bi-person-circle"></span></div>
-                            </div>
-                        </div>
-                        <div id="toggle"><span style="margin-left: 80%; font-size: 1.2rem;"
-                                class="bi bi-brightness-high-fill"></span></div>
+        <div class="heading">
+            <div id="head_sec">
+                <div>Member Overview</div>
+                <div>
+                    <div><span class="bi bi-person-circle"></span></div>
+                </div>
+            </div>
+            <div id="toggle"><span style="margin-left: 80%; font-size: 1.2rem;"
+                    class="bi bi-brightness-high-fill"></span></div>
+        </div>
+        <div class="welcome">
+            <div>Welcome back <span id="user_name"></span></div>
+            <div id="greeting"></div>
+        </div>
+    </header>
+
+    <section id="overview_tab">
+        <section class="nav_bar">
+            <nav id="sidebar">
+                <div class="nav_parent"><button class="nav_btn" id="overview_btn">Overview</button></div>
+                <div class="nav_parent"><button class="nav_btn" id="analytics_btn">Analytics</button> </div>
+                <div class="nav_parent"><button class="nav_btn" id="setting_btn">Setting</button></div>
+            </nav>
+
+            <section>
+
+
+                <div class="card_parent">
+                    <div class="card" id="subs_card">
+                        <div></div>
+                        <div></div>
                     </div>
-                    <div class="welcome">
-                        <div>Welcome back <span id="user_name"></span></div>
-                        <div id="greeting"></div>
+                    <div class="card" id="renewal_card">
+                        <div> <span class="bi bi-calendar3"></span></div>
+                        <div class="txt">Renewal Date</div>
+                        <div class="date" id="Renewal_date"> June 15 2025</div>
+                        <div><input class="range" type="range"></div>
+                        <div class="days" id="rem_date"> 23 days remaining</div>
                     </div>
-                </header>
-
-                <section id="overview_tab">
-                    <section class="nav_bar">
-                        <nav id="sidebar">
-                            <div class="nav_parent"><button class="nav_btn" id="overview_btn">Overview</button></div>
-                            <div class="nav_parent"><button class="nav_btn" id="analytics_btn">Analytics</button> </div>
-                            <div class="nav_parent"><button class="nav_btn" id="setting_btn">Setting</button></div>
-                        </nav>
-
-                        <section>
+                    <!-- </div> -->
+                    <!-- <div class="card_parent card_css"> -->
+                    <div class="card" id="sessions_card"></div>
+                    <div class="card" id="reward_card"></div>
+                    <div class="card" id=""></div>
+                    <div class="card" id=""></div>
+                </div>
 
 
-                            <div class="card_parent">
-                                <div class="card" id="subs_card">
-                                    <div></div>
-                                    <div></div>
-                                </div>
-                                <div class="card" id="renewal_card">
-                                    <div> <span class="bi bi-calendar3"></span></div>
-                                    <div class="txt">Renewal Date</div>
-                                    <div class="date" id="Renewal_date"> June 15 2025</div>
-                                    <div><input class="range" type="range"></div>
-                                    <div class="days" id="rem_date"> 23 days remaining</div>
-                                </div>
-                                <!-- </div> -->
-                                <!-- <div class="card_parent card_css"> -->
-                                <div class="card" id="sessions_card"></div>
-                                <div class="card" id="reward_card"></div>
-                                <div class="card" id=""></div>
-                                <div class="card" id=""></div>
-                            </div>
+                <div class="action_parent">
+                    <div style="background-color: #1a1b4d;" class="action_card" id="book_card">
+                        <div> <span class="bi bi-journal-plus quick_icon"></span></div>
+                        <div>Book Session</div>
+                    </div>
+                    <div style="background-color: #2a296f;" class="action_card" id="schedule_card">
+                        <div><span class="bi bi-clock quick_icon"></span></div>
+                        <div>View schedule</div>
+                    </div>
+                    <div style="background-color: #3a367f;" class="action_card" id="upgrade_card">
+                        <div> <span class="bi bi-box-arrow-up quick_icon"></span></div>
+                        <div>Updrade Plan</div>
+                    </div>
+                    <div class="action_card" id="support_card">
+                        <div><span class="bi bi-chat quick_icon"></span></div>
+                        <div>Contact Support</div>
+                    </div>
+                </div>
 
-
-                            <div class="action_parent">
-                                <div style="background-color: #1a1b4d;" class="action_card" id="book_card">
-                                    <div> <span class="bi bi-journal-plus quick_icon"></span></div>
-                                    <div>Book Session</div>
-                                </div>
-                                <div style="background-color: #2a296f;" class="action_card" id="schedule_card">
-                                    <div><span class="bi bi-clock quick_icon"></span></div>
-                                    <div>View schedule</div>
-                                </div>
-                                <div style="background-color: #3a367f;" class="action_card" id="upgrade_card">
-                                    <div> <span class="bi bi-box-arrow-up quick_icon"></span></div>
-                                    <div>Updrade Plan</div>
-                                </div>
-                                <div class="action_card" id="support_card">
-                                    <div><span class="bi bi-chat quick_icon"></span></div>
-                                    <div>Contact Support</div>
-                                </div>
-                            </div>
-
-                            <div></div>
-                        </section>
-                    </section>
-                </section>
-                <!-- yaha per tum log apne section page copy paste kar do and css us page mein -->
+                <div></div>
+            </section>
+        </section>
+    </section>
+    <!-- yaha per tum log apne section page copy paste kar do and css us page mein -->
 
 
 
 
-                <script src="overview.js"></script>
+    <script src="overview.js"></script>
 </body>
 
 </html>
