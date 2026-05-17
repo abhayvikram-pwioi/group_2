@@ -1,6 +1,7 @@
 let d = new Date()
 let time = d.getHours();
 let greet = document.getElementById("greeting")
+let toggle = document.getElementById("toggle")
 
 console.log(time);
 
@@ -13,5 +14,9 @@ else if(time >= 12 && time <= 17){
 else if(time > 17 && time <= 23){ 
     greet.innerText = "Good Evening"
 }
+
+toggle.addEventListener("click" , ()=> {
+    
+})
 
 
