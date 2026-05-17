@@ -1,7 +1,9 @@
 let d = new Date();
 let time = d.getHours();
+let greet = document.getElementById("greeting")
+let toggle = document.getElementById("toggle")
 
-let greet = document.getElementById("greeting");
+
 
 if (time >= 0 && time <= 11) {
     greet.innerText = "Good Morning";
@@ -15,6 +17,10 @@ else {
 
 const user_name =
     document.getElementById("user_name");
+toggle.addEventListener("click", () => {
+
+})
+
 
 const renewal_date =
     document.getElementById("renewal_date");
