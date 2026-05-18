@@ -1,23 +1,7 @@
-let d = new Date();
-let time = d.getHours();
-let greet = document.getElementById("greeting")
-let toggle = document.getElementById("toggle")
 
-
-
-if (time >= 0 && time <= 11) {
-    greet.innerText = "Good Morning";
-}
-else if (time >= 12 && time <= 17) {
-    greet.innerText = "Good Afternoon";
-}
-else {
-    greet.innerText = "Good Evening";
-}
 
 const user_name =
     document.getElementById("user_name");
-
 
 
 
