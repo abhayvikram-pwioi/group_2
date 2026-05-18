@@ -1,162 +1,174 @@
 /* desktop Css */
 
 @media only screen and (min-width: 769px) {
-*{
+    * {
         font-family: arial;
         padding: 0;
         margin: 0;
-        
-}
 
-#overview_tab{
-    /* padding: 0.7rem; */
-    background-color: aqua;
-    background-image: linear-gradient(to right, #264d9a, #5c8be9);
-}
+    }
 
-#sidebar{
-    background-color: rgb(6, 112, 234);
-    display: flex;
-    flex-direction: column;
-    justify-content: left;
-    padding: 1rem;
+    #overview_tab {
+        /* padding: 0.7rem; */
+        background-color: aqua;
+        background-image: linear-gradient(to right, #264d9a, #5c8be9);
+    }
 
-}
+    #sidebar {
+        background-color: rgb(6, 112, 234);
+        display: flex;
+        flex-direction: column;
+        justify-content: left;
+        padding: 1rem;
 
-/* header{
+    }
+
+    /* header{
     
 } */
 
-.nav_bar{
-    display: grid;
-    grid-template-columns: 1fr 5fr;
-    /* padding: 20px; */
-}
+    .nav_bar {
+        display: grid;
+        grid-template-columns: 1fr 5fr;
+        /* padding: 20px; */
+    }
 
-.nav_btn{
-    background-color: inherit;
-    border: none;
-    color: yellow;
-    font-size: 1.7rem;
-}
+    .nav_btn {
+        background-color: inherit;
+        border: none;
+        color: yellow;
+        font-size: 1.7rem;
+    }
 
-.nav_parent{
-  margin-bottom: 15px;
-}
+    .nav_parent {
+        margin-bottom: 15px;
+    }
 
-header{
-    display: flex;
-    /* justify-content: space-around; */
-    align-items: center;
-    background-image: linear-gradient(to right, #35770c, #1cab85);
-    color: white;
-    padding: 0.5rem 1rem;
-    height: 105px;
-}
+    .hidden {
+        display: none;
+    }
 
-.welcome{
-    font-size: 2.5rem;
-    margin-left: auto;
-    margin-right: 1.5rem;
-}
+    .active-btn {
+        background-color: aliceblue;
+        color: black;
+    }
 
-#head_sec{
-    display: flex;
-    align-items: center;
-    font-size: 2.5rem;
-    margin-left: 1rem;
+    header {
+        display: flex;
+        /* justify-content: space-around; */
+        align-items: center;
+        background-image: linear-gradient(to right, #35770c, #1cab85);
+        color: white;
+        padding: 0.5rem 1rem;
+        height: 105px;
+    }
 
+    .welcome {
+        font-size: 2.5rem;
+        margin-left: auto;
+        margin-right: 1.5rem;
+    }
 
-}
-
-.bi-person-circle{
-    font-size: 2.1rem;
-    margin-left: 25px;
-    display: none;
-}
-
-#greeting{
-    font-size: 1.4rem;
-    margin-top: 10px;
-}
+    #head_sec {
+        display: flex;
+        align-items: center;
+        font-size: 2.5rem;
+        margin-left: 1rem;
 
 
-/* Card css */
+    }
 
-.card_parent{
-    display: grid;
-   grid-template-columns: 1fr 1fr 1fr;
-   row-gap: 1rem;
-    margin-top: 28px;
-}
+    .bi-person-circle {
+        font-size: 2.1rem;
+        margin-left: 25px;
+        display: none;
+    }
 
-
-
-.card{
-    width: 20rem;
-    background-color: white;;
-    height: 22rem;
-    padding: 15px;
-    /* border: 1px solid black; */
-    border-radius: 10px;
-    margin-left: 2rem;
-    box-shadow: 1px 2px 18px rgb(133, 222, 222);
-}
+    #greeting {
+        font-size: 1.4rem;
+        margin-top: 10px;
+    }
 
 
-#subs_card{
-    background-image: linear-gradient(to right, #264d9a, #517dd5);
-    color: white;
-}
+    /* Card css */
 
-#renewal_card{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.bi-calendar3{
-    font-size: 4rem;
-}
-
-.txt{
-    font-size: 2rem;
-}
-
-.days{
-    font-size: 1.4rem;
-}
-.date{
-    font-size: 2rem;
-}
+    .card_parent {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        row-gap: 1rem;
+        margin-top: 28px;
+    }
 
 
-/* Quick Section Css */
 
-.action_parent{
-    display: flex;
-    justify-content: space-around;
-    margin: 0 10px;  
-    margin-top: 55px; 
-    color: white;
-   
-}
+    .card {
+        width: 20rem;
+        background-color: white;
+        ;
+        height: 22rem;
+        padding: 15px;
+        /* border: 1px solid black; */
+        border-radius: 10px;
+        margin-left: 2rem;
+        box-shadow: 1px 2px 18px rgb(133, 222, 222);
+    }
 
-.action_card{
-    width: 10rem;
-    height: 14rem;
-    /* border: 1px solid black; */
-    margin-left: 8px;
-    border-radius: 10px;
-    box-shadow: 1px 2px 18px rgb(133, 222, 222);
-     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    text-align: center;
-}
-.quick_icon{
-    font-size: 2.7rem;
-}
+
+    #subs_card {
+        background-image: linear-gradient(to right, #264d9a, #517dd5);
+        color: white;
+    }
+
+    #renewal_card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .bi-calendar3 {
+        font-size: 4rem;
+    }
+
+    .txt {
+        font-size: 2rem;
+    }
+
+    .days {
+        font-size: 1.4rem;
+    }
+
+    .date {
+        font-size: 2rem;
+    }
+
+
+    /* Quick Section Css */
+
+    .action_parent {
+        display: flex;
+        justify-content: space-around;
+        margin: 0 10px;
+        margin-top: 55px;
+        color: white;
+
+    }
+
+    .action_card {
+        width: 10rem;
+        height: 14rem;
+        /* border: 1px solid black; */
+        margin-left: 8px;
+        border-radius: 10px;
+        box-shadow: 1px 2px 18px rgb(133, 222, 222);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        text-align: center;
+    }
+
+    .quick_icon {
+        font-size: 2.7rem;
+    }
 }
 
 
@@ -166,101 +178,102 @@ header{
 
 
 
-@media only screen and (max-width: 480px){
-*{
+@media only screen and (max-width: 480px) {
+    * {
         font-family: arial;
         padding: 0;
         margin: 0;
-}
+    }
 
-section{
-    padding: 0.7rem;
-    background-color: aqua;
-}
+    section {
+        padding: 0.7rem;
+        background-color: aqua;
+    }
 
-header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-image: linear-gradient(to right, #264d9a, #5c8be9);
-    color: white;
-    border-radius: 10px;
-    padding: 0.5rem 1rem;
-    height: 105px;
-}
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-image: linear-gradient(to right, #264d9a, #5c8be9);
+        color: white;
+        border-radius: 10px;
+        padding: 0.5rem 1rem;
+        height: 105px;
+    }
 
-.welcome{
-    font-size: 1.5rem;
-}
+    .welcome {
+        font-size: 1.5rem;
+    }
 
-#head_sec{
-    display: flex;
-    align-items: center;
-    font-size: 1.5rem;
-    margin-left: 60px;
+    #head_sec {
+        display: flex;
+        align-items: center;
+        font-size: 1.5rem;
+        margin-left: 60px;
 
-}
+    }
 
-.bi-person-circle{
-    font-size: 2.1rem;
-    margin-left: 25px;
-}
+    .bi-person-circle {
+        font-size: 2.1rem;
+        margin-left: 25px;
+    }
 
-#greeting{
-    font-size: 0.9rem;
-    margin-top: 10px;
-}
-
-
-/* Card css */
-
-.card_parent{
-    display: grid;
-   grid-template-columns: 1fr 1fr;
-   row-gap: 1rem;
-   column-gap: 0.8rem;
-    margin-top: 28px;
-}
-
-.card{
-    width: 110px;
-    background-color: white;;
-    height: 142px;
-    padding: 15px;
-    /* border: 1px solid black; */
-    border-radius: 10px;
-    box-shadow: 1px 2px 18px rgb(133, 222, 222);
-}
-
-#subs_card{
-    background-image: linear-gradient(to right, #264d9a, #517dd5);
-    color: white;
-}
-
-#renewal_card{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
+    #greeting {
+        font-size: 0.9rem;
+        margin-top: 10px;
+    }
 
 
+    /* Card css */
 
-/* Quick Section Css */
+    .card_parent {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        row-gap: 1rem;
+        column-gap: 0.8rem;
+        margin-top: 28px;
+    }
 
-.action_parent{
-    display: flex;
-    margin: 0 10px;  
-    margin-top: 55px; 
-}
+    .card {
+        width: 110px;
+        background-color: white;
+        ;
+        height: 142px;
+        padding: 15px;
+        /* border: 1px solid black; */
+        border-radius: 10px;
+        box-shadow: 1px 2px 18px rgb(133, 222, 222);
+    }
 
-.action_card{
-    width: 73px;
-    height: 100px;
-    /* border: 1px solid black; */
-    margin-left: 8px;
-    border-radius: 10px;
-    box-shadow: 1px 2px 18px rgb(133, 222, 222);
-}
+    #subs_card {
+        background-image: linear-gradient(to right, #264d9a, #517dd5);
+        color: white;
+    }
+
+    #renewal_card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+
+
+    /* Quick Section Css */
+
+    .action_parent {
+        display: flex;
+        margin: 0 10px;
+        margin-top: 55px;
+    }
+
+    .action_card {
+        width: 73px;
+        height: 100px;
+        /* border: 1px solid black; */
+        margin-left: 8px;
+        border-radius: 10px;
+        box-shadow: 1px 2px 18px rgb(133, 222, 222);
+    }
 }
 
 
@@ -272,95 +285,96 @@ header{
 
 
 @media only screen and (min-width: 481px) and (max-width: 768px) {
-*{
+    * {
         font-family: arial;
         padding: 0;
         margin: 0;
-}
+    }
 
-section{
-    padding: 0.7rem;
-    background-color: aqua;
-}
+    section {
+        padding: 0.7rem;
+        background-color: aqua;
+    }
 
-header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-image: linear-gradient(to right, #264d9a, #5c8be9);
-    color: white;
-    border-radius: 10px;
-    padding: 0.5rem 1rem;
-    height: 105px;
-}
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-image: linear-gradient(to right, #264d9a, #5c8be9);
+        color: white;
+        border-radius: 10px;
+        padding: 0.5rem 1rem;
+        height: 105px;
+    }
 
-.welcome{
-    font-size: 1.5rem;
-}
+    .welcome {
+        font-size: 1.5rem;
+    }
 
-#head_sec{
-    display: flex;
-    align-items: center;
-    font-size: 1.5rem;
-    margin-left: 60px;
+    #head_sec {
+        display: flex;
+        align-items: center;
+        font-size: 1.5rem;
+        margin-left: 60px;
 
-}
+    }
 
-.bi-person-circle{
-    font-size: 2.1rem;
-    margin-left: 25px;
-}
+    .bi-person-circle {
+        font-size: 2.1rem;
+        margin-left: 25px;
+    }
 
-#greeting{
-    font-size: 0.9rem;
-    margin-top: 10px;
-}
-
-
-/* Card css */
-
-.card_parent{
-    display: flex;
-    justify-content: space-around;
-    margin-top: 28px;
-}
-
-.card{
-    width: 110px;
-    background-color: white;;
-    height: 142px;
-    padding: 15px;
-    /* border: 1px solid black; */
-    border-radius: 10px;
-    box-shadow: 1px 2px 18px rgb(133, 222, 222);
-}
-
-#subs_card{
-    background-image: linear-gradient(to right, #264d9a, #517dd5);
-    color: white;
-}
-
-#renewal_card{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
+    #greeting {
+        font-size: 0.9rem;
+        margin-top: 10px;
+    }
 
 
-/* Quick Section Css */
+    /* Card css */
 
-.action_parent{
-    display: flex;
-    margin: 0 10px;  
-    margin-top: 55px; 
-}
+    .card_parent {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 28px;
+    }
 
-.action_card{
-    width: 73px;
-    height: 100px;
-    /* border: 1px solid black; */
-    margin-left: 8px;
-    border-radius: 10px;
-    box-shadow: 1px 2px 18px rgb(133, 222, 222);
-}
+    .card {
+        width: 110px;
+        background-color: white;
+        ;
+        height: 142px;
+        padding: 15px;
+        /* border: 1px solid black; */
+        border-radius: 10px;
+        box-shadow: 1px 2px 18px rgb(133, 222, 222);
+    }
+
+    #subs_card {
+        background-image: linear-gradient(to right, #264d9a, #517dd5);
+        color: white;
+    }
+
+    #renewal_card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+
+    /* Quick Section Css */
+
+    .action_parent {
+        display: flex;
+        margin: 0 10px;
+        margin-top: 55px;
+    }
+
+    .action_card {
+        width: 73px;
+        height: 100px;
+        /* border: 1px solid black; */
+        margin-left: 8px;
+        border-radius: 10px;
+        box-shadow: 1px 2px 18px rgb(133, 222, 222);
+    }
 }

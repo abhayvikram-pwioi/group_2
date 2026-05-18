@@ -17,13 +17,12 @@ else {
 
 const user_name =
     document.getElementById("user_name");
-toggle.addEventListener("click", () => {
 
-})
+
 
 
 const renewal_date =
-    document.getElementById("renewal_date");
+    document.getElementById("Renewal_date");
 
 const days_remaining =
     document.getElementById("rem_date");
@@ -58,3 +57,83 @@ function load_user_data(data, user_number) {
 }
 
 load();
+
+
+// below code is for section switching
+
+
+let overview_btn =
+    document.getElementById("overview_btn");
+
+let analytics_btn =
+    document.getElementById("analytics_btn");
+
+let setting_btn =
+    document.getElementById("setting_btn");
+
+let overview =
+    document.getElementById("overview_tab");
+
+let analytics =
+    document.getElementById("analytics_tab");
+
+let setting =
+    document.getElementById("setting_tab");
+
+function switchTab(tabName) {
+
+    if (tabName === "overview") {
+        console.log("overview tab");
+
+        overview.classList.remove("hidden");
+        overview_btn.classList.add("active-btn");
+
+        analytics.classList.add("hidden");
+        analytics_btn.classList.remove("active-btn");
+
+        setting.classList.add("hidden");
+        setting_btn.classList.remove("active-btn");
+    }
+
+    else if (tabName === "analytics") {
+        console.log("analytics tab");
+
+        analytics.classList.remove("hidden");
+        analytics_btn.classList.add("active-btn");
+
+        overview.classList.add("hidden");
+        overview_btn.classList.remove("active-btn");
+
+        setting.classList.add("hidden");
+        setting_btn.classList.remove("active-btn");
+    }
+
+    else if (tabName === "settings") {
+        console.log("settings tab");
+
+        setting.classList.remove("hidden");
+        setting_btn.classList.add("active-btn");
+
+        overview.classList.add("hidden");
+        overview_btn.classList.remove("active-btn");
+
+        analytics.classList.add("hidden");
+        analytics_btn.classList.remove("active-btn");
+    }
+}
+
+overview_btn.addEventListener("click", () => {
+    switchTab("overview");
+    console.log("overview clicked");
+});
+
+analytics_btn.addEventListener("click", () => {
+    switchTab("analytics");
+    console.log("analytics clicked");
+});
+
+
+setting_btn.addEventListener("click", () => {
+    switchTab("settings");
+    console.log("settings clicked");
+});
