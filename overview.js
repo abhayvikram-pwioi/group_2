@@ -40,6 +40,8 @@ async function load() {
     user_number =
         Math.floor(Math.random() * data.members.length);
 
+    getData(data, user_number);
+
     load_user_data(data, user_number);
 }
 
@@ -93,6 +95,8 @@ function switchTab(tabName) {
 
         if (setting) setting.classList.add("hidden");
         setting_btn.classList.remove("active-btn");
+
+        appState.current_Tab = "overview";
     }
 
     else if (tabName === "analytics") {
@@ -106,6 +110,8 @@ function switchTab(tabName) {
 
         if (setting) setting.classList.add("hidden");
         setting_btn.classList.remove("active-btn");
+
+        appState.current_Tab = "analytics";
     }
 
     else if (tabName === "settings") {
@@ -119,6 +125,8 @@ function switchTab(tabName) {
 
         if (analytics) analytics.classList.add("hidden");
         analytics_btn.classList.remove("active-btn");
+
+        appState.current_Tab = "settings";
     }
 }
 
