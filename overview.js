@@ -85,39 +85,39 @@ function switchTab(tabName) {
     if (tabName === "overview") {
         console.log("overview tab");
 
-        overview.classList.remove("hidden");
+        if (overview) overview.classList.remove("hidden");
         overview_btn.classList.add("active-btn");
 
-        analytics.classList.add("hidden");
+        if (analytics) analytics.classList.add("hidden");
         analytics_btn.classList.remove("active-btn");
 
-        setting.classList.add("hidden");
+        if (setting) setting.classList.add("hidden");
         setting_btn.classList.remove("active-btn");
     }
 
     else if (tabName === "analytics") {
         console.log("analytics tab");
 
-        analytics.classList.remove("hidden");
+        if (analytics) analytics.classList.remove("hidden");
         analytics_btn.classList.add("active-btn");
 
-        overview.classList.add("hidden");
+        if (overview) overview.classList.add("hidden");
         overview_btn.classList.remove("active-btn");
 
-        setting.classList.add("hidden");
+        if (setting) setting.classList.add("hidden");
         setting_btn.classList.remove("active-btn");
     }
 
     else if (tabName === "settings") {
         console.log("settings tab");
 
-        setting.classList.remove("hidden");
+        if (setting) setting.classList.remove("hidden");
         setting_btn.classList.add("active-btn");
 
-        overview.classList.add("hidden");
+        if (overview) overview.classList.add("hidden");
         overview_btn.classList.remove("active-btn");
 
-        analytics.classList.add("hidden");
+        if (analytics) analytics.classList.add("hidden");
         analytics_btn.classList.remove("active-btn");
     }
 }
