@@ -47,85 +47,74 @@ load();
 
 // below code is for section switching
 
+let overview_btn = document.getElementById("overview_btn");
+let analytics_btn = document.getElementById("analytics_btn");
+let personalInfo_btn = document.getElementById("personalInfo_btn");
+let setting_btn = document.getElementById("setting_btn");
 
-let overview_btn =
-    document.getElementById("overview_btn");
-
-let analytics_btn =
-    document.getElementById("analytics_btn");
-
-let setting_btn =
-    document.getElementById("setting_btn");
-
-let overview =
-    document.getElementById("overview_tab");
-
-let analytics =
-    document.getElementById("analytics_tab");
-
-let setting =
-    document.getElementById("setting_tab");
+let overview = document.getElementById("overview_tab");
+let analytics = document.getElementById("analytics_tab");
+let personalInfo = document.getElementById("personalInfo_tab");
+let setting = document.getElementById("setting_tab");
 
 function switchTab(tabName) {
+    // Hide all tabs and remove active class from all buttons
+    if (overview) overview.classList.add("hidden");
+    if (overview_btn) overview_btn.classList.remove("active-btn");
 
+    if (analytics) analytics.classList.add("hidden");
+    if (analytics_btn) analytics_btn.classList.remove("active-btn");
+
+    if (personalInfo) personalInfo.classList.add("hidden");
+    if (personalInfo_btn) personalInfo_btn.classList.remove("active-btn");
+
+    if (setting) setting.classList.add("hidden");
+    if (setting_btn) setting_btn.classList.remove("active-btn");
+
+    // Show the selected tab and add active class to its button
     if (tabName === "overview") {
         console.log("overview tab");
-
         if (overview) overview.classList.remove("hidden");
-        overview_btn.classList.add("active-btn");
-
-        if (analytics) analytics.classList.add("hidden");
-        analytics_btn.classList.remove("active-btn");
-
-        if (setting) setting.classList.add("hidden");
-        setting_btn.classList.remove("active-btn");
-
+        if (overview_btn) overview_btn.classList.add("active-btn");
         appState.current_Tab = "overview";
-    }
-
-    else if (tabName === "analytics") {
+    } else if (tabName === "analytics") {
         console.log("analytics tab");
-
         if (analytics) analytics.classList.remove("hidden");
-        analytics_btn.classList.add("active-btn");
-
-        if (overview) overview.classList.add("hidden");
-        overview_btn.classList.remove("active-btn");
-
-        if (setting) setting.classList.add("hidden");
-        setting_btn.classList.remove("active-btn");
-
+        if (analytics_btn) analytics_btn.classList.add("active-btn");
         appState.current_Tab = "analytics";
-    }
-
-    else if (tabName === "settings") {
+    } else if (tabName === "personalInfo") {
+        console.log("personalInfo tab");
+        if (personalInfo) personalInfo.classList.remove("hidden");
+        if (personalInfo_btn) personalInfo_btn.classList.add("active-btn");
+        appState.current_Tab = "personalInfo";
+    } else if (tabName === "settings") {
         console.log("settings tab");
-
         if (setting) setting.classList.remove("hidden");
-        setting_btn.classList.add("active-btn");
-
-        if (overview) overview.classList.add("hidden");
-        overview_btn.classList.remove("active-btn");
-
-        if (analytics) analytics.classList.add("hidden");
-        analytics_btn.classList.remove("active-btn");
-
+        if (setting_btn) setting_btn.classList.add("active-btn");
         appState.current_Tab = "settings";
     }
 }
 
-overview_btn.addEventListener("click", () => {
-    switchTab("overview");
-    console.log("overview clicked");
-});
+if (overview_btn) {
+    overview_btn.addEventListener("click", () => {
+        switchTab("overview");
+    });
+}
 
-analytics_btn.addEventListener("click", () => {
-    switchTab("analytics");
-    console.log("analytics clicked");
-});
+if (analytics_btn) {
+    analytics_btn.addEventListener("click", () => {
+        switchTab("analytics");
+    });
+}
 
+if (personalInfo_btn) {
+    personalInfo_btn.addEventListener("click", () => {
+        switchTab("personalInfo");
+    });
+}
 
-setting_btn.addEventListener("click", () => {
-    switchTab("settings");
-    console.log("settings clicked");
-});
+if (setting_btn) {
+    setting_btn.addEventListener("click", () => {
+        switchTab("settings");
+    });
+}
