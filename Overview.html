@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="setting.css">
+    <link rel="stylesheet" href="personal_info.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <title>Gym Dashboard</title>
@@ -352,6 +353,924 @@
     </div>
 
     </section>
+
+    <!-- personal- info  -->
+
+
+    <section class="dashboard">
+
+      <!-- LEFT SIDE -->
+
+      <div>
+
+        <!-- PROFILE OVERVIEW -->
+
+        <div class="card">
+
+          <div class="profile-overview">
+
+            <div class="profile-image">
+
+              <img
+              src="/download.jpeg">
+
+            </div>
+
+            <div class="profile-info">
+
+              <h2 id="profile-name">
+                Ishika gangwar
+              </h2>
+
+              <div class="badge">
+                Active Member
+              </div>
+
+              <div class="member-date">
+                Member since 15 Jan 2026
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!--INFO FORM -->
+
+        <div class="card" style="margin-top:24px;">
+
+          <h2 class="section-title">
+            Personal & Fitness Details
+          </h2>
+
+          <div class="form-grid">
+
+            <div class="input-group">
+
+              <label>Full Name</label>
+
+              <div class="input-box">
+                <i class="fa-regular fa-user"></i>
+
+                <input
+                type="text"
+                id="nameInput"
+                placeholder="Enter full name">
+
+              </div>
+
+            </div>
+
+            <div class="input-group">
+
+              <label>Age</label>
+
+              <div class="input-box">
+
+                <i class="fa-solid fa-calendar"></i>
+
+                <input
+                type="number"
+                placeholder="Enter age">
+
+              </div>
+
+            </div>
+
+            <div class="input-group">
+
+              <label>Gender</label>
+
+              <div class="input-box">
+
+                <i class="fa-solid fa-venus-mars"></i>
+
+                <select>
+
+                  <option>Male</option>
+                  <option>Female</option>
+                  <option>Other</option>
+
+                </select>
+
+              </div>
+
+            </div>
+
+            <div class="input-group">
+
+              <label>Height (cm)</label>
+
+              <div class="input-box">
+
+                <i class="fa-solid fa-ruler-vertical"></i>
+
+                <input
+                type="number"
+                id="height"
+                placeholder="Height">
+
+              </div>
+
+            </div>
+
+            <div class="input-group">
+
+              <label>Weight (kg)</label>
+
+              <div class="input-box">
+
+                <i class="fa-solid fa-weight-scale"></i>
+
+                <input
+                type="number"
+                id="weight"
+                placeholder="Weight">
+
+              </div>
+
+            </div>
+
+            <div class="input-group">
+
+              <label>Target Weight</label>
+
+              <div class="input-box">
+
+                <i class="fa-solid fa-bullseye"></i>
+
+                <input
+                type="number"
+                placeholder="Target Weight">
+
+              </div>
+
+            </div>
+
+            <div class="input-group">
+
+              <label>Workout Goal</label>
+
+              <div class="input-box">
+
+                <i class="fa-solid fa-dumbbell"></i>
+
+                <select>
+
+                  <option>Muscle Gain</option>
+                  <option>Fat Loss</option>
+                  <option>Strength</option>
+                  <option>Fitness</option>
+
+                </select>
+
+              </div>
+
+            </div>
+
+            <div class="input-group">
+
+              <label>Workout Type</label>
+
+              <div class="input-box">
+
+                <i class="fa-solid fa-fire"></i>
+
+                <select>
+
+                  <option>Strength Training</option>
+                  <option>Cardio</option>
+                  <option>Crossfit</option>
+                  <option>Yoga</option>
+
+                </select>
+
+              </div>
+
+            </div>
+
+            <div class="input-group">
+
+              <label>Experience Level</label>
+
+              <div class="input-box">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                <select>
+
+                  <option>Beginner</option>
+                  <option>Intermediate</option>
+                  <option>Advanced</option>
+
+                </select>
+
+              </div>
+
+            </div>
+
+            <div class="input-group">
+
+              <label>Preferred Time</label>
+
+              <div class="input-box">
+
+                <i class="fa-regular fa-clock"></i>
+
+                <select>
+
+                  <option>Morning</option>
+                  <option>Evening</option>
+                  <option>Night</option>
+
+                </select>
+
+              </div>
+
+            </div>
+
+            <div class="input-group full-width">
+
+              <label>Diet Preference</label>
+
+              <div class="input-box">
+
+                <i class="fa-solid fa-utensils"></i>
+
+                <select>
+
+                  <option>Vegetarian</option>
+                  <option>Non-Vegetarian</option>
+                  <option>Vegan</option>
+
+                </select>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <button class="save-btn" onclick="saveInfo()">
+            Save Information
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- RIGHT SIDE-->
+
+      <div>
+
+        <!-- BMI -->
+
+        <div class="card bmi-card">
+
+          <h2>BMI Summary</h2>
+
+          <div class="circle" id="circle">
+
+            <h1 id="bmi-value">
+              0
+            </h1>
+
+            <span id="bmi-status">
+              --
+            </span>
+
+          </div>
+
+          <button
+          class="calculate-btn"
+          onclick="calculateBMI()">
+
+            Calculate BMI
+
+          </button>
+
+          <p class="bmi-text" id="bmi-text">
+
+            Enter your height and weight
+            and click calculate BMI.
+
+          </p>
+
+          <div class="range-list">
+
+            <div class="range-item">
+
+              <div class="left-range">
+
+                <div class="dot blue"></div>
+
+                Underweight
+
+              </div>
+
+              <span> 18.5</span>
+
+            </div>
+
+            <div class="range-item">
+
+              <div class="left-range">
+
+                <div class="dot green"></div>
+
+                Normal
+
+              </div>
+
+              <span>18.5 - 24.9</span>
+
+            </div>
+
+            <div class="range-item">
+
+              <div class="left-range">
+
+                <div class="dot orange"></div>
+
+                Overweight
+
+              </div>
+
+              <span>> 25</span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- INSIGHTS  -->
+
+        <div class="card insight-card">
+
+          <h2 class="section-title">
+            Additional Insights
+          </h2>
+
+          <div class="insight-item">
+
+            <div class="insight-left">
+
+              <div class="insight-icon">
+                <i class="fa-solid fa-fire"></i>
+              </div>
+
+              Daily Calorie Need
+
+            </div>
+
+            <h3>2350 kcal</h3>
+
+          </div>
+
+          <div class="insight-item">
+
+            <div class="insight-left">
+
+              <div class="insight-icon">
+                <i class="fa-solid fa-dumbbell"></i>
+              </div>
+
+              Protein Intake
+
+            </div>
+
+            <h3>120 g</h3>
+
+          </div>
+
+          <div class="insight-item">
+
+            <div class="insight-left">
+
+              <div class="insight-icon">
+                <i class="fa-solid fa-glass-water"></i>
+              </div>
+
+              Ideal Water Intake
+
+            </div>
+
+            <h3>3.2 L/day</h3>
+
+          </div>
+
+          <div class="insight-item">
+
+            <div class="insight-left">
+
+              <div class="insight-icon">
+                <i class="fa-solid fa-calendar-check"></i>
+              </div>
+
+              Suggested Workouts
+
+            </div>
+
+            <h3>5/week</h3>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- setting Page -->
+
+<section>
+     <div class="top-grid">
+
+            <!-- SETTINGS MENU -->
+
+<div class="card settings-menu">
+
+    <h2>Settings Menu</h2>
+
+    <!-- NOTIFICATION -->
+
+    <div class="settings-link active"
+    data-target="notification-section">
+
+        <span>
+            <i class="fa-regular fa-bell"></i>
+            Notification Preferences
+        </span>
+
+        <i class="fa-solid fa-chevron-right"></i>
+
+    </div>
+
+    <!-- PROFILE -->
+
+    <div class="settings-link"
+    data-target="profile-section">
+
+        <span>
+            <i class="fa-regular fa-user"></i>
+            Profile Settings
+        </span>
+
+        <i class="fa-solid fa-chevron-right"></i>
+
+    </div>
+
+    <!-- APPEARANCE -->
+
+    <div class="settings-link"
+    data-target="appearance-section">
+
+        <span>
+            <i class="fa-solid fa-palette"></i>
+            Appearance
+        </span>
+
+        <i class="fa-solid fa-chevron-right"></i>
+
+    </div>
+
+    <!-- LANGUAGE -->
+
+    <div class="settings-link"
+    data-target="language-section">
+
+        <span>
+            <i class="fa-solid fa-globe"></i>
+            Language
+        </span>
+
+        <i class="fa-solid fa-chevron-right"></i>
+
+    </div>
+
+</div>
+
+
+            <!-- NOTIFICATION CARD -->
+
+            <div class="card notification-card"
+id="notification-section">
+
+                <div class="heading">
+
+                    <div class="heading-icon">
+                        <i class="fa-regular fa-bell"></i>
+                    </div>
+
+                    <div>
+                        <h2>Notification Preferences</h2>
+                        <span>Choose what updates you want to receive</span>
+                        
+                    </div>
+
+                </div>
+
+                <!-- ROW -->
+
+                <div class="setting-row">
+
+    <div class="icon-box">
+        <i class="fa-regular fa-calendar"></i>
+    </div>
+
+    <h3 class="setting-title">
+        Membership Reminders
+    </h3>
+
+    <p class="setting-description">
+        Get notified about membership expiry and renewal
+    </p>
+
+    <div class="toggle active"></div>
+
+</div>
+                <!-- ROW -->
+                <div class="setting-row">
+
+    <div class="icon-box">
+        <i class="fa-regular fa-calendar"></i>
+    </div>
+
+    <h3 class="setting-title">
+       Workout Reminders
+    </h3>
+
+    <p class="setting-description">
+        Receive reminders for your scheduled workouts
+    </p>
+
+    <div class="toggle active"></div>
+
+</div>
+
+                <!-- ROW -->
+
+                <div class="setting-row">
+
+    <div class="icon-box">
+        <i class="fa-regular fa-calendar"></i>
+    </div>
+
+    <h3 class="setting-title">
+        Achievement Alerts
+    </h3>
+
+    <p class="setting-description">
+        Get alerts when you earn new badges or points
+    </p>
+
+    <div class="toggle active"></div>
+
+</div>
+
+                <!-- ROW -->
+                <div class="setting-row">
+
+    <div class="icon-box">
+        <i class="fa-regular fa-calendar"></i>
+    </div>
+
+    <h3 class="setting-title">
+       Promotions & Offers
+    </h3>
+
+    <p class="setting-description">
+        Receive updates on new offers and discounts
+    </p>
+
+    <div class="toggle active"></div>
+
+</div>
+
+                <!-- ROW -->
+
+                <div class="setting-row">
+
+    <div class="icon-box">
+        <i class="fa-regular fa-calendar"></i>
+    </div>
+
+    <h3 class="setting-title">
+       Weekly Summary
+    </h3>
+
+    <p class="setting-description">
+       Get a weekly summary of your progress
+    </p>
+
+    <div class="toggle active"></div>
+
+</div>
+
+            </div>
+
+        </div>
+
+        <!-- BOTTOM GRID -->
+
+        <div class="bottom-grid">
+
+            <!-- PROFILE CARD -->
+
+            <div class="card profile-card"
+id="profile-section">
+
+                <div class="section-title">
+
+                    <div class="section-icon">
+                        <i class="fa-regular fa-user"></i>
+                    </div>
+
+                    <div>
+                        <h2>Profile Settings</h2>
+                        <p>Update your personal information</p>
+                    </div>
+
+                </div>
+
+                <div class="profile-content">
+
+                    <!-- AVATAR -->
+
+                    <div class="avatar">
+
+                        <img src="/download.jpeg">
+
+
+                    </div>
+
+                    <!-- FORM -->
+
+                    <div class="form">
+
+                        <div class="input-group">
+
+                            <label>Full Name</label>
+
+                            <input type="text" id="settings-name">
+
+                        </div>
+
+                        <div class="input-group">
+
+                            <label>Email Address</label>
+
+                            <input type="email"
+                                  id="settings-email">
+
+                        </div>
+
+                        <div class="input-group">
+
+                            <label>Phone Number</label>
+
+                            <input type="text" id="settings-phone" value="+91 98765 43210">
+
+                        </div>
+
+                        <div class="input-group">
+
+                            <label>Fitness Goal</label>
+
+                            <select id="settings-goal">
+
+    <option>Muscle Gain</option>
+    <option>Fat Loss</option>
+    <option>Maintain</option>
+
+</select>
+                        </div>
+
+                        <div class="input-group">
+
+                            <label>Experience Level</label>
+
+                            <select id="settings-level">
+
+    <option>Intermediate</option>
+    <option>Beginner</option>
+    <option>Advanced</option>
+
+</select>
+
+                        </div>
+
+                        
+                        <button class="save-btn">
+                            Save Changes
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- APPEARANCE -->
+
+            <div class="card appearance-card"
+id="appearance-section">
+
+                <div class="section-title">
+
+                    <div class="section-icon">
+                        <i class="fa-solid fa-palette"></i>
+                    </div>
+
+                    <div>
+                        <h2>Appearance</h2>
+                        <p>Customize the look and feel</p>
+                    </div>
+
+                </div>
+
+                <div class="appearance-grid">
+
+                    <!-- LEFT -->
+
+                    <div>
+
+                        <div class="option-block">
+
+                            <h3>Theme</h3>
+                            <p>Choose your preferred theme</p>
+
+                            <div class="theme-buttons">
+
+                                <button class="theme-btn">
+                                    Light
+                                </button>
+
+                                <button class="theme-btn active">
+                                    Dark
+                                </button>
+
+                                <button class="theme-btn">
+                                    System
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        <!-- COLORS -->
+
+                        <div class="option-block">
+
+                            <h3>Accent Color</h3>
+                            <p>Choose your accent color</p>
+
+                            <div class="colors">
+
+                                <div class="color active"
+                                style="background:#f6a313">
+                                </div>
+
+                                <div class="color"
+                                style="background:#22c55e">
+                                </div>
+
+                                <div class="color"
+                                style="background:#3b82f6">
+                                </div>
+
+                                <div class="color"
+                                style="background:#7c3aed">
+                                </div>
+
+                                <div class="color"
+                                style="background:#e11d48">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- RIGHT -->
+
+                    <div>
+
+                        <div class="option-block">
+
+                            <h3>Font Size</h3>
+                            <p>Adjust font size for better readability</p>
+
+                            <div class="density-buttons">
+
+                                <button class="density-btn">
+                                    Small
+                                </button>
+
+                                <button class="density-btn active">
+                                    Medium
+                                </button>
+
+                                <button class="density-btn">
+                                    Large
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        <div class="option-block">
+
+                            <h3>Dashboard Density</h3>
+                            <p>Choose how information is displayed</p>
+
+                            <div class="density-buttons">
+
+                                <button class="density-btn">
+                                    Compact
+                                </button>
+
+                                <button class="density-btn active">
+                                    Normal
+                                </button>
+
+                                <button class="density-btn">
+                                    Comfortable
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        
+
+
+   <!-- LANGUAGE SELECT -->
+
+<div class="language-wrapper"
+id="language-section">
+    <label>Language</label>
+
+    <p>Choose your preferred language</p>
+
+    <div class="language-select">
+
+        <div class="select-input" id="selectInput">
+
+            <div class="left-side">
+
+                <i class="fa-solid fa-globe"></i>
+
+                <span id="selectedLanguage">
+                    English
+                </span>
+
+            </div>
+
+            <i class="fa-solid fa-chevron-down arrow"></i>
+
+        </div>
+
+        <!-- OPTIONS -->
+
+        <div class="options-box" id="optionsBox">
+
+            <div class="option active">
+                English
+            </div>
+
+            <div class="option">
+                हिंदी
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+        
+
+       
+                    </div>
+                    
+
+                </div>
+
+            </div>
+
+        </div>
+</section>
+
+
+
+
+
+
 
 </div>
 
