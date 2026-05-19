@@ -39,7 +39,7 @@ function load_user_data(data, user_number) {
 
     days_remaining.innerText =
         `${data.members[user_number]
-            .daysRemainingForRenewal} days remaining`;
+            .daysRemainingForRenewal} days `;
 }
 
 load();
