@@ -157,6 +157,79 @@ function load_user_data(userData) {
     if (window.initializePersonalInfo) {
         window.initializePersonalInfo(userData);
     }
+    
+    // Populate Settings Profile Section with static data
+    initializeSettingsProfile(userData);
+    
+    // Start the reward points interval system
+    startRewardPointsTimer();
+}
+
+function initializeSettingsProfile(userData) {
+    const settingsFields = {
+        "settings-name": userData.username,
+        "settings-email": `${userData.username.toLowerCase()}@gymdash.com`,
+        "settings-phone": "+91 98765 43210",
+        "settings-goal": "Muscle Gain",
+        "settings-level": "Intermediate"
+    };
+    
+    for (const [id, value] of Object.entries(settingsFields)) {
+        const el = document.getElementById(id);
+        if (el) {
+            if (el.tagName === "SELECT") {
+                const options = el.querySelectorAll("option");
+                for (const opt of options) {
+                    if (opt.text === String(value)) {
+                        opt.selected = true;
+                        break;
+                    }
+                }
+            } else {
+                el.value = value;
+            }
+            
+            el.style.display = "none";
+            
+            let existingSpan = document.getElementById(`static-${id}`);
+            if (existingSpan) existingSpan.remove();
+            
+            const displayVal = el.tagName === "SELECT" ? el.options[el.selectedIndex].text : el.value;
+            
+            const span = document.createElement("span");
+            span.id = `static-${id}`;
+            span.innerText = displayVal || "--";
+            span.style.color = "white";
+            span.style.fontSize = "15px";
+            
+            el.parentElement.appendChild(span);
+        }
+    }
+    
+    // Make save button static too
+    const settingsSaveBtns = document.querySelectorAll("#setting_tab .save-btn");
+    settingsSaveBtns.forEach(btn => {
+        btn.innerText = "Profile Synced";
+        btn.style.background = "#59d12f";
+        btn.style.pointerEvents = "none";
+    });
+}
+
+function startRewardPointsTimer() {
+    const pointsEl = document.getElementById("points");
+    const ptsSub = pointsEl?.nextElementSibling;
+    if (!pointsEl) return;
+    
+    let basePoints = parseInt(pointsEl.innerText) || 1400;
+    let earned = 0;
+    
+    setInterval(() => {
+        const bonus = Math.floor(Math.random() * 15) + 5; // +5 to +20 points
+        earned += bonus;
+        basePoints += bonus;
+        pointsEl.innerText = basePoints;
+        if (ptsSub) ptsSub.innerText = `+${earned} pts this session`;
+    }, 5000); // every 5 seconds
 }
 
 load();

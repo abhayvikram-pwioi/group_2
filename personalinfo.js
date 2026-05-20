@@ -193,28 +193,40 @@ function updateInsights(values) {
 window.initializePersonalInfo = function(userData) {
     if (!userData) return;
     
-    // Map JSON to form inputs
+    // Map JSON to form inputs (IDs must match the HTML)
     const map = {
-        "fullname": userData.username,
+        "nameInput": userData.username,
         "age": userData.age,
         "gender": userData.gender,
         "height": userData.height,
         "weight": userData.weight,
-        "target-weight": userData.targetWeight,
+        "targetWeight": userData.targetWeight,
         "goal": "Muscle Gain", 
-        "type": userData.exerciseSchedule && userData.exerciseSchedule.length > 0 ? userData.exerciseSchedule[0] : "Strength",
+        "type": userData.exerciseSchedule && userData.exerciseSchedule.length > 0 ? userData.exerciseSchedule[0] : "Strength Training",
         "experience": "Intermediate",
         "time": userData.workoutTime || "Morning",
         "diet": "Balanced"
     };
     
     // Set input values and make static
-    const inputIds = ["fullname", "age", "gender", "height", "weight", "target-weight", "goal", "type", "experience", "time", "diet"];
+    const inputIds = ["nameInput", "age", "gender", "height", "weight", "targetWeight", "goal", "type", "experience", "time", "diet"];
     
     for (const id of inputIds) {
         const el = document.getElementById(id);
         if (el) {
-            el.value = map[id] || "";
+            // For select elements, find matching option
+            if (el.tagName === "SELECT") {
+                const options = el.querySelectorAll("option");
+                for (const opt of options) {
+                    if (opt.text === String(map[id])) {
+                        opt.selected = true;
+                        break;
+                    }
+                }
+            } else {
+                el.value = map[id] || "";
+            }
+            
             el.style.display = "none";
             
             let existingSpan = document.getElementById(`static-${id}`);
@@ -222,9 +234,11 @@ window.initializePersonalInfo = function(userData) {
                 existingSpan.remove();
             }
             
+            const displayVal = el.tagName === "SELECT" ? el.options[el.selectedIndex].text : el.value;
+            
             const span = document.createElement("span");
             span.id = `static-${id}`;
-            span.innerText = el.value || "--";
+            span.innerText = displayVal || "--";
             span.style.color = "white";
             span.style.fontSize = "15px";
             span.style.width = "100%";
@@ -233,7 +247,29 @@ window.initializePersonalInfo = function(userData) {
         }
     }
     
+    // Calculate BMI from JSON data
     calculateBMI();
+    
+    // Populate Additional Insights from JSON data
+    const values = {
+        height: userData.height,
+        weight: userData.weight,
+        age: userData.age,
+        gender: userData.gender,
+        goal: map["goal"],
+        type: map["type"],
+        experience: map["experience"],
+        time: map["time"],
+        diet: map["diet"]
+    };
+    updateInsights(values);
+    
+    // Update overview summary fields
+    if (document.getElementById("heightText")) document.getElementById("heightText").innerText = `${userData.height} cm`;
+    if (document.getElementById("weightText")) document.getElementById("weightText").innerText = `${userData.weight} kg`;
+    if (document.getElementById("experienceText")) document.getElementById("experienceText").innerText = map["experience"];
+    if (document.getElementById("goalText")) document.getElementById("goalText").innerText = map["goal"];
+    if (document.getElementById("dietText")) document.getElementById("dietText").innerText = map["diet"];
     
     const saveBtn = document.querySelector(".save-btn");
     if (saveBtn) {
