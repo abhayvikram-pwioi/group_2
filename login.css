@@ -1,0 +1,118 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: #0d0d0d;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    color: #59d12f;
+}
+
+.logo i {
+    font-size: 32px;
+}
+
+.logo h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.header p {
+    color: #a0a0a0;
+    font-size: 16px;
+}
+
+.user-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 24px;
+    width: 100%;
+}
+
+.user-card {
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 20px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.user-card:hover {
+    border-color: #59d12f;
+    box-shadow: 0 0 4px #59d12f, 0 0 20px #59d12f;
+    transform: translateY(-5px);
+}
+
+.avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: #59d12f;
+    margin-bottom: 16px;
+    border: 2px solid transparent;
+    transition: 0.3s;
+}
+
+.user-card:hover .avatar {
+    border-color: #59d12f;
+}
+
+.username {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.membership-badge {
+    background: rgba(89, 209, 47, 0.1);
+    color: #59d12f;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.membership-badge.basic {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ccc;
+}

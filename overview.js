@@ -11,7 +11,23 @@ const profile_name = document.getElementById("profile-name");
 
 let user_number = 0;
 
+const logoutBtn = document.getElementById("logout-btn");
+if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("logged_in_user");
+        window.location.href = "login.html";
+    });
+}
+
 async function load() {
+    const loggedInUser = localStorage.getItem("logged_in_user");
+    if (!loggedInUser) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    const loadStart = Date.now();
+
     try {
         const [res1, res2] = await Promise.all([
             fetch("data.json"),
@@ -20,8 +36,12 @@ async function load() {
         const data = await res1.json();
         const moreData = await res2.json();
         
-        user_number = Math.floor(Math.random() * data.members.length);
-        const member = data.members[user_number];
+        const member = data.members.find(m => m.username === loggedInUser);
+        if (!member) {
+            localStorage.removeItem("logged_in_user");
+            window.location.href = "login.html";
+            return;
+        }
         
         const moreMember = moreData.memberSchedules.find(m => m.username === member.username) || {};
         const mergedData = { ...member, ...moreMember };
@@ -30,8 +50,25 @@ async function load() {
         console.log("Merged AppState:", appState);
         
         load_user_data(mergedData);
+
+        // Dismiss the skeleton with a smooth fade-out
+        const elapsed = Date.now() - loadStart;
+        const minDisplay = 800; // minimum ms to show skeleton
+        const remaining = Math.max(0, minDisplay - elapsed);
+        
+        setTimeout(() => {
+            const skeleton = document.getElementById("skeleton-overlay");
+            if (skeleton) {
+                skeleton.classList.add("fade-out");
+                setTimeout(() => skeleton.remove(), 400);
+            }
+        }, remaining);
+
     } catch (e) {
         console.error("Error loading data:", e);
+        // Remove skeleton even on error so the page isn't stuck
+        const skeleton = document.getElementById("skeleton-overlay");
+        if (skeleton) skeleton.remove();
     }
 }
 
@@ -115,6 +152,11 @@ function load_user_data(userData) {
     
     const workEl = document.getElementById("workouts");
     if (workEl && userData.exerciseSchedule) workEl.innerText = `${userData.exerciseSchedule.length}/week`;
+    
+    // Auto-fill and freeze the Personal Info form
+    if (window.initializePersonalInfo) {
+        window.initializePersonalInfo(userData);
+    }
 }
 
 load();
@@ -130,6 +172,23 @@ let setting_btn = document.getElementById("setting_btn");
 let overview = document.getElementById("overview_tab");
 let personalInfo = document.getElementById("personalInfo_tab");
 let setting = document.getElementById("setting_tab");
+
+function showSectionSkeleton(sectionEl, skeletonId) {
+    const existing = document.getElementById(skeletonId);
+    if (existing) {
+        existing.classList.remove("fade-out");
+        existing.style.display = "grid";
+    }
+    setTimeout(() => {
+        const skel = document.getElementById(skeletonId);
+        if (skel) {
+            skel.classList.add("fade-out");
+            setTimeout(() => {
+                skel.style.display = "none";
+            }, 400);
+        }
+    }, 600);
+}
 
 function switchTab(tabName) {
     if (tabName === "overview") {
@@ -159,6 +218,7 @@ function switchTab(tabName) {
         if (setting_btn) setting_btn.classList.remove("active-btn");
 
         appState.current_Tab = "personalInfo";
+        showSectionSkeleton(personalInfo, "personalInfo-skeleton");
     }
     else if (tabName === "settings") {
         console.log("settings tab");
@@ -173,6 +233,7 @@ function switchTab(tabName) {
         if (personalInfo_btn) personalInfo_btn.classList.remove("active-btn");
 
         appState.current_Tab = "settings";
+        showSectionSkeleton(setting, "settings-skeleton");
     }
 }
 

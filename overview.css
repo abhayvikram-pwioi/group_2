@@ -3,6 +3,139 @@
     display: none !important;
 }
 
+/* ============ SKELETON LOADER ============ */
+@keyframes shimmer {
+    0% { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
+}
+
+#skeleton-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #0d0d0d;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    padding: 40px 40px 40px 280px;
+    overflow-y: auto;
+    transition: opacity 0.4s ease;
+}
+
+#skeleton-overlay.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.skeleton-container {
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.skeleton-line,
+.skeleton-circle,
+.skeleton-stat-card,
+.skeleton-chart,
+.skeleton-quick,
+.skeleton-activity,
+.skeleton-summary {
+    background: linear-gradient(90deg, #1a1a1a 25%, #252525 50%, #1a1a1a 75%);
+    background-size: 800px 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+    border-radius: 8px;
+}
+
+.skeleton-circle {
+    border-radius: 50%;
+}
+
+.skeleton-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.skeleton-membership .skeleton-line {
+    height: 120px;
+    border-radius: 16px;
+}
+
+.skeleton-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.skeleton-stat-card {
+    height: 120px;
+    border-radius: 16px;
+}
+
+.skeleton-middle {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+.skeleton-chart {
+    height: 260px;
+    border-radius: 16px;
+}
+
+.skeleton-quick {
+    height: 260px;
+    border-radius: 16px;
+}
+
+.skeleton-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.skeleton-activity {
+    height: 200px;
+    border-radius: 16px;
+}
+
+.skeleton-summary {
+    height: 200px;
+    border-radius: 16px;
+}
+
+/* ===== SECTION SKELETONS (Personal Info & Settings) ===== */
+.section-skeleton {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #0d0d0d;
+    z-index: 50;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    padding: 10px;
+    transition: opacity 0.4s ease;
+}
+
+.section-skeleton.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.skel-pi-left,
+.skel-pi-right {
+    display: flex;
+    flex-direction: column;
+}
+
 @media only screen and (min-width: 769px) {
 
     /* hover Effect */

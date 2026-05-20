@@ -17,6 +17,52 @@
 
 <body>
 
+<!-- SKELETON LOADER -->
+<div id="skeleton-overlay">
+    <div class="skeleton-container">
+        <!-- Header skeleton -->
+        <div class="skeleton-header">
+            <div>
+                <div class="skeleton-line" style="width: 160px; height: 24px;"></div>
+                <div class="skeleton-line" style="width: 220px; height: 14px; margin-top: 8px;"></div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <div class="skeleton-circle" style="width: 40px; height: 40px;"></div>
+                <div class="skeleton-circle" style="width: 40px; height: 40px;"></div>
+                <div>
+                    <div class="skeleton-line" style="width: 100px; height: 14px;"></div>
+                    <div class="skeleton-line" style="width: 80px; height: 12px; margin-top: 4px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Membership skeleton -->
+        <div class="skeleton-membership">
+            <div class="skeleton-line" style="width: 100%; height: 120px; border-radius: 16px;"></div>
+        </div>
+
+        <!-- Stats skeleton -->
+        <div class="skeleton-stats">
+            <div class="skeleton-stat-card"></div>
+            <div class="skeleton-stat-card"></div>
+            <div class="skeleton-stat-card"></div>
+            <div class="skeleton-stat-card"></div>
+        </div>
+
+        <!-- Middle skeleton -->
+        <div class="skeleton-middle">
+            <div class="skeleton-chart"></div>
+            <div class="skeleton-quick"></div>
+        </div>
+
+        <!-- Bottom skeleton -->
+        <div class="skeleton-bottom">
+            <div class="skeleton-activity"></div>
+            <div class="skeleton-summary"></div>
+        </div>
+    </div>
+</div>
+
 <main>
 
         <!-- Side Navbar -->
@@ -64,7 +110,7 @@
 
         </div>
 
-        <div class="menu-item">
+        <div class="menu-item" id="logout-btn" style="cursor: pointer;">
             <i class="fa-solid fa-right-from-bracket"></i>
             <h3>Logout</h3>
         </div>
@@ -315,6 +361,22 @@
 
 
     <section id="personalInfo_tab" class="dashboard hidden">
+
+      <!-- PERSONAL INFO SKELETON -->
+      <div class="section-skeleton" id="personalInfo-skeleton">
+          <div class="skel-pi-left">
+              <!-- Profile card skeleton -->
+              <div class="skeleton-line" style="width: 100%; height: 100px; border-radius: 16px;"></div>
+              <!-- Form skeleton -->
+              <div class="skeleton-line" style="width: 100%; height: 400px; border-radius: 16px; margin-top: 24px;"></div>
+          </div>
+          <div class="skel-pi-right">
+              <!-- BMI skeleton -->
+              <div class="skeleton-line" style="width: 100%; height: 300px; border-radius: 16px;"></div>
+              <!-- Insights skeleton -->
+              <div class="skeleton-line" style="width: 100%; height: 200px; border-radius: 16px; margin-top: 24px;"></div>
+          </div>
+      </div>
 
       <!-- LEFT SIDE -->
 
@@ -745,7 +807,20 @@
 
     <!-- setting Page -->
 
-<section id="setting_tab" class="hidden">
+<section id="setting_tab" class="hidden" style="position: relative;">
+
+     <!-- SETTINGS SKELETON -->
+     <div class="section-skeleton" id="settings-skeleton" style="grid-template-columns: 280px 1fr;">
+         <div>
+             <div class="skeleton-line" style="width: 100%; height: 400px; border-radius: 16px;"></div>
+         </div>
+         <div style="display: flex; flex-direction: column; gap: 24px;">
+             <div class="skeleton-line" style="width: 100%; height: 200px; border-radius: 16px;"></div>
+             <div class="skeleton-line" style="width: 100%; height: 200px; border-radius: 16px;"></div>
+             <div class="skeleton-line" style="width: 100%; height: 200px; border-radius: 16px;"></div>
+         </div>
+     </div>
+
      <div class="top-grid">
 
             <!-- SETTINGS MENU -->

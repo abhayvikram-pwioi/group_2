@@ -189,3 +189,56 @@ function updateInsights(values) {
     const workEl = document.getElementById("workouts");
     if (workEl) workEl.innerText = workouts;
 }
+
+window.initializePersonalInfo = function(userData) {
+    if (!userData) return;
+    
+    // Map JSON to form inputs
+    const map = {
+        "fullname": userData.username,
+        "age": userData.age,
+        "gender": userData.gender,
+        "height": userData.height,
+        "weight": userData.weight,
+        "target-weight": userData.targetWeight,
+        "goal": "Muscle Gain", 
+        "type": userData.exerciseSchedule && userData.exerciseSchedule.length > 0 ? userData.exerciseSchedule[0] : "Strength",
+        "experience": "Intermediate",
+        "time": userData.workoutTime || "Morning",
+        "diet": "Balanced"
+    };
+    
+    // Set input values and make static
+    const inputIds = ["fullname", "age", "gender", "height", "weight", "target-weight", "goal", "type", "experience", "time", "diet"];
+    
+    for (const id of inputIds) {
+        const el = document.getElementById(id);
+        if (el) {
+            el.value = map[id] || "";
+            el.style.display = "none";
+            
+            let existingSpan = document.getElementById(`static-${id}`);
+            if (existingSpan) {
+                existingSpan.remove();
+            }
+            
+            const span = document.createElement("span");
+            span.id = `static-${id}`;
+            span.innerText = el.value || "--";
+            span.style.color = "white";
+            span.style.fontSize = "15px";
+            span.style.width = "100%";
+            
+            el.parentElement.appendChild(span);
+        }
+    }
+    
+    calculateBMI();
+    
+    const saveBtn = document.querySelector(".save-btn");
+    if (saveBtn) {
+        saveBtn.innerText = "Information Saved";
+        saveBtn.style.background = "#59d12f"; 
+        saveBtn.style.pointerEvents = "none";
+    }
+};
