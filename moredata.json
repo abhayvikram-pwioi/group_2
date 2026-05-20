@@ -1,0 +1,147 @@
+{
+    "memberSchedules": [
+        {
+            "id": 1,
+            "username": "Utkarsh",
+            "exerciseSchedule": [
+                "Chest",
+                "Triceps",
+                "Cardio"
+            ],
+            "trainer": "Rahul Sharma",
+            "workoutTime": "6:00 AM",
+            "dailyCaloriesTarget": 2400,
+            "waterIntakeTarget": 3,
+            "stepsTarget": 10000,
+            "membershipStatus": "Active"
+        },
+        {
+            "id": 2,
+            "username": "Aman",
+            "exerciseSchedule": [
+                "Back",
+                "Biceps"
+            ],
+            "trainer": "Amit Verma",
+            "workoutTime": "7:30 AM",
+            "dailyCaloriesTarget": 2600,
+            "waterIntakeTarget": 4,
+            "stepsTarget": 12000,
+            "membershipStatus": "Active"
+        },
+        {
+            "id": 3,
+            "username": "Riya",
+            "exerciseSchedule": [
+                "Legs",
+                "Glutes",
+                "Yoga"
+            ],
+            "trainer": "Sneha Kapoor",
+            "workoutTime": "5:00 PM",
+            "dailyCaloriesTarget": 1800,
+            "waterIntakeTarget": 2.5,
+            "stepsTarget": 8000,
+            "membershipStatus": "Active"
+        },
+        {
+            "id": 4,
+            "username": "Karan",
+            "exerciseSchedule": [
+                "Shoulders",
+                "Chest"
+            ],
+            "trainer": "Rohit Singh",
+            "workoutTime": "8:00 AM",
+            "dailyCaloriesTarget": 3000,
+            "waterIntakeTarget": 4,
+            "stepsTarget": 11000,
+            "membershipStatus": "Active"
+        },
+        {
+            "id": 5,
+            "username": "Sneha",
+            "exerciseSchedule": [
+                "Pilates",
+                "Cardio"
+            ],
+            "trainer": "Neha Joshi",
+            "workoutTime": "6:30 PM",
+            "dailyCaloriesTarget": 1700,
+            "waterIntakeTarget": 2,
+            "stepsTarget": 7000,
+            "membershipStatus": "Expiring Soon"
+        },
+        {
+            "id": 6,
+            "username": "Rahul",
+            "exerciseSchedule": [
+                "Crossfit",
+                "HIIT"
+            ],
+            "trainer": "Akash Mehta",
+            "workoutTime": "5:30 AM",
+            "dailyCaloriesTarget": 2800,
+            "waterIntakeTarget": 3.5,
+            "stepsTarget": 13000,
+            "membershipStatus": "Active"
+        },
+        {
+            "id": 7,
+            "username": "Priya",
+            "exerciseSchedule": [
+                "Yoga",
+                "Abs"
+            ],
+            "trainer": "Pooja Sharma",
+            "workoutTime": "7:00 PM",
+            "dailyCaloriesTarget": 1900,
+            "waterIntakeTarget": 2.5,
+            "stepsTarget": 9000,
+            "membershipStatus": "Active"
+        },
+        {
+            "id": 8,
+            "username": "Arjun",
+            "exerciseSchedule": [
+                "Strength Training",
+                "Deadlift"
+            ],
+            "trainer": "Vikram Yadav",
+            "workoutTime": "9:00 AM",
+            "dailyCaloriesTarget": 3200,
+            "waterIntakeTarget": 5,
+            "stepsTarget": 10000,
+            "membershipStatus": "Expired"
+        },
+        {
+            "id": 9,
+            "username": "Neha",
+            "exerciseSchedule": [
+                "Cardio",
+                "Cycling"
+            ],
+            "trainer": "Simran Kaur",
+            "workoutTime": "6:00 AM",
+            "dailyCaloriesTarget": 2000,
+            "waterIntakeTarget": 3,
+            "stepsTarget": 8500,
+            "membershipStatus": "Active"
+        },
+        {
+            "id": 10,
+            "username": "Vikram",
+            "exerciseSchedule": [
+                "Chest",
+                "Back",
+                "Strength"
+            ],
+            "trainer": "Rajat Malhotra",
+            "workoutTime": "8:30 PM",
+            "dailyCaloriesTarget": 2900,
+            "waterIntakeTarget": 4,
+            "stepsTarget": 11500,
+            "membershipStatus": "Active"
+        }
+    ]
+}

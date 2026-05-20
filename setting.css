@@ -34,6 +34,9 @@
     min-height:529px;
 
     border-radius:26px;
+
+    position: sticky;
+    top: 24px;
 }
 
 /* TITLE */

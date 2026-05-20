@@ -42,13 +42,150 @@ function calculateBMI() {
     }
     
     const statusElement = document.getElementById("bmi-status");
-    statusElement.innerText = status;
-    statusElement.style.color = colorHex;
+    if (statusElement) {
+        statusElement.innerText = status;
+        statusElement.style.color = colorHex;
+    }
     
-    document.getElementById("bmi-text").innerText = message;
+    const bmiText = document.getElementById("bmiText");
+    if (bmiText) bmiText.innerText = status;
+    
+    const bmiMessage = document.getElementById("bmi-text");
+    if (bmiMessage) bmiMessage.innerText = message;
     
     const circle = document.getElementById("circle");
     if (circle) {
         circle.style.borderColor = colorHex;
     }
+}
+
+function saveInfo() {
+    const inputIds = [
+        "nameInput", "age", "gender", "height", "weight", 
+        "targetWeight", "goal", "type", "experience", "time", "diet"
+    ];
+    
+    const values = {};
+    for (const id of inputIds) {
+        const el = document.getElementById(id);
+        if (el) {
+            values[id] = el.value;
+        }
+    }
+    
+    if (!values.height || !values.weight) {
+        alert("Please enter at least height and weight!");
+        return;
+    }
+    
+    // Convert inputs to static text
+    for (const id of inputIds) {
+        const el = document.getElementById(id);
+        if (el) {
+            el.style.display = "none";
+            
+            let existingSpan = document.getElementById(`static-${id}`);
+            if (existingSpan) {
+                existingSpan.remove();
+            }
+            
+            const span = document.createElement("span");
+            span.id = `static-${id}`;
+            span.innerText = el.value || "--";
+            span.style.color = "white";
+            span.style.fontSize = "15px";
+            span.style.width = "100%";
+            
+            el.parentElement.appendChild(span);
+        }
+    }
+    
+    calculateBMI();
+    updateInsights(values);
+    
+    const saveBtn = document.querySelector(".save-btn");
+    if (saveBtn) {
+        saveBtn.innerText = "Information Saved";
+        saveBtn.style.background = "#59d12f"; 
+    }
+    
+    // Reward Point System
+    if (!window.profileSavedPointsAdded) {
+        window.profileSavedPointsAdded = true;
+        const pointsEl = document.getElementById("points");
+        if (pointsEl) {
+            let currentPts = parseInt(pointsEl.innerText) || 1400;
+            pointsEl.innerText = currentPts + 500;
+            const ptsSub = pointsEl.nextElementSibling;
+            if (ptsSub) ptsSub.innerText = "+500 pts for profile completion!";
+        }
+    }
+    
+    if (document.getElementById("heightText")) document.getElementById("heightText").innerText = `${values.height} cm`;
+    if (document.getElementById("weightText")) document.getElementById("weightText").innerText = `${values.weight} kg`;
+    if (document.getElementById("experienceText")) document.getElementById("experienceText").innerText = values.experience || "--";
+    if (document.getElementById("goalText")) document.getElementById("goalText").innerText = values.goal || "--";
+    if (document.getElementById("dietText")) document.getElementById("dietText").innerText = values.diet || "--";
+}
+
+function updateInsights(values) {
+    const weight = parseFloat(values.weight);
+    const height = parseFloat(values.height);
+    const age = parseFloat(values.age) || 25;
+    const gender = values.gender || "Male";
+    
+    if (isNaN(weight) || isNaN(height)) return;
+    
+    let bmr;
+    if (gender.toLowerCase() === "male") {
+        bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+    } else {
+        bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+    }
+    
+    let multiplier = 1.375; 
+    if (values.experience === "Intermediate") multiplier = 1.55;
+    if (values.experience === "Advanced") multiplier = 1.725;
+    
+    let calories = Math.round(bmr * multiplier);
+    
+    if (values.goal === "Fat Loss") {
+        calories -= 300;
+    } else if (values.goal === "Muscle Gain") {
+        calories += 300;
+    }
+    
+    let proteinMultiplier = 1.8;
+    if (values.goal === "Muscle Gain") proteinMultiplier = 2.2;
+    if (values.goal === "Fat Loss") proteinMultiplier = 2.0;
+    
+    const protein = Math.round(weight * proteinMultiplier);
+    const water = (weight * 0.033).toFixed(1);
+    
+    let workouts = "3/week";
+    if (values.experience === "Intermediate") workouts = "4/week";
+    if (values.experience === "Advanced") workouts = "5-6/week";
+    if (values.type === "Cardio" && values.experience === "Beginner") workouts = "4/week";
+    
+    const calEl = document.getElementById("calorie-need");
+    if (calEl) calEl.innerText = `${calories} kcal`;
+    
+    // Connect to Overview Summary Section
+    const overviewCal = document.getElementById("calories");
+    if (overviewCal) {
+        overviewCal.innerText = calories;
+        const calTitle = overviewCal.previousElementSibling?.querySelector("h4");
+        if (calTitle) calTitle.innerText = "Daily Calorie Target";
+        const calSub = overviewCal.nextElementSibling;
+        if (calSub) calSub.innerText = "Based on your fitness goals";
+    }
+    
+    const proEl = document.getElementById("protein-intake");
+    if (proEl) proEl.innerText = `${protein} g`;
+    
+    const watEl = document.getElementById("water-intake");
+    if (watEl) watEl.innerText = `${water} L/day`;
+    
+    const workEl = document.getElementById("workouts");
+    if (workEl) workEl.innerText = workouts;
 }

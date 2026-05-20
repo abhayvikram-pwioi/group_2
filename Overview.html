@@ -115,9 +115,9 @@
 
             <div>
                 <h5>ACTIVE MEMBERSHIP</h5>
-                <h2>Pro Annual Plan</h2>
+                <h2 id="membership-plan">Pro Annual Plan</h2>
                 <div class="membership-row">
-                    <div class="badge">Active</div>
+                    <div class="badge" id="overview-badge">Active</div>
                     <span>Renews on 15 Jan 2027</span>
                 </div>
             </div>
@@ -125,10 +125,6 @@
         </div>
 
         <div class="membership-right">
-            <div class="progress-ring">
-                <h1>72%</h1>
-                <span>of yearly goal</span>
-            </div>
             <div>
                 <div class="top">
                     <h4>Next Billing Date</h4>
@@ -137,7 +133,11 @@
     
                 <div class="bottom">
                     <h4>Membership ID</h4>
-                    <p>#GM-2026-1556</p>
+                    <p id="membership-id">#GM-2026-1556</p>
+                </div>
+                <div class="bottom" style="margin-top: 15px;">
+                    <h4>Trainer & Time</h4>
+                    <p id="trainer-time">Not Assigned</p>
                 </div>
             </div>
 
@@ -151,12 +151,12 @@
         <div class="stat-card box">
             <div class="stat-top">
                 <div class="stat-icon">
-                    <i class="fa-solid fa-dumbbell"></i>
+                    <i class="fa-solid fa-shoe-prints"></i>
                 </div>
-                <h4>Total Sessions</h4>
+                <h4>Daily Steps Target</h4>
             </div>
-            <h2 id="sessions">51</h2>
-            <p class="green">+3 this week</p>
+            <h2 id="stepsTarget">10000</h2>
+            <p class="green">Daily Goal</p>
         </div>
 
 
@@ -257,52 +257,9 @@
       <!-- RECENT -->
 
         <div class="card activity-card box">
-            <h2>Recent Activity</h2>
-            <div class="activity-item">
-                <div class="activity-left">
-                    <div class="activity-icon">
-                        <i class="fa-solid fa-person-running"></i>
-                    </div>
-                    <div>
-                        <h4>Cardio Session</h4>
-                        <p>Today, 7:30 AM</p>
-                    </div>
-                </div>
-                <div class="kcal">
-                    480 kcal
-                </div>
-            </div>
-
-
-            <div class="activity-item">
-                <div class="activity-left">
-                    <div class="activity-icon">
-                        <i class="fa-solid fa-dumbbell"></i>    
-                    </div>
-                    <div>
-                        <h4>Weight Training</h4>
-                        <p>Yesterday, 6:15 PM</p>
-                    </div>
-                </div>
-                <div class="kcal">
-                    320 kcal
-                </div>
-            </div>
-
-
-            <div class="activity-item">
-                <div class="activity-left">
-                    <div class="activity-icon">
-                        <i class="fa-solid fa-spa"></i>
-                    </div>
-                    <div>   
-                        <h4>Yoga Class</h4>
-                        <p>13 May 2026, 8:00 AM</p>
-                    </div>
-                </div>
-                <div class="kcal">
-                    210 kcal
-                </div>
+            <h2>Weekly Schedule</h2>
+            <div id="exercise-schedule">
+                <!-- Schedule injected here via JS -->
             </div>
         </div>
 
@@ -382,7 +339,7 @@
                 Ishika gangwar
               </h2>
 
-              <div class="badge">
+              <div class="badge" id="personal-badge">
                 Active Member
               </div>
 
@@ -432,6 +389,7 @@
 
                 <input
                 type="number"
+                id="age"
                 placeholder="Enter age">
 
               </div>
@@ -446,7 +404,7 @@
 
                 <i class="fa-solid fa-venus-mars"></i>
 
-                <select>
+                <select id="gender">
 
                   <option>Male</option>
                   <option>Female</option>
@@ -502,6 +460,7 @@
 
                 <input
                 type="number"
+                id="targetWeight"
                 placeholder="Target Weight">
 
               </div>
@@ -516,7 +475,7 @@
 
                 <i class="fa-solid fa-dumbbell"></i>
 
-                <select>
+                <select id="goal">
 
                   <option>Muscle Gain</option>
                   <option>Fat Loss</option>
@@ -537,7 +496,7 @@
 
                 <i class="fa-solid fa-fire"></i>
 
-                <select>
+                <select id="type">
 
                   <option>Strength Training</option>
                   <option>Cardio</option>
@@ -558,7 +517,7 @@
 
                 <i class="fa-solid fa-chart-line"></i>
 
-                <select>
+                <select id="experience">
 
                   <option>Beginner</option>
                   <option>Intermediate</option>
@@ -578,7 +537,7 @@
 
                 <i class="fa-regular fa-clock"></i>
 
-                <select>
+                <select id="time">
 
                   <option>Morning</option>
                   <option>Evening</option>
@@ -598,7 +557,7 @@
 
                 <i class="fa-solid fa-utensils"></i>
 
-                <select>
+                <select id="diet">
 
                   <option>Vegetarian</option>
                   <option>Non-Vegetarian</option>
@@ -725,7 +684,7 @@
 
             </div>
 
-            <h3>2350 kcal</h3>
+            <h3 id="calorie-need">--</h3>
 
           </div>
 
@@ -741,7 +700,7 @@
 
             </div>
 
-            <h3>120 g</h3>
+            <h3 id="protein-intake">--</h3>
 
           </div>
 
@@ -757,7 +716,7 @@
 
             </div>
 
-            <h3>3.2 L/day</h3>
+            <h3 id="water-intake">--</h3>
 
           </div>
 
@@ -773,7 +732,7 @@
 
             </div>
 
-            <h3>5/week</h3>
+            <h3 id="workouts">--</h3>
 
           </div>
 
@@ -853,6 +812,7 @@
 
 </div>
 
+<div class="settings-content" style="display:flex; flex-direction:column; gap:24px;">
 
             <!-- NOTIFICATION CARD -->
 
@@ -1252,18 +1212,8 @@ id="language-section">
     </div>
 
 </div>
+</div>
 
-        
-
-       
-                    </div>
-                    
-
-                </div>
-
-            </div>
-
-        </div>
 </section>
 
 
@@ -1280,9 +1230,11 @@ id="language-section">
     <!-- yaha per tum log apne section page copy paste kar do and css us page mein -->
 
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="app.js"></script>
     <script src="overview.js"></script>
     <script src="personalinfo.js"></script>
+    <script src="chart.js"></script>
 </body>
 
 </html>
