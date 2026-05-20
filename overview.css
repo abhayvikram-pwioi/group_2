@@ -133,7 +133,8 @@
     font-weight:500;
 }
 
-.menu-item:hover{
+.menu-item:hover,
+.active-btn {
     background:#151005;
     border:1px solid #f6a313;
 }
