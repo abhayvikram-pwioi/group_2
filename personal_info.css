@@ -350,6 +350,17 @@ MOBILE
         padding:0 12px;
 
         z-index:9999;
+        background: rgba(15, 16, 21, 0.92) !important;
+        border-top: 1px solid #222327 !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5) !important;
+    }
+
+    body.light-theme .sidebar {
+        background: rgba(255, 255, 255, 0.92) !important;
+        border-top: 1px solid #cbd5e1 !important;
+        box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.06) !important;
     }
 
     .logo{
