@@ -136,7 +136,6 @@
     flex-direction: column;
 }
 
-@media only screen and (min-width: 769px) {
 
     /* hover Effect */
 
@@ -512,7 +511,8 @@
   margin-bottom:12px;
 }
 
-.green{
+.green-text{
+    background-color: unset;
   color:#59d12f;
   font-size:0.82rem;
 }
@@ -709,215 +709,7 @@ canvas{
 /* CSS Personal Info */
 
 
-}
 
-
-
-
-/* mobile version */
-
-
-
-@media only screen and (max-width: 480px) {
-    * {
-        font-family: arial;
-        padding: 0;
-        margin: 0;
-    }
-
-    section {
-        padding: 0.7rem;
-        background-color: aqua;
-    }
-
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-image: linear-gradient(to right, #264d9a, #5c8be9);
-        color: white;
-        border-radius: 10px;
-        padding: 0.5rem 1rem;
-        height: 105px;
-    }
-
-    .welcome {
-        font-size: 1.5rem;
-    }
-
-    #head_sec {
-        display: flex;
-        align-items: center;
-        font-size: 1.5rem;
-        margin-left: 60px;
-
-    }
-
-    .bi-person-circle {
-        font-size: 2.1rem;
-        margin-left: 25px;
-    }
-
-    #greeting {
-        font-size: 0.9rem;
-        margin-top: 10px;
-    }
-
-
-    /* Card css */
-
-    .card_parent {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        row-gap: 1rem;
-        column-gap: 0.8rem;
-        margin-top: 28px;
-    }
-
-    .card {
-        width: 110px;
-        background-color: white;
-        ;
-        height: 142px;
-        padding: 15px;
-        /* border: 1px solid black; */
-        border-radius: 10px;
-        box-shadow: 1px 2px 18px rgb(133, 222, 222);
-    }
-
-    #subs_card {
-        background-image: linear-gradient(to right, #264d9a, #517dd5);
-        color: white;
-    }
-
-    #renewal_card {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
-
-
-    /* Quick Section Css */
-
-    .action_parent {
-        display: flex;
-        margin: 0 10px;
-        margin-top: 55px;
-    }
-
-    .action_card {
-        width: 73px;
-        height: 100px;
-        /* border: 1px solid black; */
-        margin-left: 8px;
-        border-radius: 10px;
-        box-shadow: 1px 2px 18px rgb(133, 222, 222);
-    }
-}
-
-
-
-
-
-/* tablet Version */
-
-
-
-@media only screen and (min-width: 481px) and (max-width: 768px) {
-    * {
-        font-family: arial;
-        padding: 0;
-        margin: 0;
-    }
-
-    section {
-        padding: 0.7rem;
-        background-color: aqua;
-    }
-
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-image: linear-gradient(to right, #264d9a, #5c8be9);
-        color: white;
-        border-radius: 10px;
-        padding: 0.5rem 1rem;
-        height: 105px;
-    }
-
-    .welcome {
-        font-size: 1.5rem;
-    }
-
-    #head_sec {
-        display: flex;
-        align-items: center;
-        font-size: 1.5rem;
-        margin-left: 60px;
-
-    }
-
-    .bi-person-circle {
-        font-size: 2.1rem;
-        margin-left: 25px;
-    }
-
-    #greeting {
-        font-size: 0.9rem;
-        margin-top: 10px;
-    }
-
-
-    /* Card css */
-
-    .card_parent {
-        display: flex;
-        justify-content: space-around;
-        margin-top: 28px;
-    }
-
-    .card {
-        width: 110px;
-        background-color: white;
-        ;
-        height: 142px;
-        padding: 15px;
-        /* border: 1px solid black; */
-        border-radius: 10px;
-        box-shadow: 1px 2px 18px rgb(133, 222, 222);
-    }
-
-    #subs_card {
-        background-image: linear-gradient(to right, #264d9a, #517dd5);
-        color: white;
-    }
-
-    #renewal_card {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
-
-    /* Quick Section Css */
-
-    .action_parent {
-        display: flex;
-        margin: 0 10px;
-        margin-top: 55px;
-    }
-
-    .action_card {
-        width: 73px;
-        height: 100px;
-        /* border: 1px solid black; */
-        margin-left: 8px;
-        border-radius: 10px;
-        box-shadow: 1px 2px 18px rgb(133, 222, 222);
-    }
-}
 
 
 /* ==========================================================================
@@ -1046,6 +838,155 @@ body.light-theme .theme-btn.active {
     background: #f6a313;
     color: white;
     border-color: #f6a313;
+}
+
+/* ==========================================================================
+   GYMPRO RESPONSIVE LAYOUT OVERRIDES (320px to 1200px+)
+   ========================================================================== */
+
+/* --- SKELETON DESKTOP DEFAULTS (INLINE STYLE MIGRATION) --- */
+#analytics-skeleton {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+}
+#settings-skeleton {
+    display: grid;
+    grid-template-columns: 290px 1fr;
+    gap: 24px;
+}
+
+/* --- LARGE BREAKPOINT (max-width: 1024px) --- */
+@media (max-width: 1024px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr) !important;
+        row-gap: 18px !important;
+    }
+}
+
+/* --- MEDIUM BREAKPOINT (max-width: 992px) --- */
+@media (max-width: 992px) {
+    .main {
+        padding: 24px 20px !important;
+    }
+
+    #analytics-skeleton,
+    #settings-skeleton,
+    .section-skeleton {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+
+    .membership {
+        grid-template-columns: 1fr !important;
+        row-gap: 24px !important;
+        min-height: auto !important;
+        padding: 24px !important;
+    }
+    .membership-left {
+        flex-direction: column !important;
+        text-align: center !important;
+        align-items: center !important;
+        gap: 16px !important;
+    }
+    .membership-icon {
+        width: 80px !important;
+        height: 80px !important;
+        font-size: 32px !important;
+    }
+    .membership-right {
+        flex-direction: column !important;
+        gap: 16px !important;
+        align-items: center !important;
+        text-align: center !important;
+    }
+    .membership-right .top {
+        margin: 0 !important;
+    }
+    .membership-right .bottom {
+        margin-top: 0 !important;
+    }
+
+    .middle-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .bottom-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .chart-card,
+    .quick-card,
+    .activity-card,
+    .summary-card {
+        height: auto !important;
+    }
+}
+
+/* --- TABLET Breakpoint (max-width: 768px) --- */
+@media (max-width: 768px) {
+    main {
+        grid-template-columns: 1fr !important;
+        padding: 1rem 1rem 100px 1rem !important; /* Spacing for bottom navbar */
+    }
+
+    #skeleton-overlay {
+        padding: 20px 16px 100px 16px !important;
+    }
+
+    header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 16px !important;
+        padding-bottom: 20px !important;
+        margin-bottom: 20px !important;
+    }
+
+    .profile-area {
+        width: 100% !important;
+        justify-content: space-between !important;
+        gap: 16px !important;
+    }
+}
+
+/* --- MOBILE BREAKPOINT (max-width: 576px) --- */
+@media (max-width: 576px) {
+    .stats {
+        grid-template-columns: 1fr !important;
+        row-gap: 14px !important;
+    }
+
+    .stat-card {
+        height: auto !important;
+        padding: 20px !important;
+    }
+    
+    .stat-top {
+        margin-bottom: 14px !important;
+    }
+
+    .stat-icon {
+        width: 44px !important;
+        height: 44px !important;
+        border-radius: 12px !important;
+        font-size: 16px !important;
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+    }
+    
+    .summary-item {
+        padding-bottom: 10px !important;
+    }
+}
+
+/* --- EXTRA SMALL MOBILE BREAKPOINT (max-width: 380px) --- */
+@media (max-width: 380px) {
+    .membership-left h2 {
+        font-size: 1.5rem !important;
+    }
 }
 
 
