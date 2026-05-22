@@ -617,3 +617,191 @@
         flex-wrap: wrap;
     }
 }
+
+
+/* ==========================================================================
+   GLOBAL LIGHT THEME OVERRIDES (CASCADING RESOLUTIONS)
+   ========================================================================== */
+
+body.light-theme,
+body.light-theme main,
+body.light-theme #skeleton-overlay,
+body.light-theme .section-skeleton {
+    background: #f8fafc !important;
+    color: #0f172a !important;
+}
+
+body.light-theme .left-side-container,
+body.light-theme .box,
+body.light-theme .card,
+body.light-theme .settings-menu,
+body.light-theme .stat-card,
+body.light-theme .personal-card,
+body.light-theme .activity_parent,
+body.light-theme .chart-card,
+body.light-theme .action_card,
+body.light-theme #renewal_card,
+body.light-theme #subs_card:not(.active) {
+    background: #ffffff !important;
+    border-color: #cbd5e1 !important;
+    color: #0f172a !important;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05) !important;
+}
+
+body.light-theme h1,
+body.light-theme h2,
+body.light-theme h3,
+body.light-theme .section-title,
+body.light-theme .profile-info h2,
+body.light-theme .settings-section-title h2,
+body.light-theme .user-card .username {
+    color: #0f172a !important;
+}
+
+body.light-theme p,
+body.light-theme .setting-description,
+body.light-theme .member-date,
+body.light-theme .language-wrapper p,
+body.light-theme .settings-section-title p {
+    color: #64748b !important;
+}
+
+body.light-theme .menu-item {
+    color: #475569 !important;
+}
+
+body.light-theme .menu-item.active-btn {
+    background: #e2e8f0 !important;
+    color: #f6a313 !important;
+    border-color: rgba(246, 163, 19, 0.25) !important;
+}
+
+body.light-theme .menu-item:hover {
+    background: #f1f5f9 !important;
+    color: #f6a313 !important;
+}
+
+/* SKELETON SHIMMER OVERRIDES */
+body.light-theme .skeleton-line,
+body.light-theme .skeleton-circle,
+body.light-theme .skeleton-stat-card,
+body.light-theme .skeleton-chart,
+body.light-theme .skeleton-quick,
+body.light-theme .skeleton-activity,
+body.light-theme .skeleton-summary {
+    background: linear-gradient(90deg, #cbd5e1 25%, #e2e8f0 50%, #cbd5e1 75%) !important;
+    background-size: 800px 100% !important;
+}
+
+/* FORMS, INPUT GROUPS & DROPDOWNS */
+body.light-theme .input-wrapper,
+body.light-theme .input-box,
+body.light-theme .select-input,
+body.light-theme .settings-input-group input,
+body.light-theme .settings-input-group select {
+    background: #f1f5f9 !important;
+    border-color: #cbd5e1 !important;
+    color: #0f172a !important;
+}
+
+body.light-theme .input-box input,
+body.light-theme .settings-input-group input {
+    color: #0f172a !important;
+}
+
+body.light-theme .input-wrapper input::placeholder,
+body.light-theme .input-box input::placeholder,
+body.light-theme .settings-input-group input::placeholder {
+    color: #94a3b8 !important;
+}
+
+/* ACCENTS & INTERACTIVE TOGGLES */
+body.light-theme .toggle {
+    background: #cbd5e1 !important;
+}
+
+body.light-theme .toggle.active {
+    background: #59d12f !important;
+}
+
+body.light-theme .options-box {
+    background: #ffffff !important;
+    border-color: #cbd5e1 !important;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08) !important;
+}
+
+body.light-theme .option {
+    color: #334155 !important;
+}
+
+body.light-theme .option:hover,
+body.light-theme .option.active {
+    background: #f1f5f9 !important;
+    color: #f6a313 !important;
+}
+
+body.light-theme .theme-btn {
+    background: #f1f5f9 !important;
+    border-color: #cbd5e1 !important;
+    color: #475569 !important;
+}
+
+body.light-theme .theme-btn.active {
+    background: #f6a313 !important;
+    color: white !important;
+    border-color: #f6a313 !important;
+}
+
+
+/* ==========================================================================
+   PERSONAL INFO & FITNESS DETAILS LIGHT THEME STYLING
+   ========================================================================== */
+
+body.light-theme .profile-info h2,
+body.light-theme .section-title,
+body.light-theme .circle h1,
+body.light-theme .bmi-card h2,
+body.light-theme .insight-left h4,
+body.light-theme .insight-right span {
+    color: #0f172a !important;
+}
+
+body.light-theme .input-group label,
+body.light-theme .range-item,
+body.light-theme .bmi-text,
+body.light-theme .insight-item span,
+body.light-theme .insight-left p,
+body.light-theme .insight-right p,
+body.light-theme .insight-item {
+    color: #334155 !important;
+}
+
+body.light-theme .input-box input,
+body.light-theme .input-box select {
+    color: #0f172a !important;
+}
+
+body.light-theme .input-box {
+    background: #f1f5f9 !important;
+    border-color: #cbd5e1 !important;
+}
+
+body.light-theme .insight-item {
+    border-color: #e2e8f0 !important;
+}
+
+body.light-theme .circle {
+    border-color: #e2e8f0 !important;
+}
+
+body.light-theme .insight-icon {
+    background: rgba(246, 163, 19, 0.1) !important;
+    color: #f6a313 !important;
+}
+
+body.light-theme option {
+    background: #ffffff !important;
+    color: #0f172a !important;
+}
+
+

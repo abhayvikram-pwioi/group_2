@@ -403,3 +403,55 @@ toggleButtons.forEach(btn => {
         btn.classList.toggle("active");
     });
 });
+
+
+// ============================================
+// THEME SWITCHER LOGIC (Dark / Light / System)
+// ============================================
+
+function applyTheme(theme) {
+    if (theme === "light") {
+        document.body.classList.add("light-theme");
+    } else if (theme === "dark") {
+        document.body.classList.remove("light-theme");
+    } else if (theme === "system") {
+        const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (isDark) {
+            document.body.classList.remove("light-theme");
+        } else {
+            document.body.classList.add("light-theme");
+        }
+    }
+}
+
+// Read saved preference
+const savedTheme = localStorage.getItem("selected_theme") || "dark";
+applyTheme(savedTheme);
+
+// Initialize Setting buttons states on load
+const themeBtns = document.querySelectorAll(".theme-btn");
+themeBtns.forEach(btn => {
+    const text = btn.innerText.trim().toLowerCase();
+    if (text === savedTheme) {
+        themeBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+    }
+    
+    btn.addEventListener("click", () => {
+        themeBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        
+        const selected = btn.innerText.trim().toLowerCase();
+        localStorage.setItem("selected_theme", selected);
+        applyTheme(selected);
+        console.log("Applied theme:", selected);
+    });
+});
+
+// Watch for OS system theme shifts if set to system
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+    const activePref = localStorage.getItem("selected_theme") || "dark";
+    if (activePref === "system") {
+        applyTheme("system");
+    }
+});

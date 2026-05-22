@@ -920,3 +920,133 @@ canvas{
 }
 
 
+/* ==========================================================================
+   LIGHT THEME STYLING HOOKS
+   ========================================================================== */
+
+body.light-theme {
+    background: #f8fafc !important;
+    color: #0f172a !important;
+}
+
+body.light-theme .left-side-container,
+body.light-theme .box,
+body.light-theme .card,
+body.light-theme .settings-menu {
+    background: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    color: #0f172a !important;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04) !important;
+}
+
+body.light-theme h1,
+body.light-theme h2,
+body.light-theme h3,
+body.light-theme .section-title,
+body.light-theme .profile-info h2,
+body.light-theme .settings-section-title h2,
+body.light-theme .user-card .username {
+    color: #0f172a !important;
+}
+
+body.light-theme p,
+body.light-theme .setting-description,
+body.light-theme .member-date,
+body.light-theme .language-wrapper p,
+body.light-theme .settings-section-title p {
+    color: #64748b !important;
+}
+
+body.light-theme .menu-item {
+    color: #475569 !important;
+}
+
+body.light-theme .menu-item.active-btn {
+    background: #f1f5f9 !important;
+    color: #f6a313 !important;
+    border-color: rgba(246, 163, 19, 0.15) !important;
+}
+
+body.light-theme .menu-item:hover {
+    background: #f8fafc !important;
+    color: #f6a313 !important;
+}
+
+/* SKELETON LOADER OVERRIDES */
+body.light-theme #skeleton-overlay,
+body.light-theme .section-skeleton {
+    background: #f8fafc !important;
+}
+
+body.light-theme .skeleton-line,
+body.light-theme .skeleton-circle,
+body.light-theme .skeleton-stat-card,
+body.light-theme .skeleton-chart,
+body.light-theme .skeleton-quick,
+body.light-theme .skeleton-activity,
+body.light-theme .skeleton-summary {
+    background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%) !important;
+    background-size: 800px 100% !important;
+}
+
+/* FORMS, INPUTS, AND DROPDOWNS OVERRIDES */
+body.light-theme .input-wrapper,
+body.light-theme .input-box,
+body.light-theme .select-input,
+body.light-theme .settings-input-group input,
+body.light-theme .settings-input-group select {
+    background: #f1f5f9 !important;
+    border-color: #cbd5e1 !important;
+    color: #0f172a !important;
+}
+
+body.light-theme .input-box input,
+body.light-theme .settings-input-group input {
+    color: #0f172a !important;
+}
+
+body.light-theme .input-wrapper input::placeholder,
+body.light-theme .input-box input::placeholder,
+body.light-theme .settings-input-group input::placeholder {
+    color: #94a3b8 !important;
+}
+
+/* ACCENTS & INTERACTIVE COMPONENTS */
+body.light-theme .toggle {
+    background: #cbd5e1 !important;
+}
+
+body.light-theme .toggle.active {
+    background: #59d12f !important;
+}
+
+body.light-theme .options-box {
+    background: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08) !important;
+}
+
+body.light-theme .option {
+    color: #334155 !important;
+}
+
+body.light-theme .option:hover,
+body.light-theme .option.active {
+    background: #f1f5f9 !important;
+    color: #f6a313 !important;
+}
+
+body.light-theme .theme-btn {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #475569;
+}
+
+body.light-theme .theme-btn.active {
+    background: #f6a313;
+    color: white;
+    border-color: #f6a313;
+}
+
+
+

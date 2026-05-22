@@ -71,7 +71,7 @@
     <nav class="sidebar">
 
       <div>
-        <a href="home.html" class="logo" style="text-decoration: none; color: inherit; display: flex;">
+        <a href="index.html" class="logo" style="text-decoration: none; color: inherit; display: flex;">
 
           <div class="logo-icon">
             <i class="fa-solid fa-dumbbell"></i>
@@ -805,16 +805,19 @@
 
         <!-- Left Column: Detailed Charts -->
         <div style="display: flex; flex-direction: column; gap: 24px;">
-          
+
           <!-- Card 1: Weekly Workout Hours -->
           <div class="card">
-            <div class="heading" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <div class="heading"
+              style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
               <div>
                 <h2 class="section-title" style="margin-bottom: 4px;">Weekly Workout Hours</h2>
                 <p style="color: #888; font-size: 14px;">Total training time distributed across the week</p>
               </div>
-              <div style="background: rgba(89, 209, 47, 0.1); color: #59d12f; padding: 8px 16px; border-radius: 12px; font-weight: 600;">
-                <i class="fa-solid fa-clock" style="margin-right: 6px;"></i><span id="total-weekly-hours">13.0</span> hrs total
+              <div
+                style="background: rgba(89, 209, 47, 0.1); color: #59d12f; padding: 8px 16px; border-radius: 12px; font-weight: 600;">
+                <i class="fa-solid fa-clock" style="margin-right: 6px;"></i><span id="total-weekly-hours">13.0</span>
+                hrs total
               </div>
             </div>
             <div style="height: 320px; position: relative;">
@@ -824,13 +827,16 @@
 
           <!-- Card 2: Weight Progress Tracking -->
           <div class="card">
-            <div class="heading" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <div class="heading"
+              style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
               <div>
                 <h2 class="section-title" style="margin-bottom: 4px;">Monthly Weight Trend</h2>
                 <p style="color: #888; font-size: 14px;">Track your progress towards your goal weight</p>
               </div>
-              <div style="background: rgba(246, 163, 19, 0.1); color: #f6a313; padding: 8px 16px; border-radius: 12px; font-weight: 600;">
-                <i class="fa-solid fa-weight-scale" style="margin-right: 6px;"></i>Lost <span id="weight-loss-kpis">8.0</span> kg
+              <div
+                style="background: rgba(246, 163, 19, 0.1); color: #f6a313; padding: 8px 16px; border-radius: 12px; font-weight: 600;">
+                <i class="fa-solid fa-weight-scale" style="margin-right: 6px;"></i>Lost <span
+                  id="weight-loss-kpis">8.0</span> kg
               </div>
             </div>
             <div style="height: 320px; position: relative;">
@@ -845,64 +851,80 @@
 
           <!-- Card 3: Analytics Quick Stats -->
           <div class="card" style="padding: 28px;">
-            <h2 class="section-title" style="font-size: 20px; margin-bottom: 20px; border-bottom: 1px solid #222; padding-bottom: 12px; color: white;">
+            <h2 class="section-title"
+              style="font-size: 20px; margin-bottom: 20px; border-bottom: 1px solid #222; padding-bottom: 12px; color: white;">
               <i class="fa-solid fa-gauge-high" style="color: #59d12f; margin-right: 8px;"></i>
               Training KPIs
             </h2>
-            
+
             <div style="display: flex; flex-direction: column; gap: 20px;">
               <div style="display: flex; align-items: center; gap: 16px;">
-                <div style="width: 48px; height: 48px; border-radius: 14px; background: rgba(89, 209, 47, 0.05); border: 1px solid rgba(89, 209, 47, 0.15); display: flex; align-items: center; justify-content: center; color: #59d12f; font-size: 18px;">
+                <div
+                  style="width: 48px; height: 48px; border-radius: 14px; background: rgba(89, 209, 47, 0.05); border: 1px solid rgba(89, 209, 47, 0.15); display: flex; align-items: center; justify-content: center; color: #59d12f; font-size: 18px;">
                   <i class="fa-solid fa-bolt"></i>
                 </div>
                 <div>
-                  <p style="color: #888; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Avg Hours / Day</p>
-                  <h3 id="avg-hours-day" style="font-size: 22px; font-weight: 700; color: white; margin-top: 2px;">1.85 hrs</h3>
+                  <p style="color: #888; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Avg Hours /
+                    Day</p>
+                  <h3 id="avg-hours-day" style="font-size: 22px; font-weight: 700; color: white; margin-top: 2px;">1.85
+                    hrs</h3>
                 </div>
               </div>
 
               <div style="display: flex; align-items: center; gap: 16px;">
-                <div style="width: 48px; height: 48px; border-radius: 14px; background: rgba(59, 130, 246, 0.05); border: 1px solid rgba(59, 130, 246, 0.15); display: flex; align-items: center; justify-content: center; color: #3b82f6; font-size: 18px;">
+                <div
+                  style="width: 48px; height: 48px; border-radius: 14px; background: rgba(59, 130, 246, 0.05); border: 1px solid rgba(59, 130, 246, 0.15); display: flex; align-items: center; justify-content: center; color: #3b82f6; font-size: 18px;">
                   <i class="fa-solid fa-calendar-check"></i>
                 </div>
                 <div>
-                  <p style="color: #888; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Most Active Day</p>
-                  <h3 id="most-active-day" style="font-size: 22px; font-weight: 700; color: white; margin-top: 2px;">Saturday</h3>
+                  <p style="color: #888; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Most Active
+                    Day</p>
+                  <h3 id="most-active-day" style="font-size: 22px; font-weight: 700; color: white; margin-top: 2px;">
+                    Saturday</h3>
                 </div>
               </div>
 
               <div style="display: flex; align-items: center; gap: 16px;">
-                <div style="width: 48px; height: 48px; border-radius: 14px; background: rgba(246, 163, 19, 0.05); border: 1px solid rgba(246, 163, 19, 0.15); display: flex; align-items: center; justify-content: center; color: #f6a313; font-size: 18px;">
+                <div
+                  style="width: 48px; height: 48px; border-radius: 14px; background: rgba(246, 163, 19, 0.05); border: 1px solid rgba(246, 163, 19, 0.15); display: flex; align-items: center; justify-content: center; color: #f6a313; font-size: 18px;">
                   <i class="fa-solid fa-flag-checkered"></i>
                 </div>
                 <div>
-                  <p style="color: #888; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Goal Weight Target</p>
-                  <h3 id="target-weight-kpi" style="font-size: 22px; font-weight: 700; color: white; margin-top: 2px;">72.0 kg</h3>
+                  <p style="color: #888; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Goal Weight
+                    Target</p>
+                  <h3 id="target-weight-kpi" style="font-size: 22px; font-weight: 700; color: white; margin-top: 2px;">
+                    72.0 kg</h3>
                 </div>
               </div>
             </div>
           </div>
 
           <!-- Card 4: Streak & consistency card -->
-          <div class="card" style="position: relative; overflow: hidden; background: linear-gradient(135deg, #131417 0%, #1c1d22 100%);">
-            <div style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; border-radius: 50%; background: radial-gradient(circle, rgba(89, 209, 47, 0.05) 0%, transparent 70%);"></div>
-            
+          <div class="card"
+            style="position: relative; overflow: hidden; background: linear-gradient(135deg, #131417 0%, #1c1d22 100%);">
+            <div
+              style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; border-radius: 50%; background: radial-gradient(circle, rgba(89, 209, 47, 0.05) 0%, transparent 70%);">
+            </div>
+
             <h2 class="section-title" style="font-size: 20px; margin-bottom: 12px; color: white;">Consistency Score</h2>
             <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 20px;">
               <span style="font-size: 64px; font-weight: 900; color: #59d12f; line-height: 1;">94</span>
               <span style="font-size: 20px; font-weight: 600; color: #a0a0a0;">%</span>
             </div>
-            
+
             <p style="color: #aaa; font-size: 14px; line-height: 1.6; margin-bottom: 24px;">
-              Excellent dedication! You have successfully completed <strong>94%</strong> of your scheduled workouts this month. You're ranked in the top <strong>3%</strong> of GYMPRO athletes!
+              Excellent dedication! You have successfully completed <strong>94%</strong> of your scheduled workouts this
+              month. You're ranked in the top <strong>3%</strong> of GYMPRO athletes!
             </p>
 
-            <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); padding: 16px; border-radius: 16px; display: flex; align-items: center; justify-content: space-between;">
+            <div
+              style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); padding: 16px; border-radius: 16px; display: flex; align-items: center; justify-content: space-between;">
               <div style="display: flex; align-items: center; gap: 10px;">
                 <i class="fa-solid fa-trophy" style="color: #f6a313; font-size: 18px;"></i>
                 <span style="font-size: 14px; font-weight: 500; color: white;">Consistency Award</span>
               </div>
-              <span style="font-size: 12px; color: #59d12f; font-weight: 600; text-transform: uppercase;">Active badge</span>
+              <span style="font-size: 12px; color: #59d12f; font-weight: 600; text-transform: uppercase;">Active
+                badge</span>
             </div>
           </div>
 
