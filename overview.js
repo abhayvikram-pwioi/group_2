@@ -36,11 +36,22 @@ async function load() {
         const data = await res1.json();
         const moreData = await res2.json();
         
-        const member = data.members.find(m => m.username === loggedInUser);
+        let member = data.members.find(m => m.username === loggedInUser);
         if (!member) {
-            localStorage.removeItem("logged_in_user");
-            window.location.href = "login.html";
-            return;
+            // If the user signed up locally and isn't in data.json, assign them a random member's data
+            const nonUtkarshMembers = data.members.filter(m => m.username !== "Utkarsh");
+            const baseMembers = nonUtkarshMembers.length > 0 ? nonUtkarshMembers : data.members;
+            const randomBase = baseMembers[Math.floor(Math.random() * baseMembers.length)];
+            
+            // Get any custom signup info from localStorage to keep it consistent
+            const signedUpUsers = JSON.parse(localStorage.getItem("signedUpUsers") || "[]");
+            const localUser = signedUpUsers.find(u => u.username === loggedInUser) || {};
+            
+            member = {
+                ...randomBase,
+                ...localUser,
+                username: loggedInUser
+            };
         }
         
         const moreMember = moreData.memberSchedules.find(m => m.username === member.username) || {};
@@ -239,10 +250,12 @@ load();
 
 
 let overview_btn = document.getElementById("overview_btn");
+let analytics_btn = document.getElementById("analytics_btn");
 let personalInfo_btn = document.getElementById("personalInfo_btn");
 let setting_btn = document.getElementById("setting_btn");
 
 let overview = document.getElementById("overview_tab");
+let analytics = document.getElementById("analytics_tab");
 let personalInfo = document.getElementById("personalInfo_tab");
 let setting = document.getElementById("setting_tab");
 
@@ -270,6 +283,9 @@ function switchTab(tabName) {
         if (overview) overview.classList.remove("hidden");
         if (overview_btn) overview_btn.classList.add("active-btn");
 
+        if (analytics) analytics.classList.add("hidden");
+        if (analytics_btn) analytics_btn.classList.remove("active-btn");
+
         if (personalInfo) personalInfo.classList.add("hidden");
         if (personalInfo_btn) personalInfo_btn.classList.remove("active-btn");
 
@@ -277,6 +293,29 @@ function switchTab(tabName) {
         if (setting_btn) setting_btn.classList.remove("active-btn");
 
         appState.current_Tab = "overview";
+    }
+    else if (tabName === "analytics") {
+        console.log("analytics tab");
+
+        if (analytics) analytics.classList.remove("hidden");
+        if (analytics_btn) analytics_btn.classList.add("active-btn");
+
+        if (overview) overview.classList.add("hidden");
+        if (overview_btn) overview_btn.classList.remove("active-btn");
+
+        if (personalInfo) personalInfo.classList.add("hidden");
+        if (personalInfo_btn) personalInfo_btn.classList.remove("active-btn");
+
+        if (setting) setting.classList.add("hidden");
+        if (setting_btn) setting_btn.classList.remove("active-btn");
+
+        appState.current_Tab = "analytics";
+        showSectionSkeleton(analytics, "analytics-skeleton");
+        
+        // Trigger initialization of analytics charts
+        if (window.initAnalyticsCharts) {
+            window.initAnalyticsCharts();
+        }
     }
     else if (tabName === "personalInfo") {
         console.log("personalInfo tab");
@@ -286,6 +325,9 @@ function switchTab(tabName) {
 
         if (overview) overview.classList.add("hidden");
         if (overview_btn) overview_btn.classList.remove("active-btn");
+
+        if (analytics) analytics.classList.add("hidden");
+        if (analytics_btn) analytics_btn.classList.remove("active-btn");
 
         if (setting) setting.classList.add("hidden");
         if (setting_btn) setting_btn.classList.remove("active-btn");
@@ -302,6 +344,9 @@ function switchTab(tabName) {
         if (overview) overview.classList.add("hidden");
         if (overview_btn) overview_btn.classList.remove("active-btn");
 
+        if (analytics) analytics.classList.add("hidden");
+        if (analytics_btn) analytics_btn.classList.remove("active-btn");
+
         if (personalInfo) personalInfo.classList.add("hidden");
         if (personalInfo_btn) personalInfo_btn.classList.remove("active-btn");
 
@@ -314,6 +359,13 @@ if (overview_btn) {
     overview_btn.addEventListener("click", () => {
         switchTab("overview");
         console.log("overview clicked");
+    });
+}
+
+if (analytics_btn) {
+    analytics_btn.addEventListener("click", () => {
+        switchTab("analytics");
+        console.log("analytics clicked");
     });
 }
 

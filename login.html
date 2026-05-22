@@ -15,11 +15,48 @@
                 <i class="fa-solid fa-dumbbell"></i>
                 <h2>Gym Dashboard</h2>
             </div>
-            <p>Select a user profile to continue</p>
+        <form id="login-form" class="login-form">
+            <div id="error-alert" class="error-alert" style="display: none;">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span id="error-message">Incorrect username or password.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="login-username">Username</label>
+                <div class="input-wrapper">
+                    <i class="fa-regular fa-user"></i>
+                    <input type="text" id="login-username" placeholder="Enter username" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="login-password">Password</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="login-password" placeholder="Enter password" required>
+                </div>
+            </div>
+
+            <button type="submit" class="login-btn">
+                <span>Login</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </form>
+
+        <div class="divider">
+            <span>Or Quick Access Profiles</span>
         </div>
         
         <div class="user-grid" id="user-grid">
             <!-- User cards will be injected here via JS -->
+        </div>
+
+        <div class="login-footer">
+            <a href="home.html" class="back-home-btn">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back to Home
+            </a>
+            <p class="signup-prompt">Don't have an account? <a href="signup.html">Sign up free</a></p>
         </div>
     </div>
     

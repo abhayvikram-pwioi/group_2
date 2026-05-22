@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GYMPRO — Stronger Everyday</title>
+  <meta name="description" content="GYMPRO - Your premium gym dashboard. Track workouts, monitor progress, and achieve your fitness goals.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="home.css">
+</head>
+
+<body>
+
+  <!-- ============ NAVBAR ============ -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="home.html" class="nav-logo">
+        <div class="nav-logo-icon">
+          <i class="fa-solid fa-dumbbell"></i>
+        </div>
+        <span>GYM<em>PRO</em></span>
+      </a>
+
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#stats">Stats</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#pricing">Pricing</a>
+      </div>
+
+      <div class="nav-actions">
+        <a href="login.html" class="btn-ghost">Log In</a>
+        <a href="signup.html" class="btn-primary">Sign Up Free</a>
+      </div>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="#features">Features</a>
+      <a href="#stats">Stats</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#pricing">Pricing</a>
+      <div class="mobile-actions">
+        <a href="login.html" class="btn-ghost">Log In</a>
+        <a href="signup.html" class="btn-primary">Sign Up Free</a>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ============ HERO SECTION ============ -->
+  <section class="hero" id="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-grid-bg"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <i class="fa-solid fa-bolt"></i>
+        <span>Track. Train. Transform.</span>
+      </div>
+
+      <h1>Your Fitness Journey<br><span class="gradient-text">Starts Here.</span></h1>
+
+      <p class="hero-desc">
+        GYMPRO is the all-in-one gym dashboard that helps you track workouts, monitor your progress, manage
+        memberships, and crush your fitness goals — all in a beautiful, real-time interface.
+      </p>
+
+      <div class="hero-cta">
+        <a href="signup.html" class="btn-primary btn-lg">
+          <i class="fa-solid fa-rocket"></i>
+          Get Started Free
+        </a>
+        <a href="#features" class="btn-outline btn-lg">
+          <i class="fa-solid fa-play"></i>
+          See How It Works
+        </a>
+      </div>
+
+      <div class="hero-trust">
+        <div class="avatar-stack">
+          <div class="hero-avatar" style="background:#f6a313;">U</div>
+          <div class="hero-avatar" style="background:#22c55e;">H</div>
+          <div class="hero-avatar" style="background:#3b82f6;">I</div>
+          <div class="hero-avatar" style="background:#7c3aed;">K</div>
+        </div>
+        <p><strong>500+</strong> members already crushing their goals</p>
+      </div>
+    </div>
+
+    <!-- Hero Visual / Dashboard Preview -->
+    <div class="hero-visual">
+      <div class="dashboard-preview">
+        <div class="preview-header">
+          <div class="preview-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <span class="preview-title">Dashboard Preview</span>
+        </div>
+        <div class="preview-body">
+          <div class="preview-stat-row">
+            <div class="preview-stat">
+              <i class="fa-solid fa-shoe-prints"></i>
+              <div>
+                <span class="preview-num">10,000</span>
+                <span class="preview-label">Daily Steps</span>
+              </div>
+            </div>
+            <div class="preview-stat">
+              <i class="fa-solid fa-fire"></i>
+              <div>
+                <span class="preview-num">3,094</span>
+                <span class="preview-label">Calories Burned</span>
+              </div>
+            </div>
+            <div class="preview-stat">
+              <i class="fa-regular fa-star"></i>
+              <div>
+                <span class="preview-num">1,438</span>
+                <span class="preview-label">Reward Points</span>
+              </div>
+            </div>
+          </div>
+          <div class="preview-chart">
+            <div class="preview-bar" style="--h:40%"></div>
+            <div class="preview-bar" style="--h:65%"></div>
+            <div class="preview-bar active" style="--h:90%"></div>
+            <div class="preview-bar" style="--h:55%"></div>
+            <div class="preview-bar" style="--h:75%"></div>
+            <div class="preview-bar" style="--h:50%"></div>
+            <div class="preview-bar" style="--h:85%"></div>
+          </div>
+          <div class="preview-chart-labels">
+            <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ FEATURES SECTION ============ -->
+  <section class="features" id="features">
+    <div class="section-header">
+      <span class="section-tag"><i class="fa-solid fa-cubes-stacked"></i> Features</span>
+      <h2>Everything You Need to<br><span class="gradient-text">Dominate Your Training</span></h2>
+      <p>From real-time analytics to personalized workout plans, GYMPRO has got you covered.</p>
+    </div>
+
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-chart-line"></i></div>
+        <h3>Real-Time Analytics</h3>
+        <p>Track your steps, calories, and workout stats with beautiful charts and live data.</p>
+      </div>
+
+      <div class="feature-card featured">
+        <div class="feature-icon"><i class="fa-solid fa-dumbbell"></i></div>
+        <h3>Smart Workout Plans</h3>
+        <p>AI-generated workout schedules tailored to your fitness level and goals.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-utensils"></i></div>
+        <h3>Diet & Nutrition</h3>
+        <p>Get personalized calorie intake, protein goals, and diet recommendations.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-crown"></i></div>
+        <h3>Membership Manager</h3>
+        <p>View your plan, renewal dates, trainer details, and billing — all in one place.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-weight-scale"></i></div>
+        <h3>BMI & Body Stats</h3>
+        <p>Calculate BMI instantly and track weight changes over time with visual insights.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-trophy"></i></div>
+        <h3>Reward Points</h3>
+        <p>Earn points for consistency and milestones. Redeem them for gym perks.</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============ STATS SECTION ============ -->
+  <section class="stats-section" id="stats">
+    <div class="stats-grid">
+      <div class="stat-block">
+        <h2 class="counter" data-target="500">0</h2>
+        <span>Active Members</span>
+      </div>
+      <div class="stat-block">
+        <h2 class="counter" data-target="15">0</h2>
+        <span>Expert Trainers</span>
+      </div>
+      <div class="stat-block">
+        <h2 class="counter" data-target="12000">0</h2>
+        <span>Workouts Completed</span>
+      </div>
+      <div class="stat-block">
+        <h2 class="counter" data-target="98">0</h2>
+        <span>Satisfaction Rate %</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section class="testimonials" id="testimonials">
+    <div class="section-header">
+      <span class="section-tag"><i class="fa-solid fa-quote-left"></i> Testimonials</span>
+      <h2>What Our Members<br><span class="gradient-text">Have to Say</span></h2>
+    </div>
+
+    <div class="testimonials-grid">
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+        <p>"GYMPRO completely transformed how I track my workouts. The dashboard is beautiful and super intuitive!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background:#f6a313;">U</div>
+          <div>
+            <h4>Utkarsh</h4>
+            <span>Premium Member</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+        <p>"The BMI tracker and diet recommendations helped me lose 8kg in 3 months. Highly recommend!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background:#22c55e;">I</div>
+          <div>
+            <h4>Ishika</h4>
+            <span>Gold Member</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
+        </div>
+        <p>"Love the reward points system! It keeps me motivated to hit the gym every single day."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background:#3b82f6;">R</div>
+          <div>
+            <h4>Rahul</h4>
+            <span>Gold Member</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============ PRICING SECTION ============ -->
+  <section class="pricing" id="pricing">
+    <div class="section-header">
+      <span class="section-tag"><i class="fa-solid fa-tag"></i> Pricing</span>
+      <h2>Choose Your<br><span class="gradient-text">Perfect Plan</span></h2>
+      <p>No hidden fees. Cancel anytime.</p>
+    </div>
+
+    <div class="pricing-grid">
+
+      <div class="pricing-card">
+        <h3>Basic</h3>
+        <div class="price">₹499<span>/month</span></div>
+        <ul>
+          <li><i class="fa-solid fa-check"></i> Access to gym floor</li>
+          <li><i class="fa-solid fa-check"></i> Basic dashboard</li>
+          <li><i class="fa-solid fa-check"></i> BMI calculator</li>
+          <li class="disabled"><i class="fa-solid fa-xmark"></i> Personal trainer</li>
+          <li class="disabled"><i class="fa-solid fa-xmark"></i> Diet plan</li>
+        </ul>
+        <a href="signup.html" class="btn-outline btn-full">Get Started</a>
+      </div>
+
+      <div class="pricing-card popular">
+        <div class="popular-badge">Most Popular</div>
+        <h3>Gold</h3>
+        <div class="price">₹999<span>/month</span></div>
+        <ul>
+          <li><i class="fa-solid fa-check"></i> Full gym access</li>
+          <li><i class="fa-solid fa-check"></i> Full dashboard + analytics</li>
+          <li><i class="fa-solid fa-check"></i> BMI + nutrition tracker</li>
+          <li><i class="fa-solid fa-check"></i> Group training sessions</li>
+          <li class="disabled"><i class="fa-solid fa-xmark"></i> Personal trainer</li>
+        </ul>
+        <a href="signup.html" class="btn-primary btn-full">Get Started</a>
+      </div>
+
+      <div class="pricing-card">
+        <h3>Premium</h3>
+        <div class="price">₹1,999<span>/month</span></div>
+        <ul>
+          <li><i class="fa-solid fa-check"></i> Everything in Gold</li>
+          <li><i class="fa-solid fa-check"></i> Dedicated personal trainer</li>
+          <li><i class="fa-solid fa-check"></i> Custom diet & workout plan</li>
+          <li><i class="fa-solid fa-check"></i> Priority booking</li>
+          <li><i class="fa-solid fa-check"></i> Reward points (2x)</li>
+        </ul>
+        <a href="signup.html" class="btn-outline btn-full">Get Started</a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============ CTA SECTION ============ -->
+  <section class="cta-section">
+    <div class="cta-glow"></div>
+    <h2>Ready to <span class="gradient-text">Transform</span> Your Fitness?</h2>
+    <p>Join 500+ members and start tracking your progress today. It's free to get started.</p>
+    <a href="signup.html" class="btn-primary btn-lg">
+      <i class="fa-solid fa-arrow-right"></i>
+      Create Free Account
+    </a>
+  </section>
+
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <div class="nav-logo-icon">
+            <i class="fa-solid fa-dumbbell"></i>
+          </div>
+          <span>GYM<em>PRO</em></span>
+        </div>
+        <p>Your all-in-one gym dashboard.<br>Stronger Everyday.</p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="login.html">Log In</a>
+        <a href="signup.html">Sign Up</a>
+      </div>
+
+      <div class="footer-links">
+        <h4>Connect</h4>
+        <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+        <a href="#"><i class="fa-brands fa-twitter"></i> Twitter</a>
+        <a href="#"><i class="fa-brands fa-youtube"></i> YouTube</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 GYMPRO. All rights reserved.</p>
+    </div>
+  </footer>
+
+
+  <script src="home.js"></script>
+
+</body>
+
+</html>

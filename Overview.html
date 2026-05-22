@@ -2,1314 +2,1406 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="overview.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="setting.css">
-    <link rel="stylesheet" href="personal_info.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="overview.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="setting.css">
+  <link rel="stylesheet" href="personal_info.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <title>Gym Dashboard</title>
+  <title>Gym Dashboard</title>
 </head>
 
 <body>
 
-<!-- SKELETON LOADER -->
-<div id="skeleton-overlay">
+  <!-- SKELETON LOADER -->
+  <div id="skeleton-overlay">
     <div class="skeleton-container">
-        <!-- Header skeleton -->
-        <div class="skeleton-header">
-            <div>
-                <div class="skeleton-line" style="width: 160px; height: 24px;"></div>
-                <div class="skeleton-line" style="width: 220px; height: 14px; margin-top: 8px;"></div>
-            </div>
-            <div style="display: flex; align-items: center; gap: 16px;">
-                <div class="skeleton-circle" style="width: 40px; height: 40px;"></div>
-                <div class="skeleton-circle" style="width: 40px; height: 40px;"></div>
-                <div>
-                    <div class="skeleton-line" style="width: 100px; height: 14px;"></div>
-                    <div class="skeleton-line" style="width: 80px; height: 12px; margin-top: 4px;"></div>
-                </div>
-            </div>
+      <!-- Header skeleton -->
+      <div class="skeleton-header">
+        <div>
+          <div class="skeleton-line" style="width: 160px; height: 24px;"></div>
+          <div class="skeleton-line" style="width: 220px; height: 14px; margin-top: 8px;"></div>
         </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div class="skeleton-circle" style="width: 40px; height: 40px;"></div>
+          <div class="skeleton-circle" style="width: 40px; height: 40px;"></div>
+          <div>
+            <div class="skeleton-line" style="width: 100px; height: 14px;"></div>
+            <div class="skeleton-line" style="width: 80px; height: 12px; margin-top: 4px;"></div>
+          </div>
+        </div>
+      </div>
 
-        <!-- Membership skeleton -->
-        <div class="skeleton-membership">
-            <div class="skeleton-line" style="width: 100%; height: 120px; border-radius: 16px;"></div>
-        </div>
+      <!-- Membership skeleton -->
+      <div class="skeleton-membership">
+        <div class="skeleton-line" style="width: 100%; height: 120px; border-radius: 16px;"></div>
+      </div>
 
-        <!-- Stats skeleton -->
-        <div class="skeleton-stats">
-            <div class="skeleton-stat-card"></div>
-            <div class="skeleton-stat-card"></div>
-            <div class="skeleton-stat-card"></div>
-            <div class="skeleton-stat-card"></div>
-        </div>
+      <!-- Stats skeleton -->
+      <div class="skeleton-stats">
+        <div class="skeleton-stat-card"></div>
+        <div class="skeleton-stat-card"></div>
+        <div class="skeleton-stat-card"></div>
+        <div class="skeleton-stat-card"></div>
+      </div>
 
-        <!-- Middle skeleton -->
-        <div class="skeleton-middle">
-            <div class="skeleton-chart"></div>
-            <div class="skeleton-quick"></div>
-        </div>
+      <!-- Middle skeleton -->
+      <div class="skeleton-middle">
+        <div class="skeleton-chart"></div>
+        <div class="skeleton-quick"></div>
+      </div>
 
-        <!-- Bottom skeleton -->
-        <div class="skeleton-bottom">
-            <div class="skeleton-activity"></div>
-            <div class="skeleton-summary"></div>
-        </div>
+      <!-- Bottom skeleton -->
+      <div class="skeleton-bottom">
+        <div class="skeleton-activity"></div>
+        <div class="skeleton-summary"></div>
+      </div>
     </div>
-</div>
+  </div>
 
-<main>
+  <main>
 
-        <!-- Side Navbar -->
+    <!-- Side Navbar -->
 
     <nav class="sidebar">
 
-        <div>
-            <div class="logo"> 
+      <div>
+        <a href="home.html" class="logo" style="text-decoration: none; color: inherit; display: flex;">
 
-                <div class="logo-icon">
-                    <i class="fa-solid fa-dumbbell"></i>
-                </div>
+          <div class="logo-icon">
+            <i class="fa-solid fa-dumbbell"></i>
+          </div>
 
-                <div>
-                    <h1>GYM<span>PRO</span></h1>
-                    <p>STRONGER EVERYDAY</p>
-                </div>
+          <div>
+            <h1>GYM<span>PRO</span></h1>
+            <p>STRONGER EVERYDAY</p>
+          </div>
 
-            </div>
-
-
-
-            <div class="menu">
-                <span id="overview_btn" class="menu-item active-btn">
-                    <i class="fa-solid fa-house"></i>
-                <h3>Overview</h3>
-                </span>
-
-                <span id="analytics_btn" class="menu-item">
-                    <i class="fa-solid fa-chart-simple"></i>
-                    <h3>Analytics</h3>
-                </span>
+        </a>
 
 
-                <span id="personalInfo_btn" class="menu-item">
-                    <i class="fa-solid fa-user"></i>
-                    <h3>Personal Info</h3>
-                </span>
 
-                <span id="setting_btn" class="menu-item ">
-                    <i class="fa-solid fa-gear"></i>
-                    <h3>Settings</h3>
-                </span>
-            </div>
+        <div class="menu">
+          <span id="overview_btn" class="menu-item active-btn">
+            <i class="fa-solid fa-house"></i>
+            <h3>Overview</h3>
+          </span>
 
+          <span id="analytics_btn" class="menu-item">
+            <i class="fa-solid fa-chart-simple"></i>
+            <h3>Analytics</h3>
+          </span>
+
+
+          <span id="personalInfo_btn" class="menu-item">
+            <i class="fa-solid fa-user"></i>
+            <h3>Personal Info</h3>
+          </span>
+
+          <span id="setting_btn" class="menu-item ">
+            <i class="fa-solid fa-gear"></i>
+            <h3>Settings</h3>
+          </span>
         </div>
 
-        <div class="menu-item" id="logout-btn" style="cursor: pointer;">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            <h3>Logout</h3>
-        </div>
+      </div>
+
+      <div class="menu-item" id="logout-btn" style="cursor: pointer;">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <h3>Logout</h3>
+      </div>
 
     </nav>
 
     <!-- header -->
     <div class="main">
 
-    <header>
+      <header>
+
+        <div>
+          <h2>Overview</h2>
+          <p id="date">Wednesday 15 May 2026</p>
+        </div>
+
+        <div class="profile-area">
+
+          <div class="notification">
+            <i class="fa-regular fa-bell"></i>
+          </div>
+
+          <div class="profile">
+
+            <img src="/download.jpeg">
 
             <div>
-                <h2>Overview</h2>
-                <p id="date">Wednesday 15 May 2026</p>
+              <h3 id="user_name">ishika gangwar</h3>
+              <p>Premium Member</p>
             </div>
 
-            <div class="profile-area">
+          </div>
 
-                <div class="notification">
-                    <i class="fa-regular fa-bell"></i>
-                </div>
+        </div>
 
-                <div class="profile">
-
-                    <img src="/download.jpeg">
-
-                    <div>
-                      <h3  id="user_name">ishika gangwar</h3>
-                        <p>Premium Member</p>
-                    </div>
-
-                </div>
-
-            </div>
-
-     </header>
+      </header>
 
 
-     <!-- Membership -->
+      <!-- Membership -->
 
-<section id="overview_tab">
+      <section id="overview_tab">
 
-    <div class="card membership box">
-      <div class="membership-left">
+        <div class="card membership box">
+          <div class="membership-left">
             <div class="membership-icon">
-                <i class="fa-solid fa-crown"></i>
+              <i class="fa-solid fa-crown"></i>
             </div>
 
             <div>
-                <h5>ACTIVE MEMBERSHIP</h5>
-                <h2 id="membership-plan">Pro Annual Plan</h2>
-                <div class="membership-row">
-                    <div class="badge" id="overview-badge">Active</div>
-                    <span>Renews on 15 Jan 2027</span>
-                </div>
+              <h5>ACTIVE MEMBERSHIP</h5>
+              <h2 id="membership-plan">Pro Annual Plan</h2>
+              <div class="membership-row">
+                <div class="badge" id="overview-badge">Active</div>
+                <span>Renews on 15 Jan 2027</span>
+              </div>
             </div>
 
-        </div>
+          </div>
 
-        <div class="membership-right">
+          <div class="membership-right">
             <div>
-                <div class="top">
-                    <h4>Next Billing Date</h4>
-                    <p id="Renewal_date">15 Jan 2027</p>
-                </div>
-    
-                <div class="bottom">
-                    <h4>Membership ID</h4>
-                    <p id="membership-id">#GM-2026-1556</p>
-                </div>
-                <div class="bottom" style="margin-top: 15px;">
-                    <h4>Trainer & Time</h4>
-                    <p id="trainer-time">Not Assigned</p>
-                </div>
+              <div class="top">
+                <h4>Next Billing Date</h4>
+                <p id="Renewal_date">15 Jan 2027</p>
+              </div>
+
+              <div class="bottom">
+                <h4>Membership ID</h4>
+                <p id="membership-id">#GM-2026-1556</p>
+              </div>
+              <div class="bottom" style="margin-top: 15px;">
+                <h4>Trainer & Time</h4>
+                <p id="trainer-time">Not Assigned</p>
+              </div>
             </div>
+
+          </div>
 
         </div>
 
-    </div>
+        <!-- STATS -->
 
-                <!-- STATS -->
-
-    <div class="stats">
-        <div class="stat-card box">
+        <div class="stats">
+          <div class="stat-card box">
             <div class="stat-top">
-                <div class="stat-icon">
-                    <i class="fa-solid fa-shoe-prints"></i>
-                </div>
-                <h4>Daily Steps Target</h4>
+              <div class="stat-icon">
+                <i class="fa-solid fa-shoe-prints"></i>
+              </div>
+              <h4>Daily Steps Target</h4>
             </div>
             <h2 id="stepsTarget">10000</h2>
             <p class="green">Daily Goal</p>
-        </div>
+          </div>
 
 
-        <div class="stat-card box">
+          <div class="stat-card box">
             <div class="stat-top">
-                <div class="stat-icon">
-                    <i class="fa-solid fa-fire"></i>
-                </div>
-                <h4>Calories Burned</h4>
+              <div class="stat-icon">
+                <i class="fa-solid fa-fire"></i>
+              </div>
+              <h4>Calories Burned</h4>
             </div>
-             <h2 id="calories">4200</h2>
+            <h2 id="calories">4200</h2>
             <p class="green">+420 kcal this week</p>
-        </div>
+          </div>
 
 
 
-        <div class="stat-card box">
+          <div class="stat-card box">
             <div class="stat-top">
-                <div class="stat-icon">
-                    <i class="fa-regular fa-star"></i> 
-                </div>
-                <h4>Reward Points</h4>
+              <div class="stat-icon">
+                <i class="fa-regular fa-star"></i>
+              </div>
+              <h4>Reward Points</h4>
             </div>
             <h2 id="points">1400</h2>
             <p class="green">+120 pts this week</p>
-        </div>
+          </div>
 
 
-        <div class="stat-card box">
+          <div class="stat-card box">
             <div class="stat-top">
-                <div class="stat-icon">
-                    <i class="fa-regular fa-calendar"></i>
-                </div>
-                <h4>Days Remaining</h4>
+              <div class="stat-icon">
+                <i class="fa-regular fa-calendar"></i>
+              </div>
+              <h4>Days Remaining</h4>
             </div>
             <h2 id="rem_date">246</h2>
             <p class="green">Until next renewal</p>
+          </div>
+
         </div>
 
-    </div>
+
+
+        <!-- MIDDLE -->
 
 
 
-             <!-- MIDDLE -->
+        <div class="middle-grid">
 
+          <!-- CHART -->
 
-
-    <div class="middle-grid">
-
-            <!-- CHART -->
-
-        <div class="card chart-card box">
+          <div class="card chart-card box">
             <div class="chart-top">
-                <h2>Weekly Summary</h2>
-                <!-- <button class="week-btn"> This Week </button> -->
+              <h2>Weekly Summary</h2>
+              <!-- <button class="week-btn"> This Week </button> -->
             </div>
             <canvas id="activityChart"></canvas>
-        </div>
+          </div>
 
 
-            <!-- QUICK -->
+          <!-- QUICK -->
 
 
-        <div class="card quick-card box">
+          <div class="card quick-card box">
             <h2>Quick Actions</h2>
 
             <button class="quick-btn active-btn">
-                <i class="fa-regular fa-calendar"></i>
-                 Book a Class
+              <i class="fa-regular fa-calendar"></i>
+              Book a Class
             </button>
 
 
             <button class="quick-btn active-btn">
-                <i class="fa-solid fa-download"></i>
-                Download Report
+              <i class="fa-solid fa-download"></i>
+              Download Report
             </button>
 
 
             <button class="quick-btn active-btn">
-                <i class="fa-regular fa-user"></i>
-                Edit Profile
+              <i class="fa-regular fa-user"></i>
+              Edit Profile
             </button>
 
-        </div>
-
-    </div>
-
-
-
-
-             <!-- BOTTOM -->
-
-
-
-
-    <div class="bottom-grid">
-
-      <!-- RECENT -->
-
-        <div class="card activity-card box">
-            <h2>Weekly Schedule</h2>
-            <div id="exercise-schedule">
-                <!-- Schedule injected here via JS -->
-            </div>
-        </div>
-
-
-
-      <!-- SUMMARY -->
-
-
-
-        <div class="card summary-card box">
-            <h2>Personal Info Summary</h2>
-            <div class="summary-grid">
-                <div class="summary-item">
-                    <h4>Height</h4>
-                    <p id="heightText">172 cm</p>
-                </div>
-                <div class="summary-item">
-                    <h4>Experience</h4>
-                    <p id="experienceText">Intermediate</p>
-                </div>  
-
-
-                <div class="summary-item">
-                    <h4>Weight</h4>
-                    <p id="weightText">68 kg</p>
-                </div>
-                <div class="summary-item">
-                    <h4>BMI</h4>
-                    <div class="bmi-badge" id="bmiText">
-                        Normal
-                    </div>
-                </div>
-
-
-                <div class="summary-item">
-                    <h4>Goal</h4>
-                    <p id="goalText">Muscle Gain</p>
-                </div>
-                <div class="summary-item">
-                    <h4>Diet</h4>
-                    <p id="dietText">Balanced</p>
-                </div>
-
-            </div>  
-
-        </div>
-
-    </div>
-
-    </section>
-
-    <!-- personal- info  -->
-
-
-    <section id="personalInfo_tab" class="dashboard hidden">
-
-      <!-- PERSONAL INFO SKELETON -->
-      <div class="section-skeleton" id="personalInfo-skeleton">
-          <div class="skel-pi-left">
-              <!-- Profile card skeleton -->
-              <div class="skeleton-line" style="width: 100%; height: 100px; border-radius: 16px;"></div>
-              <!-- Form skeleton -->
-              <div class="skeleton-line" style="width: 100%; height: 400px; border-radius: 16px; margin-top: 24px;"></div>
-          </div>
-          <div class="skel-pi-right">
-              <!-- BMI skeleton -->
-              <div class="skeleton-line" style="width: 100%; height: 300px; border-radius: 16px;"></div>
-              <!-- Insights skeleton -->
-              <div class="skeleton-line" style="width: 100%; height: 200px; border-radius: 16px; margin-top: 24px;"></div>
-          </div>
-      </div>
-
-      <!-- LEFT SIDE -->
-
-      <div>
-
-        <!-- PROFILE OVERVIEW -->
-
-        <div class="card">
-
-          <div class="profile-overview">
-
-            <div class="profile-image">
-
-              <img
-              src="/download.jpeg">
-
-            </div>
-
-            <div class="profile-info">
-
-              <h2 id="profile-name">
-                Ishika gangwar
-              </h2>
-
-              <div class="badge" id="personal-badge">
-                Active Member
-              </div>
-
-              <div class="member-date">
-                Member since 15 Jan 2026
-              </div>
-
-            </div>
-
           </div>
 
         </div>
 
-        <!--INFO FORM -->
 
-        <div class="card" style="margin-top:24px;">
 
-          <h2 class="section-title">
-            Personal & Fitness Details
-          </h2>
 
-          <div class="form-grid">
+        <!-- BOTTOM -->
 
-            <div class="input-group">
 
-              <label>Full Name</label>
 
-              <div class="input-box">
-                <i class="fa-regular fa-user"></i>
-
-                <input
-                type="text"
-                id="nameInput"
-                placeholder="Enter full name">
-
-              </div>
-
-            </div>
-
-            <div class="input-group">
-
-              <label>Age</label>
-
-              <div class="input-box">
-
-                <i class="fa-solid fa-calendar"></i>
-
-                <input
-                type="number"
-                id="age"
-                placeholder="Enter age">
-
-              </div>
-
-            </div>
-
-            <div class="input-group">
-
-              <label>Gender</label>
-
-              <div class="input-box">
-
-                <i class="fa-solid fa-venus-mars"></i>
-
-                <select id="gender">
-
-                  <option>Male</option>
-                  <option>Female</option>
-                  <option>Other</option>
-
-                </select>
-
-              </div>
-
-            </div>
-
-            <div class="input-group">
-
-              <label>Height (cm)</label>
-
-              <div class="input-box">
-
-                <i class="fa-solid fa-ruler-vertical"></i>
-
-                <input
-                type="number"
-                id="height"
-                placeholder="Height">
-
-              </div>
-
-            </div>
-
-            <div class="input-group">
-
-              <label>Weight (kg)</label>
-
-              <div class="input-box">
-
-                <i class="fa-solid fa-weight-scale"></i>
-
-                <input
-                type="number"
-                id="weight"
-                placeholder="Weight">
-
-              </div>
-
-            </div>
-
-            <div class="input-group">
-
-              <label>Target Weight</label>
-
-              <div class="input-box">
-
-                <i class="fa-solid fa-bullseye"></i>
-
-                <input
-                type="number"
-                id="targetWeight"
-                placeholder="Target Weight">
-
-              </div>
-
-            </div>
-
-            <div class="input-group">
-
-              <label>Workout Goal</label>
-
-              <div class="input-box">
-
-                <i class="fa-solid fa-dumbbell"></i>
-
-                <select id="goal">
-
-                  <option>Muscle Gain</option>
-                  <option>Fat Loss</option>
-                  <option>Strength</option>
-                  <option>Fitness</option>
-
-                </select>
-
-              </div>
-
-            </div>
-
-            <div class="input-group">
-
-              <label>Workout Type</label>
-
-              <div class="input-box">
-
-                <i class="fa-solid fa-fire"></i>
-
-                <select id="type">
-
-                  <option>Strength Training</option>
-                  <option>Cardio</option>
-                  <option>Crossfit</option>
-                  <option>Yoga</option>
-
-                </select>
-
-              </div>
-
-            </div>
-
-            <div class="input-group">
-
-              <label>Experience Level</label>
-
-              <div class="input-box">
-
-                <i class="fa-solid fa-chart-line"></i>
-
-                <select id="experience">
-
-                  <option>Beginner</option>
-                  <option>Intermediate</option>
-                  <option>Advanced</option>
-
-                </select>
-
-              </div>
-
-            </div>
-
-            <div class="input-group">
-
-              <label>Preferred Time</label>
-
-              <div class="input-box">
-
-                <i class="fa-regular fa-clock"></i>
-
-                <select id="time">
-
-                  <option>Morning</option>
-                  <option>Evening</option>
-                  <option>Night</option>
-
-                </select>
-
-              </div>
-
-            </div>
-
-            <div class="input-group full-width">
-
-              <label>Diet Preference</label>
-
-              <div class="input-box">
-
-                <i class="fa-solid fa-utensils"></i>
-
-                <select id="diet">
-
-                  <option>Vegetarian</option>
-                  <option>Non-Vegetarian</option>
-                  <option>Vegan</option>
-
-                </select>
-
-              </div>
-
-            </div>
-
-          </div>
-
-          <button class="save-btn" onclick="saveInfo()">
-            Save Information
-          </button>
-
-        </div>
-
-      </div>
-
-      <!-- RIGHT SIDE-->
-
-      <div>
-
-        <!-- BMI -->
-
-        <div class="card bmi-card">
-
-          <h2>BMI Summary</h2>
-
-          <div class="circle" id="circle">
-
-            <h1 id="bmi-value">
-              0
-            </h1>
-
-            <span id="bmi-status">
-              --
-            </span>
-
-          </div>
-
-          <button
-          class="calculate-btn"
-          onclick="calculateBMI()">
-
-            Calculate BMI
-
-          </button>
-
-          <p class="bmi-text" id="bmi-text">
-
-            Enter your height and weight
-            and click calculate BMI.
-
-          </p>
-
-          <div class="range-list">
-
-            <div class="range-item">
-
-              <div class="left-range">
-
-                <div class="dot blue"></div>
-
-                Underweight
-
-              </div>
-
-              <span> 18.5</span>
-
-            </div>
-
-            <div class="range-item">
-
-              <div class="left-range">
-
-                <div class="dot green"></div>
-
-                Normal
-
-              </div>
-
-              <span>18.5 - 24.9</span>
-
-            </div>
-
-            <div class="range-item">
-
-              <div class="left-range">
-
-                <div class="dot orange"></div>
-
-                Overweight
-
-              </div>
-
-              <span>> 25</span>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        <!-- INSIGHTS  -->
-
-        <div class="card insight-card">
-
-          <h2 class="section-title">
-            Additional Insights
-          </h2>
-
-          <div class="insight-item">
-
-            <div class="insight-left">
-
-              <div class="insight-icon">
-                <i class="fa-solid fa-fire"></i>
-              </div>
-
-              Daily Calorie Need
-
-            </div>
-
-            <h3 id="calorie-need">--</h3>
-
-          </div>
-
-          <div class="insight-item">
-
-            <div class="insight-left">
-
-              <div class="insight-icon">
-                <i class="fa-solid fa-dumbbell"></i>
-              </div>
-
-              Protein Intake
-
-            </div>
-
-            <h3 id="protein-intake">--</h3>
-
-          </div>
-
-          <div class="insight-item">
-
-            <div class="insight-left">
-
-              <div class="insight-icon">
-                <i class="fa-solid fa-glass-water"></i>
-              </div>
-
-              Ideal Water Intake
-
-            </div>
-
-            <h3 id="water-intake">--</h3>
-
-          </div>
-
-          <div class="insight-item">
-
-            <div class="insight-left">
-
-              <div class="insight-icon">
-                <i class="fa-solid fa-calendar-check"></i>
-              </div>
-
-              Suggested Workouts
-
-            </div>
-
-            <h3 id="workouts">--</h3>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- setting Page -->
-
-<section id="setting_tab" class="hidden" style="position: relative;">
-
-     <!-- SETTINGS SKELETON -->
-     <div class="section-skeleton" id="settings-skeleton" style="grid-template-columns: 280px 1fr;">
-         <div>
-             <div class="skeleton-line" style="width: 100%; height: 400px; border-radius: 16px;"></div>
-         </div>
-         <div style="display: flex; flex-direction: column; gap: 24px;">
-             <div class="skeleton-line" style="width: 100%; height: 200px; border-radius: 16px;"></div>
-             <div class="skeleton-line" style="width: 100%; height: 200px; border-radius: 16px;"></div>
-             <div class="skeleton-line" style="width: 100%; height: 200px; border-radius: 16px;"></div>
-         </div>
-     </div>
-
-     <div class="top-grid">
-
-            <!-- SETTINGS MENU -->
-
-<div class="card settings-menu">
-
-    <h2>Settings Menu</h2>
-
-    <!-- NOTIFICATION -->
-
-    <div class="settings-link active"
-    data-target="notification-section">
-
-        <span>
-            <i class="fa-regular fa-bell"></i>
-            Notification Preferences
-        </span>
-
-        <i class="fa-solid fa-chevron-right"></i>
-
-    </div>
-
-    <!-- PROFILE -->
-
-    <div class="settings-link"
-    data-target="profile-section">
-
-        <span>
-            <i class="fa-regular fa-user"></i>
-            Profile Settings
-        </span>
-
-        <i class="fa-solid fa-chevron-right"></i>
-
-    </div>
-
-    <!-- APPEARANCE -->
-
-    <div class="settings-link"
-    data-target="appearance-section">
-
-        <span>
-            <i class="fa-solid fa-palette"></i>
-            Appearance
-        </span>
-
-        <i class="fa-solid fa-chevron-right"></i>
-
-    </div>
-
-    <!-- LANGUAGE -->
-
-    <div class="settings-link"
-    data-target="language-section">
-
-        <span>
-            <i class="fa-solid fa-globe"></i>
-            Language
-        </span>
-
-        <i class="fa-solid fa-chevron-right"></i>
-
-    </div>
-
-</div>
-
-<div class="settings-content" style="display:flex; flex-direction:column; gap:24px;">
-
-            <!-- NOTIFICATION CARD -->
-
-            <div class="card notification-card"
-id="notification-section">
-
-                <div class="heading">
-
-                    <div class="heading-icon">
-                        <i class="fa-regular fa-bell"></i>
-                    </div>
-
-                    <div>
-                        <h2>Notification Preferences</h2>
-                        <span>Choose what updates you want to receive</span>
-                        
-                    </div>
-
-                </div>
-
-                <!-- ROW -->
-
-                <div class="setting-row">
-
-    <div class="icon-box">
-        <i class="fa-regular fa-calendar"></i>
-    </div>
-
-    <h3 class="setting-title">
-        Membership Reminders
-    </h3>
-
-    <p class="setting-description">
-        Get notified about membership expiry and renewal
-    </p>
-
-    <div class="toggle active"></div>
-
-</div>
-                <!-- ROW -->
-                <div class="setting-row">
-
-    <div class="icon-box">
-        <i class="fa-regular fa-calendar"></i>
-    </div>
-
-    <h3 class="setting-title">
-       Workout Reminders
-    </h3>
-
-    <p class="setting-description">
-        Receive reminders for your scheduled workouts
-    </p>
-
-    <div class="toggle active"></div>
-
-</div>
-
-                <!-- ROW -->
-
-                <div class="setting-row">
-
-    <div class="icon-box">
-        <i class="fa-regular fa-calendar"></i>
-    </div>
-
-    <h3 class="setting-title">
-        Achievement Alerts
-    </h3>
-
-    <p class="setting-description">
-        Get alerts when you earn new badges or points
-    </p>
-
-    <div class="toggle active"></div>
-
-</div>
-
-                <!-- ROW -->
-                <div class="setting-row">
-
-    <div class="icon-box">
-        <i class="fa-regular fa-calendar"></i>
-    </div>
-
-    <h3 class="setting-title">
-       Promotions & Offers
-    </h3>
-
-    <p class="setting-description">
-        Receive updates on new offers and discounts
-    </p>
-
-    <div class="toggle active"></div>
-
-</div>
-
-                <!-- ROW -->
-
-                <div class="setting-row">
-
-    <div class="icon-box">
-        <i class="fa-regular fa-calendar"></i>
-    </div>
-
-    <h3 class="setting-title">
-       Weekly Summary
-    </h3>
-
-    <p class="setting-description">
-       Get a weekly summary of your progress
-    </p>
-
-    <div class="toggle active"></div>
-
-</div>
-
-            </div>
-
-        </div>
-
-        <!-- BOTTOM GRID -->
 
         <div class="bottom-grid">
 
-            <!-- PROFILE CARD -->
+          <!-- RECENT -->
 
-            <div class="card profile-card"
-id="profile-section">
+          <div class="card activity-card box">
+            <h2>Weekly Schedule</h2>
+            <div id="exercise-schedule">
+              <!-- Schedule injected here via JS -->
+            </div>
+          </div>
 
-                <div class="section-title">
 
-                    <div class="section-icon">
-                        <i class="fa-regular fa-user"></i>
-                    </div>
 
-                    <div>
-                        <h2>Profile Settings</h2>
-                        <p>Update your personal information</p>
-                    </div>
+          <!-- SUMMARY -->
+
+
+
+          <div class="card summary-card box">
+            <h2>Personal Info Summary</h2>
+            <div class="summary-grid">
+              <div class="summary-item">
+                <h4>Height</h4>
+                <p id="heightText">172 cm</p>
+              </div>
+              <div class="summary-item">
+                <h4>Experience</h4>
+                <p id="experienceText">Intermediate</p>
+              </div>
+
+
+              <div class="summary-item">
+                <h4>Weight</h4>
+                <p id="weightText">68 kg</p>
+              </div>
+              <div class="summary-item">
+                <h4>BMI</h4>
+                <div class="bmi-badge" id="bmiText">
+                  Normal
+                </div>
+              </div>
+
+
+              <div class="summary-item">
+                <h4>Goal</h4>
+                <p id="goalText">Muscle Gain</p>
+              </div>
+              <div class="summary-item">
+                <h4>Diet</h4>
+                <p id="dietText">Balanced</p>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- personal- info  -->
+
+
+      <section id="personalInfo_tab" class="dashboard hidden">
+
+        <!-- PERSONAL INFO SKELETON -->
+        <div class="section-skeleton" id="personalInfo-skeleton">
+          <div class="skel-pi-left">
+            <!-- Profile card skeleton -->
+            <div class="skeleton-line" style="width: 100%; height: 100px; border-radius: 16px;"></div>
+            <!-- Form skeleton -->
+            <div class="skeleton-line" style="width: 100%; height: 400px; border-radius: 16px; margin-top: 24px;"></div>
+          </div>
+          <div class="skel-pi-right">
+            <!-- BMI skeleton -->
+            <div class="skeleton-line" style="width: 100%; height: 300px; border-radius: 16px;"></div>
+            <!-- Insights skeleton -->
+            <div class="skeleton-line" style="width: 100%; height: 200px; border-radius: 16px; margin-top: 24px;"></div>
+          </div>
+        </div>
+
+        <!-- LEFT SIDE -->
+
+        <div>
+
+          <!-- PROFILE OVERVIEW -->
+
+          <div class="card">
+
+            <div class="profile-overview">
+
+              <div class="profile-image">
+
+                <img src="/download.jpeg">
+
+              </div>
+
+              <div class="profile-info">
+
+                <h2 id="profile-name">
+                  Ishika gangwar
+                </h2>
+
+                <div class="badge" id="personal-badge">
+                  Active Member
+                </div>
+
+                <div class="member-date">
+                  Member since 15 Jan 2026
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!--INFO FORM -->
+
+          <div class="card" style="margin-top:24px;">
+
+            <h2 class="section-title">
+              Personal & Fitness Details
+            </h2>
+
+            <div class="form-grid">
+
+              <div class="input-group">
+
+                <label>Full Name</label>
+
+                <div class="input-box">
+                  <i class="fa-regular fa-user"></i>
+
+                  <input type="text" id="nameInput" placeholder="Enter full name">
 
                 </div>
 
-                <div class="profile-content">
+              </div>
 
-                    <!-- AVATAR -->
+              <div class="input-group">
 
-                    <div class="avatar">
+                <label>Age</label>
 
-                        <img src="/download.jpeg">
+                <div class="input-box">
 
+                  <i class="fa-solid fa-calendar"></i>
 
-                    </div>
-
-                    <!-- FORM -->
-
-                    <div class="form">
-
-                        <div class="input-group">
-
-                            <label>Full Name</label>
-
-                            <input type="text" id="settings-name">
-
-                        </div>
-
-                        <div class="input-group">
-
-                            <label>Email Address</label>
-
-                            <input type="email"
-                                  id="settings-email">
-
-                        </div>
-
-                        <div class="input-group">
-
-                            <label>Phone Number</label>
-
-                            <input type="text" id="settings-phone" value="+91 98765 43210">
-
-                        </div>
-
-                        <div class="input-group">
-
-                            <label>Fitness Goal</label>
-
-                            <select id="settings-goal">
-
-    <option>Muscle Gain</option>
-    <option>Fat Loss</option>
-    <option>Maintain</option>
-
-</select>
-                        </div>
-
-                        <div class="input-group">
-
-                            <label>Experience Level</label>
-
-                            <select id="settings-level">
-
-    <option>Intermediate</option>
-    <option>Beginner</option>
-    <option>Advanced</option>
-
-</select>
-
-                        </div>
-
-                        
-                        <button class="save-btn">
-                            Save Changes
-                        </button>
-
-                    </div>
+                  <input type="number" id="age" placeholder="Enter age">
 
                 </div>
+
+              </div>
+
+              <div class="input-group">
+
+                <label>Gender</label>
+
+                <div class="input-box">
+
+                  <i class="fa-solid fa-venus-mars"></i>
+
+                  <select id="gender">
+
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+
+                  </select>
+
+                </div>
+
+              </div>
+
+              <div class="input-group">
+
+                <label>Height (cm)</label>
+
+                <div class="input-box">
+
+                  <i class="fa-solid fa-ruler-vertical"></i>
+
+                  <input type="number" id="height" placeholder="Height">
+
+                </div>
+
+              </div>
+
+              <div class="input-group">
+
+                <label>Weight (kg)</label>
+
+                <div class="input-box">
+
+                  <i class="fa-solid fa-weight-scale"></i>
+
+                  <input type="number" id="weight" placeholder="Weight">
+
+                </div>
+
+              </div>
+
+              <div class="input-group">
+
+                <label>Target Weight</label>
+
+                <div class="input-box">
+
+                  <i class="fa-solid fa-bullseye"></i>
+
+                  <input type="number" id="targetWeight" placeholder="Target Weight">
+
+                </div>
+
+              </div>
+
+              <div class="input-group">
+
+                <label>Workout Goal</label>
+
+                <div class="input-box">
+
+                  <i class="fa-solid fa-dumbbell"></i>
+
+                  <select id="goal">
+
+                    <option>Muscle Gain</option>
+                    <option>Fat Loss</option>
+                    <option>Strength</option>
+                    <option>Fitness</option>
+
+                  </select>
+
+                </div>
+
+              </div>
+
+              <div class="input-group">
+
+                <label>Workout Type</label>
+
+                <div class="input-box">
+
+                  <i class="fa-solid fa-fire"></i>
+
+                  <select id="type">
+
+                    <option>Strength Training</option>
+                    <option>Cardio</option>
+                    <option>Crossfit</option>
+                    <option>Yoga</option>
+
+                  </select>
+
+                </div>
+
+              </div>
+
+              <div class="input-group">
+
+                <label>Experience Level</label>
+
+                <div class="input-box">
+
+                  <i class="fa-solid fa-chart-line"></i>
+
+                  <select id="experience">
+
+                    <option>Beginner</option>
+                    <option>Intermediate</option>
+                    <option>Advanced</option>
+
+                  </select>
+
+                </div>
+
+              </div>
+
+              <div class="input-group">
+
+                <label>Preferred Time</label>
+
+                <div class="input-box">
+
+                  <i class="fa-regular fa-clock"></i>
+
+                  <select id="time">
+
+                    <option>Morning</option>
+                    <option>Evening</option>
+                    <option>Night</option>
+
+                  </select>
+
+                </div>
+
+              </div>
+
+              <div class="input-group full-width">
+
+                <label>Diet Preference</label>
+
+                <div class="input-box">
+
+                  <i class="fa-solid fa-utensils"></i>
+
+                  <select id="diet">
+
+                    <option>Vegetarian</option>
+                    <option>Non-Vegetarian</option>
+                    <option>Vegan</option>
+
+                  </select>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <button class="save-btn" onclick="saveInfo()">
+              Save Information
+            </button>
+
+          </div>
+
+        </div>
+
+        <!-- RIGHT SIDE-->
+
+        <div>
+
+          <!-- BMI -->
+
+          <div class="card bmi-card">
+
+            <h2>BMI Summary</h2>
+
+            <div class="circle" id="circle">
+
+              <h1 id="bmi-value">
+                0
+              </h1>
+
+              <span id="bmi-status">
+                --
+              </span>
+
+            </div>
+
+            <button class="calculate-btn" onclick="calculateBMI()">
+
+              Calculate BMI
+
+            </button>
+
+            <p class="bmi-text" id="bmi-text">
+
+              Enter your height and weight
+              and click calculate BMI.
+
+            </p>
+
+            <div class="range-list">
+
+              <div class="range-item">
+
+                <div class="left-range">
+
+                  <div class="dot blue"></div>
+
+                  Underweight
+
+                </div>
+
+                <span> 18.5</span>
+
+              </div>
+
+              <div class="range-item">
+
+                <div class="left-range">
+
+                  <div class="dot green"></div>
+
+                  Normal
+
+                </div>
+
+                <span>18.5 - 24.9</span>
+
+              </div>
+
+              <div class="range-item">
+
+                <div class="left-range">
+
+                  <div class="dot orange"></div>
+
+                  Overweight
+
+                </div>
+
+                <span>> 25</span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- INSIGHTS  -->
+
+          <div class="card insight-card">
+
+            <h2 class="section-title">
+              Additional Insights
+            </h2>
+
+            <div class="insight-item">
+
+              <div class="insight-left">
+
+                <div class="insight-icon">
+                  <i class="fa-solid fa-fire"></i>
+                </div>
+
+                Daily Calorie Need
+
+              </div>
+
+              <h3 id="calorie-need">--</h3>
+
+            </div>
+
+            <div class="insight-item">
+
+              <div class="insight-left">
+
+                <div class="insight-icon">
+                  <i class="fa-solid fa-dumbbell"></i>
+                </div>
+
+                Protein Intake
+
+              </div>
+
+              <h3 id="protein-intake">--</h3>
+
+            </div>
+
+            <div class="insight-item">
+
+              <div class="insight-left">
+
+                <div class="insight-icon">
+                  <i class="fa-solid fa-glass-water"></i>
+                </div>
+
+                Ideal Water Intake
+
+              </div>
+
+              <h3 id="water-intake">--</h3>
+
+            </div>
+
+            <div class="insight-item">
+
+              <div class="insight-left">
+
+                <div class="insight-icon">
+                  <i class="fa-solid fa-calendar-check"></i>
+                </div>
+
+                Suggested Workouts
+
+              </div>
+
+              <h3 id="workouts">--</h3>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- Analytics Page -->
+      <section id="analytics_tab" class="dashboard hidden" style="position: relative;">
+
+        <!-- SKELETON LOADER -->
+        <div class="section-skeleton" id="analytics-skeleton" style="grid-template-columns: 2fr 1fr; gap: 24px;">
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+            <div class="skeleton-line" style="width: 100%; height: 350px; border-radius: 22px;"></div>
+            <div class="skeleton-line" style="width: 100%; height: 350px; border-radius: 22px;"></div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+            <div class="skeleton-line" style="width: 100%; height: 280px; border-radius: 22px;"></div>
+            <div class="skeleton-line" style="width: 100%; height: 420px; border-radius: 22px;"></div>
+          </div>
+        </div>
+
+        <!-- Left Column: Detailed Charts -->
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+          
+          <!-- Card 1: Weekly Workout Hours -->
+          <div class="card">
+            <div class="heading" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+              <div>
+                <h2 class="section-title" style="margin-bottom: 4px;">Weekly Workout Hours</h2>
+                <p style="color: #888; font-size: 14px;">Total training time distributed across the week</p>
+              </div>
+              <div style="background: rgba(89, 209, 47, 0.1); color: #59d12f; padding: 8px 16px; border-radius: 12px; font-weight: 600;">
+                <i class="fa-solid fa-clock" style="margin-right: 6px;"></i><span id="total-weekly-hours">13.0</span> hrs total
+              </div>
+            </div>
+            <div style="height: 320px; position: relative;">
+              <canvas id="weeklyHoursChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Card 2: Weight Progress Tracking -->
+          <div class="card">
+            <div class="heading" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+              <div>
+                <h2 class="section-title" style="margin-bottom: 4px;">Monthly Weight Trend</h2>
+                <p style="color: #888; font-size: 14px;">Track your progress towards your goal weight</p>
+              </div>
+              <div style="background: rgba(246, 163, 19, 0.1); color: #f6a313; padding: 8px 16px; border-radius: 12px; font-weight: 600;">
+                <i class="fa-solid fa-weight-scale" style="margin-right: 6px;"></i>Lost <span id="weight-loss-kpis">8.0</span> kg
+              </div>
+            </div>
+            <div style="height: 320px; position: relative;">
+              <canvas id="weightProgressChart"></canvas>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Premium KPIs & Summary Cards -->
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+
+          <!-- Card 3: Analytics Quick Stats -->
+          <div class="card" style="padding: 28px;">
+            <h2 class="section-title" style="font-size: 20px; margin-bottom: 20px; border-bottom: 1px solid #222; padding-bottom: 12px; color: white;">
+              <i class="fa-solid fa-gauge-high" style="color: #59d12f; margin-right: 8px;"></i>
+              Training KPIs
+            </h2>
+            
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+              <div style="display: flex; align-items: center; gap: 16px;">
+                <div style="width: 48px; height: 48px; border-radius: 14px; background: rgba(89, 209, 47, 0.05); border: 1px solid rgba(89, 209, 47, 0.15); display: flex; align-items: center; justify-content: center; color: #59d12f; font-size: 18px;">
+                  <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div>
+                  <p style="color: #888; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Avg Hours / Day</p>
+                  <h3 id="avg-hours-day" style="font-size: 22px; font-weight: 700; color: white; margin-top: 2px;">1.85 hrs</h3>
+                </div>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 16px;">
+                <div style="width: 48px; height: 48px; border-radius: 14px; background: rgba(59, 130, 246, 0.05); border: 1px solid rgba(59, 130, 246, 0.15); display: flex; align-items: center; justify-content: center; color: #3b82f6; font-size: 18px;">
+                  <i class="fa-solid fa-calendar-check"></i>
+                </div>
+                <div>
+                  <p style="color: #888; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Most Active Day</p>
+                  <h3 id="most-active-day" style="font-size: 22px; font-weight: 700; color: white; margin-top: 2px;">Saturday</h3>
+                </div>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 16px;">
+                <div style="width: 48px; height: 48px; border-radius: 14px; background: rgba(246, 163, 19, 0.05); border: 1px solid rgba(246, 163, 19, 0.15); display: flex; align-items: center; justify-content: center; color: #f6a313; font-size: 18px;">
+                  <i class="fa-solid fa-flag-checkered"></i>
+                </div>
+                <div>
+                  <p style="color: #888; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Goal Weight Target</p>
+                  <h3 id="target-weight-kpi" style="font-size: 22px; font-weight: 700; color: white; margin-top: 2px;">72.0 kg</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4: Streak & consistency card -->
+          <div class="card" style="position: relative; overflow: hidden; background: linear-gradient(135deg, #131417 0%, #1c1d22 100%);">
+            <div style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; border-radius: 50%; background: radial-gradient(circle, rgba(89, 209, 47, 0.05) 0%, transparent 70%);"></div>
+            
+            <h2 class="section-title" style="font-size: 20px; margin-bottom: 12px; color: white;">Consistency Score</h2>
+            <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 20px;">
+              <span style="font-size: 64px; font-weight: 900; color: #59d12f; line-height: 1;">94</span>
+              <span style="font-size: 20px; font-weight: 600; color: #a0a0a0;">%</span>
+            </div>
+            
+            <p style="color: #aaa; font-size: 14px; line-height: 1.6; margin-bottom: 24px;">
+              Excellent dedication! You have successfully completed <strong>94%</strong> of your scheduled workouts this month. You're ranked in the top <strong>3%</strong> of GYMPRO athletes!
+            </p>
+
+            <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); padding: 16px; border-radius: 16px; display: flex; align-items: center; justify-content: space-between;">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <i class="fa-solid fa-trophy" style="color: #f6a313; font-size: 18px;"></i>
+                <span style="font-size: 14px; font-weight: 500; color: white;">Consistency Award</span>
+              </div>
+              <span style="font-size: 12px; color: #59d12f; font-weight: 600; text-transform: uppercase;">Active badge</span>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- setting Page -->
+
+      <section id="setting_tab" class="hidden" style="position: relative;">
+
+        <!-- SETTINGS SKELETON -->
+        <div class="section-skeleton" id="settings-skeleton" style="grid-template-columns: 280px 1fr;">
+          <div>
+            <div class="skeleton-line" style="width: 100%; height: 400px; border-radius: 16px;"></div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+            <div class="skeleton-line" style="width: 100%; height: 200px; border-radius: 16px;"></div>
+            <div class="skeleton-line" style="width: 100%; height: 200px; border-radius: 16px;"></div>
+            <div class="skeleton-line" style="width: 100%; height: 200px; border-radius: 16px;"></div>
+          </div>
+        </div>
+
+        <div class="top-grid">
+
+          <!-- SETTINGS MENU -->
+
+          <div class="card settings-menu">
+
+            <h2>Settings Menu</h2>
+
+            <!-- NOTIFICATION -->
+
+            <div class="settings-link active" data-target="notification-section">
+
+              <span>
+                <i class="fa-regular fa-bell"></i>
+                Notification Preferences
+              </span>
+
+              <i class="fa-solid fa-chevron-right"></i>
+
+            </div>
+
+            <!-- PROFILE -->
+
+            <div class="settings-link" data-target="profile-section">
+
+              <span>
+                <i class="fa-regular fa-user"></i>
+                Profile Settings
+              </span>
+
+              <i class="fa-solid fa-chevron-right"></i>
 
             </div>
 
             <!-- APPEARANCE -->
 
-            <div class="card appearance-card"
-id="appearance-section">
+            <div class="settings-link" data-target="appearance-section">
 
-                <div class="section-title">
+              <span>
+                <i class="fa-solid fa-palette"></i>
+                Appearance
+              </span>
 
-                    <div class="section-icon">
-                        <i class="fa-solid fa-palette"></i>
-                    </div>
+              <i class="fa-solid fa-chevron-right"></i>
 
-                    <div>
-                        <h2>Appearance</h2>
-                        <p>Customize the look and feel</p>
-                    </div>
+            </div>
+
+            <!-- LANGUAGE -->
+
+            <div class="settings-link" data-target="language-section">
+
+              <span>
+                <i class="fa-solid fa-globe"></i>
+                Language
+              </span>
+
+              <i class="fa-solid fa-chevron-right"></i>
+
+            </div>
+
+          </div>
+
+          <div class="settings-content" style="display:flex; flex-direction:column; gap:24px;">
+
+            <!-- NOTIFICATION CARD -->
+
+            <div class="card notification-card" id="notification-section">
+
+              <div class="heading">
+
+                <div class="heading-icon">
+                  <i class="fa-regular fa-bell"></i>
+                </div>
+
+                <div>
+                  <h2>Notification Preferences</h2>
+                  <span>Choose what updates you want to receive</span>
 
                 </div>
 
-                <div class="appearance-grid">
+              </div>
 
-                    <!-- LEFT -->
+              <!-- ROW -->
 
-                    <div>
+              <div class="setting-row">
 
-                        <div class="option-block">
+                <div class="icon-box">
+                  <i class="fa-regular fa-calendar"></i>
+                </div>
 
-                            <h3>Theme</h3>
-                            <p>Choose your preferred theme</p>
+                <h3 class="setting-title">
+                  Membership Reminders
+                </h3>
 
-                            <div class="theme-buttons">
+                <p class="setting-description">
+                  Get notified about membership expiry and renewal
+                </p>
 
-                                <button class="theme-btn">
-                                    Light
-                                </button>
+                <div class="toggle active"></div>
 
-                                <button class="theme-btn active">
-                                    Dark
-                                </button>
+              </div>
+              <!-- ROW -->
+              <div class="setting-row">
 
-                                <button class="theme-btn">
-                                    System
-                                </button>
+                <div class="icon-box">
+                  <i class="fa-regular fa-calendar"></i>
+                </div>
 
-                            </div>
+                <h3 class="setting-title">
+                  Workout Reminders
+                </h3>
 
-                        </div>
+                <p class="setting-description">
+                  Receive reminders for your scheduled workouts
+                </p>
 
-                        <!-- COLORS -->
+                <div class="toggle active"></div>
 
-                        <div class="option-block">
+              </div>
 
-                            <h3>Accent Color</h3>
-                            <p>Choose your accent color</p>
+              <!-- ROW -->
 
-                            <div class="colors">
+              <div class="setting-row">
 
-                                <div class="color active"
-                                style="background:#f6a313">
-                                </div>
+                <div class="icon-box">
+                  <i class="fa-regular fa-calendar"></i>
+                </div>
 
-                                <div class="color"
-                                style="background:#22c55e">
-                                </div>
+                <h3 class="setting-title">
+                  Achievement Alerts
+                </h3>
 
-                                <div class="color"
-                                style="background:#3b82f6">
-                                </div>
+                <p class="setting-description">
+                  Get alerts when you earn new badges or points
+                </p>
 
-                                <div class="color"
-                                style="background:#7c3aed">
-                                </div>
+                <div class="toggle active"></div>
 
-                                <div class="color"
-                                style="background:#e11d48">
-                                </div>
+              </div>
 
-                            </div>
+              <!-- ROW -->
+              <div class="setting-row">
 
-                        </div>
+                <div class="icon-box">
+                  <i class="fa-regular fa-calendar"></i>
+                </div>
+
+                <h3 class="setting-title">
+                  Promotions & Offers
+                </h3>
+
+                <p class="setting-description">
+                  Receive updates on new offers and discounts
+                </p>
+
+                <div class="toggle active"></div>
+
+              </div>
+
+              <!-- ROW -->
+
+              <div class="setting-row">
+
+                <div class="icon-box">
+                  <i class="fa-regular fa-calendar"></i>
+                </div>
+
+                <h3 class="setting-title">
+                  Weekly Summary
+                </h3>
+
+                <p class="setting-description">
+                  Get a weekly summary of your progress
+                </p>
+
+                <div class="toggle active"></div>
+
+              </div>
+
+            </div>
+
+            <!-- PROFILE CARD -->
+
+            <div class="card profile-card" id="profile-section">
+
+              <div class="settings-section-title">
+
+                <div class="section-icon">
+                  <i class="fa-regular fa-user"></i>
+                </div>
+
+                <div>
+                  <h2>Profile Settings</h2>
+                  <p>Update your personal information</p>
+                </div>
+
+              </div>
+
+              <div class="profile-content">
+
+                <!-- AVATAR -->
+
+                <div class="avatar">
+
+                  <img src="/download.jpeg">
+
+
+                </div>
+
+                <!-- FORM -->
+
+                <div class="form">
+
+                  <div class="settings-input-group">
+
+                    <label>Full Name</label>
+
+                    <input type="text" id="settings-name">
+
+                  </div>
+
+                  <div class="settings-input-group">
+
+                    <label>Email Address</label>
+
+                    <input type="email" id="settings-email">
+
+                  </div>
+
+                  <div class="settings-input-group">
+
+                    <label>Phone Number</label>
+
+                    <input type="text" id="settings-phone" value="+91 98765 43210">
+
+                  </div>
+
+                  <div class="settings-input-group">
+
+                    <label>Fitness Goal</label>
+
+                    <select id="settings-goal">
+
+                      <option>Muscle Gain</option>
+                      <option>Fat Loss</option>
+                      <option>Maintain</option>
+
+                    </select>
+                  </div>
+
+                  <div class="settings-input-group">
+
+                    <label>Experience Level</label>
+
+                    <select id="settings-level">
+
+                      <option>Intermediate</option>
+                      <option>Beginner</option>
+                      <option>Advanced</option>
+
+                    </select>
+
+                  </div>
+
+
+                  <button class="settings-save-btn">
+                    Save Changes
+                  </button>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- APPEARANCE -->
+
+            <div class="card appearance-card" id="appearance-section">
+
+              <div class="settings-section-title">
+
+                <div class="section-icon">
+                  <i class="fa-solid fa-palette"></i>
+                </div>
+
+                <div>
+                  <h2>Appearance</h2>
+                  <p>Customize the look and feel</p>
+                </div>
+
+              </div>
+
+              <div class="appearance-grid">
+
+                <!-- LEFT -->
+
+                <div>
+
+                  <div class="option-block">
+
+                    <h3>Theme</h3>
+                    <p>Choose your preferred theme</p>
+
+                    <div class="theme-buttons">
+
+                      <button class="theme-btn">
+                        Light
+                      </button>
+
+                      <button class="theme-btn active">
+                        Dark
+                      </button>
+
+                      <button class="theme-btn">
+                        System
+                      </button>
 
                     </div>
 
-                    <!-- RIGHT -->
+                  </div>
 
-                    <div>
+                  <!-- COLORS -->
 
-                        <div class="option-block">
+                  <div class="option-block">
 
-                            <h3>Font Size</h3>
-                            <p>Adjust font size for better readability</p>
+                    <h3>Accent Color</h3>
+                    <p>Choose your accent color</p>
 
-                            <div class="density-buttons">
+                    <div class="colors">
 
-                                <button class="density-btn">
-                                    Small
-                                </button>
+                      <div class="color active" style="background:#f6a313">
+                      </div>
 
-                                <button class="density-btn active">
-                                    Medium
-                                </button>
+                      <div class="color" style="background:#22c55e">
+                      </div>
 
-                                <button class="density-btn">
-                                    Large
-                                </button>
+                      <div class="color" style="background:#3b82f6">
+                      </div>
 
-                            </div>
+                      <div class="color" style="background:#7c3aed">
+                      </div>
+
+                      <div class="color" style="background:#e11d48">
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <!-- RIGHT -->
+
+                <div>
+
+                  <div class="option-block">
+
+                    <h3>Font Size</h3>
+                    <p>Adjust font size for better readability</p>
+
+                    <div class="density-buttons">
+
+                      <button class="density-btn">
+                        Small
+                      </button>
+
+                      <button class="density-btn active">
+                        Medium
+                      </button>
+
+                      <button class="density-btn">
+                        Large
+                      </button>
+
+                    </div>
+
+                  </div>
+
+                  <div class="option-block">
+
+                    <h3>Dashboard Density</h3>
+                    <p>Choose how information is displayed</p>
+
+                    <div class="density-buttons">
+
+                      <button class="density-btn">
+                        Compact
+                      </button>
+
+                      <button class="density-btn active">
+                        Normal
+                      </button>
+
+                      <button class="density-btn">
+                        Comfortable
+                      </button>
+
+                    </div>
+
+                  </div>
+
+                  <!-- LANGUAGE SELECT -->
+
+                  <div class="language-wrapper" id="language-section">
+                    <label>Language</label>
+
+                    <p>Choose your preferred language</p>
+
+                    <div class="language-select">
+
+                      <div class="select-input" id="selectInput">
+
+                        <div class="left-side">
+
+                          <i class="fa-solid fa-globe"></i>
+
+                          <span id="selectedLanguage">
+                            English
+                          </span>
 
                         </div>
 
-                        <div class="option-block">
+                        <i class="fa-solid fa-chevron-down arrow"></i>
 
-                            <h3>Dashboard Density</h3>
-                            <p>Choose how information is displayed</p>
+                      </div>
 
-                            <div class="density-buttons">
+                      <!-- OPTIONS -->
 
-                                <button class="density-btn">
-                                    Compact
-                                </button>
+                      <div class="options-box" id="optionsBox">
 
-                                <button class="density-btn active">
-                                    Normal
-                                </button>
-
-                                <button class="density-btn">
-                                    Comfortable
-                                </button>
-
-                            </div>
-
+                        <div class="option active">
+                          English
                         </div>
 
-                        
+                        <div class="option">
+                          हिंदी
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div><!-- /appearance-grid -->
+
+            </div><!-- /appearance-card -->
+
+          </div><!-- /settings-content -->
+
+        </div><!-- /top-grid -->
+
+      </section>
 
 
-   <!-- LANGUAGE SELECT -->
 
-<div class="language-wrapper"
-id="language-section">
-    <label>Language</label>
 
-    <p>Choose your preferred language</p>
 
-    <div class="language-select">
 
-        <div class="select-input" id="selectInput">
-
-            <div class="left-side">
-
-                <i class="fa-solid fa-globe"></i>
-
-                <span id="selectedLanguage">
-                    English
-                </span>
-
-            </div>
-
-            <i class="fa-solid fa-chevron-down arrow"></i>
-
-        </div>
-
-        <!-- OPTIONS -->
-
-        <div class="options-box" id="optionsBox">
-
-            <div class="option active">
-                English
-            </div>
-
-            <div class="option">
-                हिंदी
-            </div>
-
-        </div>
 
     </div>
 
-</div>
-</div>
-
-</section>
+  </main>
 
 
+  <!-- yaha per tum log apne section page copy paste kar do and css us page,,,,,,vfxvfsvbgregr mein -->
 
 
-
-
-
-</div>
-
-</main>
-
-
-    <!-- yaha per tum log apne section page copy paste kar do and css us page mein -->
-
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="app.js"></script>
-    <script src="overview.js"></script>
-    <script src="personalinfo.js"></script>
-    <script src="chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="app.js"></script>
+  <script src="overview.js"></script>
+  <script src="personalinfo.js"></script>
+  <script src="chart.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GYMPRO — Sign Up</title>
+  <meta name="description" content="Create your GYMPRO account and start your fitness journey today.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+
+  <div class="signup-page">
+
+    <!-- LEFT PANEL - Branding -->
+    <div class="brand-panel">
+      <div class="brand-glow"></div>
+
+      <a href="home.html" class="brand-logo">
+        <div class="brand-icon">
+          <i class="fa-solid fa-dumbbell"></i>
+        </div>
+        <span>GYM<em>PRO</em></span>
+      </a>
+
+      <div class="brand-content">
+        <h1>Start Your<br><span>Fitness Journey</span></h1>
+        <p>Join 500+ members tracking workouts, crushing goals, and transforming their lives with GYMPRO.</p>
+
+        <div class="brand-features">
+          <div class="brand-feature">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Real-time workout analytics</span>
+          </div>
+          <div class="brand-feature">
+            <i class="fa-solid fa-utensils"></i>
+            <span>Personalized diet plans</span>
+          </div>
+          <div class="brand-feature">
+            <i class="fa-solid fa-trophy"></i>
+            <span>Earn rewards for consistency</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="brand-avatars">
+        <div class="brand-avatar" style="background:#f6a313;">U</div>
+        <div class="brand-avatar" style="background:#22c55e;">I</div>
+        <div class="brand-avatar" style="background:#3b82f6;">R</div>
+        <div class="brand-avatar" style="background:#7c3aed;">K</div>
+        <p><strong>500+</strong> active members</p>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL - Form -->
+    <div class="form-panel">
+      <div class="form-container">
+
+        <div class="form-header">
+          <h2>Create Your Account</h2>
+          <p>Fill in the details below to get started</p>
+        </div>
+
+        <form id="signup-form" novalidate>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="signup-name">Full Name</label>
+              <div class="input-wrapper">
+                <i class="fa-regular fa-user"></i>
+                <input type="text" id="signup-name" placeholder="Enter your name" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="signup-age">Age</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-calendar"></i>
+                <input type="number" id="signup-age" placeholder="Your age" min="14" max="80" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="signup-email">Email Address</label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-envelope"></i>
+              <input type="email" id="signup-email" placeholder="you@example.com" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="signup-gender">Gender</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-venus-mars"></i>
+                <select id="signup-gender" required>
+                  <option value="" disabled selected>Select</option>
+                  <option>Male</option>
+                  <option>Female</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="signup-plan">Membership Plan</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-crown"></i>
+                <select id="signup-plan" required>
+                  <option value="" disabled selected>Select</option>
+                  <option>Basic</option>
+                  <option>Gold</option>
+                  <option>Premium</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="signup-height">Height (cm)</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-ruler-vertical"></i>
+                <input type="number" id="signup-height" placeholder="e.g. 175" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="signup-weight">Weight (kg)</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-weight-scale"></i>
+                <input type="number" id="signup-weight" placeholder="e.g. 72" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="signup-goal">Fitness Goal</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-bullseye"></i>
+              <select id="signup-goal" required>
+                <option value="" disabled selected>Select your goal</option>
+                <option>Muscle Gain</option>
+                <option>Fat Loss</option>
+                <option>Strength</option>
+                <option>General Fitness</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="signup-password">Password</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-lock"></i>
+              <input type="password" id="signup-password" placeholder="Create a secure password" required>
+            </div>
+          </div>
+
+          <button type="submit" class="signup-btn" id="signup-submit">
+            <span>Create Account</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+
+        </form>
+
+        <div class="form-footer">
+          <p>Already have an account? <a href="login.html">Log In</a></p>
+          <a href="home.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+        </div>
+
+        <!-- Success Message (hidden by default) -->
+        <div class="success-message" id="success-message">
+          <div class="success-icon"><i class="fa-solid fa-check"></i></div>
+          <h3>Account Created!</h3>
+          <p>Welcome to GYMPRO. Redirecting to login...</p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script src="signup.js"></script>
+</body>
+</html>

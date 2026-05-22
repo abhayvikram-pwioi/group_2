@@ -1,0 +1,62 @@
+{
+    "userAnalytics": {
+        "id": 1,
+        "username": "Utkarsh",
+        "weeklyWorkoutHours": [
+            {
+                "day": "Monday",
+                "hours": 1.5
+            },
+            {
+                "day": "Tuesday",
+                "hours": 2
+            },
+            {
+                "day": "Wednesday",
+                "hours": 1
+            },
+            {
+                "day": "Thursday",
+                "hours": 2.5
+            },
+            {
+                "day": "Friday",
+                "hours": 1.5
+            },
+            {
+                "day": "Saturday",
+                "hours": 3
+            },
+            {
+                "day": "Sunday",
+                "hours": 1
+            }
+        ],
+        "monthlyWeightProgress": [
+            {
+                "month": "January",
+                "weight": 82
+            },
+            {
+                "month": "February",
+                "weight": 80
+            },
+            {
+                "month": "March",
+                "weight": 79
+            },
+            {
+                "month": "April",
+                "weight": 77
+            },
+            {
+                "month": "May",
+                "weight": 76
+            },
+            {
+                "month": "June",
+                "weight": 74
+            }
+        ]
+    }
+}
