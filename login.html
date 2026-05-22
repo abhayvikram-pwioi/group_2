@@ -3,60 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gym Dashboard - Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>GYMPRO — Premium Log In</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="login.css">
 </head>
 <body>
-    <div class="login-container">
-        <div class="header">
-            <div class="logo">
-                <i class="fa-solid fa-dumbbell"></i>
-                <h2>Gym Dashboard</h2>
-            </div>
-        <form id="login-form" class="login-form">
-            <div id="error-alert" class="error-alert" style="display: none;">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-                <span id="error-message">Incorrect username or password.</span>
-            </div>
+    <!-- Background Glow Elements -->
+    <div class="glow-bg">
+        <div class="glow-circle green"></div>
+        <div class="glow-circle gold"></div>
+    </div>
 
-            <div class="form-group">
-                <label for="login-username">Username</label>
-                <div class="input-wrapper">
-                    <i class="fa-regular fa-user"></i>
-                    <input type="text" id="login-username" placeholder="Enter username" required>
+    <div class="login-wrapper">
+        <div class="login-card">
+            
+            <!-- LEFT PANEL: Brand Info & Accents -->
+            <div class="brand-panel">
+                <div class="brand-overlay"></div>
+                <div class="brand-content-wrapper">
+                    <a href="home.html" class="logo-link">
+                        <div class="logo-icon-box">
+                            <i class="fa-solid fa-dumbbell"></i>
+                        </div>
+                        <span>GYM<em>PRO</em></span>
+                    </a>
+                    
+                    <div class="brand-showcase">
+                        <h1>Elevate Your Training.</h1>
+                        <p>Log in to access your interactive dashboards, track weekly workouts, and monitor weight targets with real-time statistics.</p>
+                        
+                        <div class="feature-checklist">
+                            <div class="check-item">
+                                <div class="check-icon"><i class="fa-solid fa-check"></i></div>
+                                <span>Dynamic Bar Chart Workouts Tracking</span>
+                            </div>
+                            <div class="check-item">
+                                <div class="check-icon"><i class="fa-solid fa-check"></i></div>
+                                <span>Monthly Weight Tendency Curves</span>
+                            </div>
+                            <div class="check-item">
+                                <div class="check-icon"><i class="fa-solid fa-check"></i></div>
+                                <span>High-Fidelity UI Layout & Theme Switchers</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="brand-footer">
+                        <p>&copy; 2026 GYMPRO Inc. All rights reserved.</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="login-password">Password</label>
-                <div class="input-wrapper">
-                    <i class="fa-solid fa-lock"></i>
-                    <input type="password" id="login-password" placeholder="Enter password" required>
+            <!-- RIGHT PANEL: Interactive Forms & Quick Access -->
+            <div class="form-panel">
+                <div class="form-header">
+                    <h2>Welcome Back</h2>
+                    <p>Enter your credentials or click an active profile card below.</p>
+                </div>
+
+                <form id="login-form" class="login-form">
+                    <div id="error-alert" class="error-alert" style="display: none;">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span id="error-message">Incorrect username or password.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login-username">Username</label>
+                        <div class="input-wrapper">
+                            <i class="fa-regular fa-user"></i>
+                            <input type="text" id="login-username" placeholder="Enter username" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="login-password" placeholder="Enter password" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="login-btn">
+                        <span>Sign In</span>
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                    </button>
+                </form>
+
+                <div class="divider">
+                    <span>Or Quick Access Profiles</span>
+                </div>
+
+                <div class="user-grid-container">
+                    <div class="user-grid" id="user-grid">
+                        <!-- User cards will be injected here via JS -->
+                    </div>
+                </div>
+
+                <div class="form-footer">
+                    <p>Don't have an account? <a href="signup.html">Sign up free</a></p>
+                    <a href="home.html" class="back-home-btn">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>Back to Home</span>
+                    </a>
                 </div>
             </div>
 
-            <button type="submit" class="login-btn">
-                <span>Login</span>
-                <i class="fa-solid fa-arrow-right"></i>
-            </button>
-        </form>
-
-        <div class="divider">
-            <span>Or Quick Access Profiles</span>
-        </div>
-        
-        <div class="user-grid" id="user-grid">
-            <!-- User cards will be injected here via JS -->
-        </div>
-
-        <div class="login-footer">
-            <a href="home.html" class="back-home-btn">
-                <i class="fa-solid fa-arrow-left"></i>
-                Back to Home
-            </a>
-            <p class="signup-prompt">Don't have an account? <a href="signup.html">Sign up free</a></p>
         </div>
     </div>
     
