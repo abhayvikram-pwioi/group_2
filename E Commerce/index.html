@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VELORA Fashion Store</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- ================= HEADER ================= -->
+
+  <header class="header">
+
+    <div class="top-navbar">
+
+      <div class="logo">
+        VELORA
+      </div>
+
+      <div class="nav-icons">
+
+        <i class="fa-solid fa-magnifying-glass" id="searchBtn"></i>
+
+        <i class="fa-regular fa-heart"></i>
+
+        <div class="cart-icon">
+
+          <i class="fa-solid fa-bag-shopping"></i>
+
+          
+        </div>
+
+        <i class="fa-regular fa-user"></i>
+
+      </div>
+
+    </div>
+
+    <!-- SEARCH OVERLAY -->
+
+<div class="search-overlay" id="searchOverlay">
+
+  <div class="search-container">
+
+    <div class="search-box">
+
+      <i class="fa-solid fa-magnifying-glass"></i>
+
+      <input
+        type="text"
+        placeholder="Search For Dresses, Tops, Handbags..."
+      >
+
+    </div>
+
+    <button id="closeSearch">
+      Cancel
+    </button>
+
+  </div>
+
+  <!-- POPULAR CHOICES -->
+
+  <div class="search-layout">
+
+  <!-- LEFT -->
+
+  <div class="search-left">
+
+    <h3>POPULAR CHOICES</h3>
+
+    <div class="popular-tags">
+
+      <button>Casual Wear</button>
+      <button>Party Wear</button>
+      <button>Dresses</button>
+      <button>Formal Wear</button>
+      <button>Mini Dresses</button>
+
+    </div>
+
+  </div>
+
+  <!-- RIGHT -->
+
+  <div class="search-right">
+
+    <div class="search-categories">
+
+      <div class="circle-item">
+        <img src="https://i.pinimg.com/1200x/04/ae/ba/04aeba86067b5eb67eefce829bc297b1.jpg">
+        <p>Dresses</p>
+      </div>
+
+      <div class="circle-item">
+        <img src="https://i.pinimg.com/1200x/5e/85/a1/5e85a18dabe6614aa249c12919a36593.jpg">
+        <p>Footwear</p>
+      </div>
+
+      <div class="circle-item">
+        <img src="https://i.pinimg.com/736x/38/a5/49/38a5495e95aa8285e4e977bae6a2ebe4.jpg">
+        <p>Tops</p>
+      </div>
+
+      <div class="circle-item">
+        <img src="https://i.pinimg.com/736x/9e/82/fd/9e82fd86769ef8ae7386afda326acbfb.jpg">
+        <p>Coords</p>
+      </div>
+
+      <div class="circle-item">
+        <img src="https://i.pinimg.com/736x/10/22/cd/1022cd8442a350d833a2e76c1c9d19ab.jpg">
+        <p>Trousers</p>
+      </div>
+
+      <div class="circle-item">
+        <img src="https://i.pinimg.com/736x/8c/dc/b0/8cdcb00670bd36c7d350ad7ef8b0780c.jpg">
+        <p>Curve</p>
+      </div>
+
+    </div>
+
+    <h3 class="recommended-title">
+      RECOMMENDED FOR YOU
+    </h3>
+
+    <div class="recommended-products">
+
+      <div class="recommend-card">
+        <img src="https://i.pinimg.com/1200x/2f/cd/30/2fcd3055447c4a775f920cf586a73f88.jpg">
+        <p>Corset Top</p>
+        <span>₹699</span>
+      </div>
+
+      <div class="recommend-card">
+        <img src="https://i.pinimg.com/1200x/a0/6f/11/a06f11631632ef63543dfa3477eab2c8.jpg">
+        <p>Brown Top</p>
+        <span>₹899</span>
+      </div>
+
+      <div class="recommend-card">
+        <img src="https://i.pinimg.com/736x/e5/89/e4/e589e45b57adfe13e8d27d5b2a554dab.jpg">
+        <p>Mini Dress</p>
+        <span>₹999</span>
+      </div>
+
+      <div class="recommend-card">
+        <img src="https://i.pinimg.com/736x/ef/30/b8/ef30b86fac8a5fc4f5ce004cae86beb2.jpg">
+        <p>Lace Top</p>
+        <span>₹899</span>
+      </div>
+
+      <div class="recommend-card">
+        <img src="https://i.pinimg.com/1200x/46/8a/23/468a2327f7815a4bddd856dc8a07c9be.jpg">
+        <p>Summer Dress</p>
+        <span>₹649</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+
+    <!-- CATEGORY BAR -->
+
+    <nav class="category-navbar">
+
+      <a href="#new-arrivals">New Arrivals</a>
+
+      <a href="#handbags">Handbags</a>
+
+      <a href="#clothing">Clothing</a>
+
+      <a href="#footwear">Footwear</a>
+
+      <a href="#curve">Curve</a>
+
+      <a href="#accessories">Accessories</a>
+
+      <a href="#summer">Summer Collection</a>
+
+      
+    </nav>
+
+  </header>
+
+  <!-- ================= HERO SECTION ================= -->
+
+  <section class="hero">
+
+    <button class="arrow left-arrow">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
+
+    <div class="slider" id="slider">
+
+      <!-- Slide 1 -->
+
+      <div class="slide active">
+
+        <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=1920&q=80">
+
+        <div class="overlay"></div>
+
+        <div class="hero-content">
+
+          <p>FRESH STYLES DAILY</p>
+
+          <h1>NEW ARRIVALS</h1>
+          <h2>Be the first to discover our latest pieces</h2>
+          <br>
+
+          <button>VIEW COLLECTION</button>
+
+        </div>
+
+      </div>
+
+      <!-- Slide 2 -->
+
+      <div class="slide">
+
+        <img src="https://i.pinimg.com/736x/8b/96/54/8b965479fa8d295d2b0cbb819659cc3c.jpg">
+
+        <div class="overlay"></div>
+
+        <div class="hero-content">
+
+          <p>LUXURY EDIT</p>
+
+          <h1>ICONIC BAGS</h1>
+
+          <button>EXPLORE</button>
+
+        </div>
+
+      </div>
+
+      <!-- Slide 3 -->
+
+      <div class="slide">
+
+       <img src="https://i.pinimg.com/1200x/87/1c/20/871c20a50fcee74c13297a61da03f948.jpg">
+
+        <div class="overlay"></div>
+
+        <div class="hero-content">
+
+          
+        </div>
+
+      </div>
+
+      <!-- Slide 4 -->
+
+      <div class="slide">
+
+        <img src="https://images.stockcake.com/public/4/1/0/410aada6-bf0f-4b2e-93c7-ff13dd5c7573/golden-ocean-dream-stockcake.jpg">
+
+        <div class="overlay"></div>
+
+        <div class="hero-content">
+
+          <p>SUMMER VIBES</p>
+
+          <h1>SUN & SEA</h1>
+
+          <button>VIEW COLLECTION</button>
+
+        </div>
+
+      </div>
+
+      <!-- Slide 5 -->
+
+      <div class="slide">
+
+       <img src="https://i.pinimg.com/1200x/17/10/44/171044f2bbdef20e8a7cd9344b58da49.jpg">
+
+        <div class="overlay"></div>
+
+        <div class="hero-content">
+
+          <p>NEW DROP</p>
+
+          <h1>URBAN STYLE</h1>
+
+          <button>SHOP NOW</button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <button class="arrow right-arrow">
+      <i class="fa-solid fa-arrow-right"></i>
+    </button>
+
+    <div class="dots">
+
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+
+    </div>
+
+  </section>
+
+  <!-- ================= FEATURED PRODUCTS ================= -->
+
+  <section class="featured-products">
+
+    <div class="section-title">
+
+      <p>TRENDING NOW</p>
+
+      <h2>FEATURED PRODUCTS</h2>
+
+    </div>
+
+    <div class="product-grid">
+
+      <!-- CARD 1 -->
+
+      <div class="product-card">
+
+        <div class="product-image">
+
+          <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=800&q=80">
+
+
+          <button class="wishlist-btn">
+
+            <i class="fa-regular fa-heart"></i>
+
+          </button>
+
+        </div>
+
+        <h3>Satin Summer Dress</h3>
+
+        <p class="price">₹2,499</p>
+
+        <div class="rating">★★★★★</div>
+
+        <button class="cart-btn">
+          ADD TO CART
+        </button>
+
+      </div>
+
+      <!-- CARD 2 -->
+
+      <div class="product-card">
+
+        <div class="product-image">
+
+          <img src="https://i.pinimg.com/736x/fe/7e/d2/fe7ed24d270546b950a69198540394d0.jpg">
+
+          <button class="wishlist-btn">
+            <i class="fa-regular fa-heart"></i>
+          </button>
+
+        </div>
+
+        <h3>Premium Handbag</h3>
+
+        <p class="price">₹3,999</p>
+
+        <div class="rating">★★★★★</div>
+
+        <button class="cart-btn">
+          ADD TO CART
+        </button>
+
+      </div>
+
+      <!-- CARD 3 -->
+
+      <div class="product-card">
+
+        <div class="product-image">
+
+          <img src="https://i.pinimg.com/736x/6d/d8/2c/6dd82c6e38f5017be8de6e8fd395b14a.jpg">
+
+
+          <button class="wishlist-btn">
+            <i class="fa-regular fa-heart"></i>
+          </button>
+
+        </div>
+
+        <h3>Co-ord Set</h3>
+
+        <p class="price">₹1,899</p>
+
+        <div class="rating">★★★★★</div>
+
+        <button class="cart-btn">
+          ADD TO CART
+        </button>
+
+      </div>
+
+      <!-- CARD 4 -->
+
+      <div class="product-card">
+
+        <div class="product-image">
+
+          <img src="https://i.pinimg.com/1200x/fd/4d/e6/fd4de6f83d6d822c6fdd5c67f1796d17.jpg">
+
+          <button class="wishlist-btn">
+            <i class="fa-regular fa-heart"></i>
+          </button>
+
+        </div>
+
+        <h3>Floral Beachwear</h3>
+
+        <p class="price">₹2,799</p>
+
+        <div class="rating">★★★★★</div>
+
+        <button class="cart-btn">
+          ADD TO CART
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+  
+    <!-- ================= MORE PRODUCTS ================= -->
+
+  <section class="more-products">
+
+    <div class="section-title">
+
+      <p>DISCOVER MORE</p>
+
+      <h2>MORE PRODUCTS</h2>
+
+    </div>
+
+    <div class="product-grid">
+
+      <!-- Product 5 -->
+
+      <div class="product-card">
+
+        <div class="product-image">
+
+          <img src="https://i.pinimg.com/736x/2a/54/79/2a54793e3f45c5a38764f0aad3c0f86e.jpg">
+
+          <button class="wishlist-btn">
+            <i class="fa-regular fa-heart"></i>
+          </button>
+
+        </div>
+
+        <h3>Chunky Sneakers</h3>
+
+        <p class="price">₹2,199</p>
+
+        <div class="rating">★★★★★</div>
+
+        <button class="cart-btn">
+          ADD TO CART
+        </button>
+
+      </div>
+
+      <!-- Product 6 -->
+
+      <div class="product-card">
+
+        <div class="product-image">
+
+          <img src="https://i.pinimg.com/736x/ea/1b/63/ea1b63735a54d449e41eb21a0ca479d2.jpg">
+
+          <button class="wishlist-btn">
+            <i class="fa-regular fa-heart"></i>
+          </button>
+
+        </div>
+
+        <h3>Wide Leg Jeans</h3>
+
+        <p class="price">₹1,999</p>
+
+        <div class="rating">★★★★★</div>
+
+        <button class="cart-btn">
+          ADD TO CART
+        </button>
+
+      </div>
+
+      <!-- Product 7 -->
+
+      <div class="product-card">
+
+        <div class="product-image">
+
+          <img src="http://i.pinimg.com/736x/b3/80/50/b380508cacab044da9439ffc49006e2e.jpg">
+
+          <button class="wishlist-btn">
+            <i class="fa-regular fa-heart"></i>
+          </button>
+
+        </div>
+
+        <h3>Crop Top</h3>
+
+        <p class="price">₹899</p>
+
+        <div class="rating">★★★★★</div>
+
+        <button class="cart-btn">
+          ADD TO CART
+        </button>
+
+      </div>
+
+      <!-- Product 8 -->
+
+      <div class="product-card">
+
+        <div class="product-image">
+
+          <img src="https://i.pinimg.com/1200x/7b/b6/2a/7bb62a76ef31e1a75466092ae72be191.jpg">
+
+          <button class="wishlist-btn">
+            <i class="fa-regular fa-heart"></i>
+          </button>
+
+        </div>
+
+        <h3>Minimal Heels</h3>
+
+        <p class="price">₹1,499</p>
+
+        <div class="rating">★★★★★</div>
+
+        <button class="cart-btn">
+          ADD TO CART
+        </button>
+
+      </div>
+
+    </div>
+
+    
+
+  </section>
+
+  
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer class="footer">
+
+    <div class="footer-container">
+
+      <!-- LEFT -->
+
+      <div class="footer-left">
+
+        <h2>VELORA</h2>
+
+        <div class="social-icons">
+
+          <i class="fa-brands fa-facebook-f"></i>
+          <i class="fa-brands fa-youtube"></i>
+          <i class="fa-brands fa-instagram"></i>
+          <i class="fa-brands fa-snapchat"></i>
+
+        </div>
+
+        <p>Velora Fashion Pvt Ltd</p>
+
+        <p>Building No. D-257, Sector 63</p>
+
+        <p>Noida, Uttar Pradesh, India</p>
+
+        <p>201301</p>
+
+      </div>
+
+      <!-- CENTER -->
+
+      <div class="footer-column">
+
+        <h3>Shop</h3>
+
+        <a href="#">New Arrivals</a>
+        <a href="#">Tops</a>
+        <a href="#">Footwear</a>
+        <a href="#">Dresses</a>
+        <a href="#">Co-ords</a>
+        <a href="#">Handbags</a>
+
+      </div>
+
+      <!-- RIGHT -->
+
+      <div class="footer-column">
+
+        <h3>Support</h3>
+
+        <a href="#">Return Policy</a>
+        <a href="#">Shipping</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms Of Service</a>
+        <a href="#">FAQ</a>
+        <a href="#">Contact Us</a>
+
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+      <div class="payment-icons">
+
+        <span>VISA</span>
+        <span>MASTERCARD</span>
+        <span>AMEX</span>
+        <span>UPI</span>
+
+      </div>
+
+      <p>
+        © 2026 Velora Fashion. All Rights Reserved.
+      </p>
+
+    </div>
+
+  </footer>
+
+  <!-- ================= JS ================= -->
+
+  <script src="script.js"></script>
+
+
+</body>
+
+</html>
