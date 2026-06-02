@@ -1,0 +1,320 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+/* Prevent horizontal overflow globally */
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+body{
+    background:#f4f4f4;
+}
+
+/* Responsive image base rule */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Fluid responsive typography */
+h1 {
+    font-size: clamp(24px, 5vw, 32px);
+}
+
+h2 {
+    font-size: clamp(20px, 4vw, 24px);
+}
+
+h3 {
+    font-size: clamp(16px, 3vw, 18.72px);
+}
+
+p, span {
+    font-size: clamp(13px, 2.5vw, 15px);
+}
+
+
+.container{
+    width:85%;
+    margin:40px auto;
+
+    display:flex;
+    gap:30px;
+}
+
+.cart-box{
+    flex:3;
+
+    background:white;
+    padding:30px;
+    border-radius:15px;
+
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.summary-box{
+    flex:1;
+
+    background:white;
+    padding:25px;
+    border-radius:15px;
+
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+
+    height:fit-content;
+}
+
+.cart-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:20px;
+}
+
+.cart-header p{
+    margin-top:8px;
+    color:gray;
+}
+
+.clear-btn{
+    color:gray;
+    cursor:pointer;
+}
+
+.item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:25px 0;
+}
+
+.item img{
+    width:90px;
+    height:90px;
+    border-radius:10px;
+    aspect-ratio:1/1; /* Preserves square aspect ratio on resize */
+}
+
+.details{
+    flex:1;
+    margin-left:20px;
+}
+
+.details h3{
+    margin-bottom:10px;
+}
+
+.details p{
+    color:#555;
+    margin-bottom:10px;
+}
+
+.details span{
+    color:gray;
+}
+
+.quantity{
+    display:flex;
+    align-items:center;
+    gap:15px;
+
+    padding:12px 20px;
+
+    border-radius:30px;
+    background:aqua;
+
+    font-weight:bold;
+}
+
+.price{
+    width:120px;
+    text-align:right;
+}
+
+.price h3{
+    margin-bottom:10px;
+}
+
+.price p{
+    color:gray;
+    cursor:pointer;
+}
+
+.summary-box h2{
+    margin:20px 0;
+}
+
+.summary-box p{
+    margin:15px 0;
+}
+
+.summary-box button{
+    width:100%;
+    padding:15px;
+
+    margin-top:20px;
+
+    border:none;
+    border-radius:10px;
+
+    background:blueviolet;
+    color:white;
+
+    font-size: clamp(14px, 3.2vw, 16px);
+    cursor:pointer;
+}
+
+hr{
+    border:none;
+    border-top:1px solid #ddd;
+}
+
+/* ==========================================================
+   Media Query for Laptops & Tablets Landscape (max-width: 1024px)
+   ========================================================== */
+@media (max-width: 1024px) {
+    .container {
+        width: 90%;
+        margin: 30px auto;
+        gap: 20px;
+    }
+
+    .cart-box {
+        padding: 25px;
+    }
+
+    .summary-box {
+        padding: 20px;
+    }
+
+    .cart-header {
+        flex-wrap: wrap; /* Allows header actions to wrap gracefully without breaking layout */
+        gap: 15px;
+    }
+
+    .quantity {
+        padding: 10px 18px; /* Slightly reduced padding to prevent overflow */
+        gap: 10px;
+    }
+
+    .price {
+        width: 100px; /* Reduced width to accommodate smaller horizontal space */
+    }
+}
+
+/* ==========================================================
+   Media Query for Tablets Portrait & Large Mobiles (max-width: 768px)
+   ========================================================== */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Stacks cart box and summary box vertically */
+        width: 92%;
+        margin: 20px auto;
+        gap: 25px;
+    }
+
+    .cart-box {
+        padding: 20px;
+    }
+
+    .summary-box {
+        padding: 20px;
+        width: 100%; /* Ensures summary box takes full width when stacked */
+    }
+
+    /* Transform cart items into a clean 2x2 grid layout */
+    .item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        grid-template-rows: auto auto;
+        column-gap: 20px;
+        row-gap: 15px;
+        align-items: start;
+        padding: 20px 0;
+    }
+
+    .item img {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .details {
+        grid-column: 2;
+        grid-row: 1;
+        margin-left: 0; /* Handled by grid column gap now */
+    }
+
+    .quantity {
+        grid-column: 1 / span 2;
+        grid-row: 2;
+        justify-self: start; /* Aligns capsule to the bottom-left */
+        padding: 10px 16px;
+        gap: 10px;
+    }
+
+    .price {
+        grid-column: 1 / span 2;
+        grid-row: 2;
+        justify-self: end; /* Aligns price to the bottom-right */
+        align-self: center;
+        text-align: right;
+        width: auto; /* Allow natural sizing */
+    }
+}
+
+/* ==========================================================
+   Media Query for Mobile Devices (max-width: 480px)
+   ========================================================== */
+@media (max-width: 480px) {
+    .container {
+        width: 94%;
+        margin: 15px auto;
+        gap: 20px;
+    }
+
+    .cart-box {
+        padding: 15px;
+        border-radius: 12px; /* Slightly reduced border radius for mobile aesthetic */
+    }
+
+    .summary-box {
+        padding: 15px;
+        border-radius: 12px;
+    }
+
+    .cart-header {
+        flex-direction: column;
+        align-items: flex-start; /* Stacks header title and action button vertically */
+        gap: 10px;
+    }
+
+    .clear-btn {
+        margin-top: 5px;
+    }
+
+    .item {
+        grid-template-columns: 80px 1fr; /* More compact grid for small screens */
+        column-gap: 15px;
+        row-gap: 12px;
+        padding: 15px 0;
+    }
+
+    .item img {
+        width: 80px; /* Slightly smaller image to maximize text space */
+        height: 80px;
+    }
+
+    .quantity {
+        padding: 8px 14px; /* Balanced size for mobile tapping */
+        gap: 8px;
+    }
+}
