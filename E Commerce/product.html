@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details - VELORA</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- ================= HEADER ================= -->
+
+  <header class="header">
+
+    <div class="top-navbar">
+
+      <a href="index.html" class="logo" style="color: black;">
+        VELORA
+      </a>
+
+      <div class="nav-icons">
+
+        <i class="fa-solid fa-magnifying-glass" id="searchBtn"></i>
+
+        <i class="fa-regular fa-heart"></i>
+
+        <div class="cart-icon">
+          <a href="cart.html">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span>0</span>
+          </a>
+        </div>
+
+        <i class="fa-regular fa-user"></i>
+
+      </div>
+
+    </div>
+
+    <!-- SEARCH OVERLAY -->
+
+    <div class="search-overlay" id="searchOverlay">
+
+      <div class="search-container">
+
+        <div class="search-box">
+
+          <i class="fa-solid fa-magnifying-glass"></i>
+
+          <input
+            type="text"
+            placeholder="Search For Dresses, Tops, Handbags..."
+          >
+
+        </div>
+
+        <button id="closeSearch">
+          Cancel
+        </button>
+
+      </div>
+
+      <!-- POPULAR CHOICES -->
+
+      <div class="search-layout">
+
+        <!-- LEFT -->
+
+        <div class="search-left">
+
+          <h3>POPULAR CHOICES</h3>
+
+          <div class="popular-tags">
+
+            <button>Casual Wear</button>
+            <button>Party Wear</button>
+            <button>Dresses</button>
+            <button>Formal Wear</button>
+            <button>Mini Dresses</button>
+
+          </div>
+
+        </div>
+
+        <!-- RIGHT -->
+
+        <div class="search-right">
+
+          <div class="search-categories">
+
+            <div class="circle-item">
+              <img src="https://i.pinimg.com/1200x/04/ae/ba/04aeba86067b5eb67eefce829bc297b1.jpg">
+              <p>Dresses</p>
+            </div>
+
+            <div class="circle-item">
+              <img src="https://i.pinimg.com/736x/38/a5/49/38a5495e95aa8285e4e977bae6a2ebe4.jpg">
+              <p>Tops</p>
+            </div>
+
+            <div class="circle-item">
+              <img src="https://i.pinimg.com/736x/9e/82/fd/9e82fd86769ef8ae7386afda326acbfb.jpg">
+              <p>Coords</p>
+            </div>
+
+            <div class="circle-item">
+              <img src="https://i.pinimg.com/736x/10/22/cd/1022cd8442a350d833a2e76c1c9d19ab.jpg">
+              <p>Trousers</p>
+            </div>
+
+            <div class="circle-item">
+              <img src="https://i.pinimg.com/736x/8c/dc/b0/8cdcb00670bd36c7d350ad7ef8b0780c.jpg">
+              <p>Curve</p>
+            </div>
+
+          </div>
+
+          <h3 class="recommended-title">
+            RECOMMENDED FOR YOU
+          </h3>
+
+          <div class="recommended-products" id="recommended-products-grid">
+            <!-- Will be dynamically populated -->
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CATEGORY BAR -->
+
+    <nav class="category-navbar">
+
+      <a href="index.html#new-arrivals">New Arrivals</a>
+
+      <a href="index.html#handbags">Handbags</a>
+
+      <a href="index.html#clothing">Clothing</a>
+
+      <a href="index.html#footwear">Footwear</a>
+
+      <a href="index.html#curve">Curve</a>
+
+      <a href="index.html#accessories">Accessories</a>
+
+      <a href="index.html#summer">Summer Collection</a>
+
+    </nav>
+
+  </header>
+
+  <!-- ================= PRODUCT DETAILS SECTION ================= -->
+
+  <main class="product-details-page">
+    <div class="product-details-container" id="product-details-loader">
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading product details...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer class="footer">
+
+    <div class="footer-container">
+
+      <!-- LEFT -->
+
+      <div class="footer-left">
+
+        <h2>VELORA</h2>
+
+        <div class="social-icons">
+
+          <i class="fa-brands fa-facebook-f"></i>
+          <i class="fa-brands fa-youtube"></i>
+          <i class="fa-brands fa-instagram"></i>
+          <i class="fa-brands fa-snapchat"></i>
+
+        </div>
+
+        <p>Velora Fashion Pvt Ltd</p>
+
+        <p>Building No. D-257, Sector 63</p>
+
+        <p>Noida, Uttar Pradesh, India</p>
+
+        <p>201301</p>
+
+      </div>
+
+      <!-- CENTER -->
+
+      <div class="footer-column">
+
+        <h3>Shop</h3>
+
+        <a href="#">New Arrivals</a>
+        <a href="#">Tops</a>
+        <a href="#">Footwear</a>
+        <a href="#">Dresses</a>
+        <a href="#">Co-ords</a>
+        <a href="#">Handbags</a>
+
+      </div>
+
+      <!-- RIGHT -->
+
+      <div class="footer-column">
+
+        <h3>Support</h3>
+
+        <a href="#">Return Policy</a>
+        <a href="#">Shipping</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms Of Service</a>
+        <a href="#">FAQ</a>
+        <a href="#">Contact Us</a>
+
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+      <div class="payment-icons">
+
+        <span>VISA</span>
+        <span>MASTERCARD</span>
+        <span>AMEX</span>
+        <span>UPI</span>
+
+      </div>
+
+      <p>
+        © 2026 Velora Fashion. All Rights Reserved.
+      </p>
+
+    </div>
+
+  </footer>
+
+  <!-- ================= JS ================= -->
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>
