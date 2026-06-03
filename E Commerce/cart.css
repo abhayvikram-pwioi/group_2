@@ -10,6 +10,12 @@ a{
     color: black;
 }
 
+#checkout{
+     text-decoration: none;
+    /* color: black; */
+    color: white;
+}
+
 .top-navbar{
   height:75px;
   display:flex;

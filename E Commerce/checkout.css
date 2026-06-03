@@ -1,0 +1,592 @@
+/* ==========================================================================
+   CSS Variables & Resets
+   ========================================================================== */
+:root {
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --primary: #4f46e5;
+    --primary-hover: #4338ca;
+    --primary-light: #e0e7ff;
+    --success: #10b981;
+    --success-bg: #f0fdf4;
+    --error: #ef4444;
+    --error-bg: #fef2f2;
+    --border-color: #e2e8f0;
+    --border-focus: #a5b4fc;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.25s ease;
+}
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+button, input, textarea { font-family: inherit; font-size: inherit; color: inherit; }
+.checkout-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+}
+
+.page-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 32px;
+    letter-spacing: -0.5px;
+}
+
+.checkout-layout {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 32px;
+    align-items: start;
+}
+
+         /* Header CSS */
+
+.top-navbar{
+  height:75px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 5%;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+
+}
+
+.logo{
+  font-size:28px;
+  font-weight:900;
+  letter-spacing:5px;
+}
+
+.nav-icons{
+  display:flex;
+  align-items:center;
+  gap:25px;
+  font-size:20px;
+}
+
+.nav-icons i{
+  cursor:pointer;
+  transition:.3s;
+}
+
+.nav-icons i:hover{
+  transform:scale(1.1);
+}
+
+.cart-icon{
+  position:relative;
+  cursor:pointer;
+}
+
+.cart-icon span{
+  position:absolute;
+  top:-8px;
+  right:-10px;
+  background:black;
+  color:white;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:11px;
+}
+
+
+
+/* ==========================================================================
+   Cards & Form Styling
+   ========================================================================== */
+.card, .sticky-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.card { padding: 32px; }
+.checkout-card { margin-bottom: 24px; }
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.step-badge {
+    background-color: var(--primary);
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.card-header h2 { font-size: 20px; font-weight: 600; }
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.full-width { grid-column: span 2; }
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+.form-group label { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.required-star { color: var(--error); }
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border-radius: var(--radius-md);
+    background-color: var(--bg-secondary);
+}
+
+/* Consolidating input and textarea selector styles */
+.input-wrapper :is(input, textarea) {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    outline: none;
+    background-color: transparent;
+    transition: all var(--transition-fast);
+}
+
+.input-wrapper textarea { resize: vertical; min-height: 90px; }
+
+.input-wrapper :is(input, textarea):focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--primary-light);
+}
+
+.input-prefix {
+    padding: 12px 0 12px 16px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    user-select: none;
+}
+
+#phone { padding-left: 8px; }
+
+/* Refactoring validation styles with :is() to reduce code lines */
+.form-group.has-error .input-wrapper :is(input, textarea) {
+    border-color: var(--error);
+    background-color: var(--error-bg);
+}
+
+.form-group.has-error .input-wrapper :is(input, textarea):focus {
+    box-shadow: 0 0 0 4px var(--error-bg);
+}
+
+.error-message {
+    color: var(--error);
+    font-size: 13px;
+    font-weight: 500;
+    display: none;
+    margin-top: 2px;
+}
+
+.form-group.has-error .error-message { display: block; }
+
+.form-group.has-success .input-wrapper :is(input, textarea) {
+    border-color: var(--success);
+    background-color: var(--success-bg);
+}
+
+.form-group.has-success .input-wrapper :is(input, textarea):focus {
+    box-shadow: 0 0 0 4px var(--success-bg);
+}
+
+.status-icon {
+    position: absolute;
+    right: 16px;
+    font-size: 16px;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all var(--transition-fast);
+}
+
+.form-group.has-error .status-icon { opacity: 1; transform: scale(1); color: var(--error); }
+.form-group.has-error .status-icon::after { content: "⚠️"; }
+.form-group.has-success .status-icon { opacity: 1; transform: scale(1); color: var(--success); }
+.form-group.has-success .status-icon::after { content: "✓"; font-weight: 700; }
+.field-hint { font-size: 12px; color: var(--text-secondary); }
+
+/* ==========================================================================
+   Payment Section Styles
+   ========================================================================== */
+.payment-selection { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+
+.payment-option-label {
+    display: flex;
+    align-items: center;
+    border: 1.5px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    cursor: pointer;
+    background-color: var(--bg-secondary);
+    transition: all var(--transition-fast);
+    position: relative;
+    user-select: none;
+}
+
+.payment-option-label:hover { border-color: var(--border-focus); background-color: var(--bg-primary); }
+.payment-option-label input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
+
+.custom-radio {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    margin-right: 16px;
+    position: relative;
+    flex-shrink: 0;
+    transition: all var(--transition-fast);
+}
+
+.payment-option-label input[type="radio"]:checked + .custom-radio {
+    border-color: var(--primary);
+    background-color: var(--primary);
+}
+
+.payment-option-label input[type="radio"]:checked + .custom-radio::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.payment-icon { font-size: 24px; margin-right: 16px; }
+.payment-text-group { display: flex; flex-direction: column; }
+.payment-title { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+.payment-desc { font-size: 12px; color: var(--text-secondary); }
+
+.payment-option-label:has(input[type="radio"]:checked) {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 1px var(--primary);
+    background-color: var(--primary-light);
+}
+
+.payment-option-label:has(input[type="radio"]:focus-visible) {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.payment-sub-forms-container {
+    background-color: var(--bg-primary);
+    border-radius: var(--radius-md);
+    margin-top: 16px;
+    overflow: hidden;
+}
+
+.payment-details-panel {
+    display: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity var(--transition-normal), transform var(--transition-normal);
+}
+
+.payment-details-panel.active {
+    display: block;
+    opacity: 1;
+    padding: 20px;
+    transform: translateY(0);
+}
+
+.cod-info-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background-color: var(--bg-secondary);
+    border-left: 4px solid var(--primary);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.cod-info-box .info-icon { font-size: 18px; }
+
+/* ==========================================================================
+   Order Summary & Sidebar
+   ========================================================================== */
+.checkout-sidebar { position: sticky; top: 24px; }
+.sticky-card { padding: 28px; }
+
+.summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1.5px solid var(--border-color);
+}
+
+.summary-header h2 { font-size: 18px; font-weight: 600; }
+
+.items-count-badge {
+    background-color: var(--primary-light);
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.summary-items {
+    max-height: 240px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding-right: 4px;
+}
+
+.summary-items::-webkit-scrollbar { width: 6px; }
+.summary-items::-webkit-scrollbar-thumb { background-color: var(--border-color); border-radius: 10px; }
+
+.summary-item-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.summary-item-row:last-child { border-bottom: none; }
+
+.item-img-wrapper {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.item-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+.item-meta { flex: 1; }
+.item-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+}
+
+.item-qty { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.item-price { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.pricing-breakdown { margin-top: 20px; padding-top: 16px; border-top: 1.5px solid var(--border-color); }
+.price-row { display: flex; justify-content: space-between; font-size: 14px; color: var(--text-secondary); margin-bottom: 10px; }
+.text-free { color: var(--success); font-weight: 600; }
+.summary-divider { border: none; border-top: 1px solid var(--border-color); margin: 12px 0; }
+.grand-total-row { font-size: 16px; color: var(--text-primary); margin-bottom: 0; }
+.total-price { font-size: 20px; color: var(--primary); }
+
+.btn-checkout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 16px;
+    background-color: var(--primary);
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+    margin-top: 24px;
+    transition: all var(--transition-fast);
+}
+
+.btn-checkout:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
+}
+
+.btn-checkout:active { transform: translateY(0); }
+.btn-checkout:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+.secure-checkout-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 16px;
+}
+
+/* ==========================================================================
+   Success Modal Overlay & Card
+   ========================================================================== */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-normal);
+}
+
+.modal-overlay:not(.hidden) { opacity: 1; pointer-events: auto; }
+
+.modal-card {
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
+    text-align: center;
+    transform: scale(0.92) translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-overlay:not(.hidden) .modal-card { transform: scale(1) translateY(0); }
+.hidden { display: none !important; }
+
+/* SVG check icon drawer animation */
+.success-icon-wrapper { display: flex; justify-content: center; margin-bottom: 24px; }
+.success-icon { width: 80px; height: 80px; }
+.success-icon-circle {
+    stroke: var(--success);
+    stroke-width: 2;
+    stroke-miterlimit: 10;
+    stroke-dasharray: 157;
+    stroke-dashoffset: 157;
+    animation: drawCircle 0.6s cubic-bezier(0.12, 0.15, 0.5, 0.9) forwards;
+}
+.success-icon-check {
+    stroke: var(--success);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: drawCheck 0.3s cubic-bezier(0.12, 0.15, 0.5, 0.9) 0.5s forwards;
+}
+
+@keyframes drawCircle { to { stroke-dashoffset: 0; } }
+@keyframes drawCheck { to { stroke-dashoffset: 0; } }
+
+#modal-title { font-size: 24px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); }
+.modal-subtitle { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; }
+
+.modal-details-card {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.modal-details-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13.5px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-details-row:last-child { border-bottom: none; }
+.details-label { color: var(--text-secondary); }
+.details-value { color: var(--text-primary); font-weight: 500; }
+.details-value.code { font-family: monospace; font-size: 13px; letter-spacing: 0.5px; }
+.confirmation-message { font-size: 13px; color: var(--text-secondary); margin-bottom: 32px; line-height: 1.6; }
+.modal-actions { display: flex; justify-content: center; }
+
+.btn-modal-primary {
+    display: inline-block;
+    padding: 14px 32px;
+    background-color: var(--primary);
+    color: white;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+    transition: all var(--transition-fast);
+}
+
+.btn-modal-primary:hover {
+    background-color: var(--primary-hover);
+    box-shadow: 0 6px 14px rgba(79, 70, 229, 0.3);
+}
+
+/* ==========================================================================
+   Responsive Media Queries
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .checkout-layout { grid-template-columns: 1.2fr 1fr; gap: 24px; }
+    .checkout-container { padding: 32px 20px 60px; }
+    .card { padding: 24px; }
+}
+
+@media (max-width: 768px) {
+    .checkout-layout { grid-template-columns: 1fr; gap: 28px; }
+    .checkout-sidebar { position: static; order: -1; }
+    .page-title { font-size: 28px; margin-bottom: 24px; }
+}
+
+@media (max-width: 576px) {
+    .header-container { padding: 12px 16px; }
+    .checkout-container { padding: 20px 16px 40px; }
+    .page-title { font-size: 24px; margin-bottom: 20px; }
+    .card { padding: 20px 16px; }
+    .form-grid { grid-template-columns: 1fr; gap: 16px; }
+    .full-width { grid-column: span 1; }
+    .payment-option-label { padding: 14px 16px; }
+    .payment-icon { margin-right: 12px; font-size: 20px; }
+    .custom-radio { margin-right: 12px; }
+    .modal-card { padding: 24px 20px; }
+}
