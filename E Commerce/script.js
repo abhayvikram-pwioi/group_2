@@ -115,6 +115,66 @@ dots.forEach((dot, index) => {
 
 let cartCountVal = 0;
 
+// =========================
+// LOCAL STORAGE CART HELPER FUNCTIONS
+// =========================
+function getCart() {
+  try {
+    return JSON.parse(localStorage.getItem("velora_cart")) || [];
+  } catch (e) {
+    console.error("Failed to parse cart:", e);
+    return [];
+  }
+}
+
+function saveCart(cart) {
+  localStorage.setItem("velora_cart", JSON.stringify(cart));
+}
+
+function addToCart(product, quantity) {
+  const cart = getCart();
+  const existingIndex = cart.findIndex(item => item.id == product.id);
+  const inrPrice = Math.round(product.price * EXCHANGE_RATE);
+  const discountPercent = Math.round(product.discountPercentage || 0);
+  const couponDiscount = Math.round(inrPrice * (Math.round(discountPercent / 3 || 5) / 100));
+
+  const couponChk = document.getElementById("coupon-chk");
+  const couponApplied = couponChk ? couponChk.checked : false;
+  const finalPrice = inrPrice - (couponApplied ? couponDiscount : 0);
+
+  const image = product.images && product.images.length > 0 ? product.images[0] : product.thumbnail;
+
+  if (existingIndex > -1) {
+    cart[existingIndex].quantity += quantity;
+    cart[existingIndex].price = finalPrice;
+  } else {
+    cart.push({
+      id: product.id,
+      title: product.title,
+      price: finalPrice,
+      image: image,
+      quantity: quantity,
+      description: product.description || ""
+    });
+  }
+  saveCart(cart);
+  updateCartHeaderBadge();
+}
+
+function updateCartHeaderBadge() {
+  const cart = getCart();
+  const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+  cartCountVal = totalCount;
+  const cartBadge = document.getElementById("cart-badge");
+  if (cartBadge) {
+    cartBadge.textContent = totalCount;
+  }
+  const cartCountEl = document.querySelectorAll(".cart-icon span");
+  cartCountEl.forEach(el => {
+    el.textContent = totalCount;
+  });
+}
+
 function showFeedbackToast(message) {
   let toast = document.getElementById("velora-toast");
   if (!toast) {
@@ -147,13 +207,13 @@ function showFeedbackToast(message) {
   }, 2500);
 }
 
-document.addEventListener("click", (e) => {
+document.addEventListener("click", async (e) => {
   // 1. Wishlist Heart Click
   const wishlistBtn = e.target.closest(".wishlist-btn");
   if (wishlistBtn) {
     const icon = wishlistBtn.querySelector("i");
     wishlistBtn.classList.toggle("active");
-
+    
     // Check if we are inside the buy box on product.html
     const isBuyBox = wishlistBtn.closest(".product-buy-box");
     if (isBuyBox) {
@@ -186,18 +246,27 @@ document.addEventListener("click", (e) => {
     let increment = 1;
     // Check if we are inside the buy box on product.html
     const isBuyBox = cartBtn.closest(".product-buy-box");
+    let productId = null;
     if (isBuyBox) {
+      const urlParams = new URLSearchParams(window.location.search);
+      productId = urlParams.get("id");
       const qtySelect = document.getElementById("buy-box-qty");
       if (qtySelect) {
         increment = parseInt(qtySelect.value, 10) || 1;
       }
+    } else {
+      const card = cartBtn.closest(".product-card");
+      if (card) {
+        productId = card.getAttribute("data-id");
+      }
     }
 
-    cartCountVal += increment;
-    const cartCountEl = document.querySelectorAll(".cart-icon span");
-    cartCountEl.forEach(el => {
-      el.textContent = cartCountVal;
-    });
+    if (productId) {
+      const product = await fetchProductDetails(productId);
+      if (product) {
+        addToCart(product, increment);
+      }
+    }
 
     const originalText = cartBtn.innerHTML;
     cartBtn.innerHTML = "✓ ADDED";
@@ -223,11 +292,14 @@ document.addEventListener("click", (e) => {
       increment = parseInt(qtySelect.value, 10) || 1;
     }
 
-    cartCountVal += increment;
-    const cartCountEl = document.querySelectorAll(".cart-icon span");
-    cartCountEl.forEach(el => {
-      el.textContent = cartCountVal;
-    });
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get("id");
+    if (productId) {
+      const product = await fetchProductDetails(productId);
+      if (product) {
+        addToCart(product, increment);
+      }
+    }
 
     const originalText = buyNowBtn.innerHTML;
     buyNowBtn.innerHTML = "✓ PROCESSING...";
@@ -756,6 +828,7 @@ function setupProductDetailsListeners(product) {
 
 // Main initializer
 async function initDynamicProducts() {
+  updateCartHeaderBadge();
   const dressesGrid = document.getElementById("dresses-grid-container");
   const recommendedGrid = document.getElementById("recommended-products-grid");
   const featuredGrid = document.getElementById("featured-products-grid");
