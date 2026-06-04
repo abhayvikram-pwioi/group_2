@@ -1,16 +1,18 @@
 const slides=document.querySelectorAll(".slide"),dots=document.querySelectorAll(".dot");
-const nextBtn=document.querySelector(".right-arrow"),prevBtn=document.querySelector(".left-arrow");
-let currentSlide=0,autoSlide,cartCountVal=0;
+let currentSlide=0,autoSlide;
 const EXCHANGE_RATE=83;
-function showSlide(i){if(!slides||!slides.length)return;slides.forEach(s=>s.classList.remove("active"));dots.forEach(d=>d.classList.remove("active"));if(slides[i])slides[i].classList.add("active");if(dots[i])dots[i].classList.add("active")}
-function nextSlide(){if(!slides||!slides.length)return;currentSlide=(currentSlide+1)%slides.length;showSlide(currentSlide)}
-function prevSlide(){if(!slides||!slides.length)return;currentSlide=(currentSlide-1+slides.length)%slides.length;showSlide(currentSlide)}
-function startSlider(){if(!slides||!slides.length)return;autoSlide=setInterval(nextSlide,5000)}
-function restartSlider(){if(!slides||!slides.length)return;clearInterval(autoSlide);startSlider()}
-startSlider();
-if(nextBtn)nextBtn.addEventListener("click",()=>{nextSlide();restartSlider()});
-if(prevBtn)prevBtn.addEventListener("click",()=>{prevSlide();restartSlider()});
-dots.forEach((dot,i)=>dot.addEventListener("click",()=>{currentSlide=i;showSlide(currentSlide);restartSlider()}));
+
+function showSlide(i){
+  currentSlide = (i + slides.length) % slides.length;
+  slides.forEach((s, idx)=>s.classList.toggle("active", idx===currentSlide));
+  dots.forEach((d, idx)=>d.classList.toggle("active", idx===currentSlide));
+}
+if(slides.length){
+  autoSlide=setInterval(()=>showSlide(currentSlide+1),5000);
+  document.querySelector(".right-arrow")?.addEventListener("click",()=>{showSlide(currentSlide+1);clearInterval(autoSlide)});
+  document.querySelector(".left-arrow")?.addEventListener("click",()=>{showSlide(currentSlide-1);clearInterval(autoSlide)});
+  dots.forEach((dot,i)=>dot.addEventListener("click",()=>{showSlide(i);clearInterval(autoSlide)}));
+}
 
 function getCart(){try{return JSON.parse(localStorage.getItem("velora_cart"))||[]}catch(e){return[]}}
 function saveCart(c){localStorage.setItem("velora_cart",JSON.stringify(c))}
@@ -25,13 +27,12 @@ function addToCart(product,quantity){
   saveCart(cart);updateCartHeaderBadge();
 }
 function updateCartHeaderBadge(){
-  const cart=getCart(),tc=cart.reduce((s,i)=>s+i.quantity,0);cartCountVal=tc;
-  const b=document.getElementById("cart-badge");if(b)b.textContent=tc;
-  document.querySelectorAll(".cart-icon span").forEach(el=>el.textContent=tc);
+  const cart=getCart(),tc=cart.reduce((s,i)=>s+i.quantity,0);
+  document.querySelectorAll("#cart-badge, .cart-icon span").forEach(el=>el.textContent=tc);
 }
 function showFeedbackToast(msg){
   let t=document.getElementById("velora-toast");
-  if(!t){t=document.createElement("div");t.id="velora-toast";Object.assign(t.style,{position:"fixed",bottom:"30px",right:"30px",backgroundColor:"#000",color:"#fff",padding:"15px 30px",borderRadius:"30px",boxShadow:"0 10px 25px rgba(0,0,0,0.2)",zIndex:"10000",fontFamily:"inherit",fontSize:"14px",fontWeight:"bold",transition:"all 0.3s ease",opacity:"0",transform:"translateY(20px)"});document.body.appendChild(t)}
+  if(!t){t=document.createElement("div");t.id="velora-toast";t.style.cssText="position:fixed;bottom:30px;right:30px;background:#000;color:#fff;padding:15px 30px;border-radius:30px;box-shadow:0 10px 25px rgba(0,0,0,0.2);z-index:10000;font-weight:bold;transition:all 0.3s ease;opacity:0;transform:translateY(20px)";document.body.appendChild(t)}
   t.textContent=msg;t.style.opacity="1";t.style.transform="translateY(0)";
   setTimeout(()=>{t.style.opacity="0";t.style.transform="translateY(20px)"},2500);
 }
@@ -41,7 +42,7 @@ function getWishlist(){try{return JSON.parse(localStorage.getItem(WISHLIST_KEY))
 function saveWishlist(w){localStorage.setItem(WISHLIST_KEY,JSON.stringify(w));updateWishlistBadge()}
 function updateWishlistBadge(){const w=getWishlist();document.querySelectorAll('.wishlist-count, #wishlistBadge').forEach(el=>el.textContent=w.length)}
 function isInWishlist(id){return getWishlist().some(i=>String(i.id)===String(id))}
-function syncHearts(){document.querySelectorAll('.product-card[data-id]').forEach(card=>{const id=card.getAttribute('data-id'),btn=card.querySelector('.wishlist-btn'),icon=btn?btn.querySelector('i'):null;if(!btn||!icon)return;if(isInWishlist(id)){btn.classList.add('active');icon.className='fa-solid fa-heart';icon.style.color='#ff4b4b'}else{btn.classList.remove('active');icon.className='fa-regular fa-heart';icon.style.color=''}})}
+function syncHearts(){document.querySelectorAll('.product-card[data-id]').forEach(card=>{const id=card.getAttribute('data-id'),btn=card.querySelector('.wishlist-btn'),icon=btn?btn.querySelector('i'):null;if(!btn||!icon)return;const active=isInWishlist(id);btn.classList.toggle('active',active);if(icon){icon.className=active?'fa-solid fa-heart':'fa-regular fa-heart';icon.style.color=active?'#ff4b4b':''}})}
 function toggleWishlistForCard(card){const id=card.getAttribute('data-id');if(!id)return;let w=getWishlist();if(w.some(i=>String(i.id)===String(id))){w=w.filter(i=>String(i.id)!==String(id))}else{const imgEl=card.querySelector('.product-image img'),titleEl=card.querySelector('h3'),priceEl=card.querySelector('.price');w.push({id,img:imgEl?imgEl.src:'',title:titleEl?titleEl.textContent.trim():'',price:priceEl?priceEl.textContent.trim():''})}saveWishlist(w);syncHearts();renderWishlist()}
 
 const wishlistOverlay=document.getElementById('wishlistOverlay'),wishlistModal=document.getElementById('wishlistModal'),wishlistGrid=document.getElementById('wishlistGrid'),wishlistEmpty=document.getElementById('wishlistEmpty'),wishlistCountText=document.getElementById('wishlistCount');
@@ -98,7 +99,7 @@ document.addEventListener("keydown",(e)=>{if(e.key==="Escape"){closeCart();close
 const header=document.querySelector(".header");
 window.addEventListener("scroll",()=>{if(header)header.style.boxShadow=window.scrollY>20?"0 10px 25px rgba(0,0,0,0.08)":"0 2px 10px rgba(0,0,0,0.05)"});
 document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener("click",function(e){const t=document.querySelector(this.getAttribute("href"));if(t){e.preventDefault();t.scrollIntoView({behavior:"smooth"})}}));
-window.addEventListener("load",()=>{showSlide(0);syncHearts();updateWishlistBadge();updateCartHeaderBadge();console.log("VELORA Fashion Store Loaded Successfully 🚀")});
+window.addEventListener("load",()=>{if(slides.length)showSlide(0);syncHearts();updateWishlistBadge();updateCartHeaderBadge();console.log("VELORA Fashion Store Loaded Successfully 🚀")});
 
 const searchBtn=document.getElementById("searchBtn"),searchOverlay=document.getElementById("searchOverlay");
 const closeSearch=document.getElementById("closeSearch"),searchInput=document.querySelector(".search-box input"),searchRight=document.querySelector('.search-right');
@@ -182,17 +183,16 @@ function renderProductDetails(p){
   const thumbs=imgs.map((img,i)=>`<div class="thumb-img ${i===0?'active':''}" data-src="${img}"><img src="${img}" alt="${p.title} ${i+1}"></div>`).join("");
   return`<div class="product-gallery"><div class="main-image-wrapper"><img id="main-product-img" src="${imgs[0]}" alt="${p.title}"></div><div class="thumbnail-strip">${thumbs}</div></div>
 <div class="product-info"><h1 class="product-title">${p.title}</h1><a href="#" class="product-brand">Visit the ${p.brand||'VELORA'} Store</a>
-<div class="product-rating-stars"><span class="stars">${stars}</span><span class="rating-value">${p.rating||5} out of 5</span><a href="#" class="rating-link">(${p.reviews?p.reviews.length:12} customer reviews)</a></div><hr>
-<div class="price-box"><div class="price-row"><span class="discount-badge">-${dp}%</span><span class="current-price">${fp}</span></div><div class="mrp-price">M.R.P.: <span>${fm}</span></div><p style="font-size:12px;color:#565959;margin-top:5px;">Inclusive of all taxes</p></div>
-<div class="coupon-box"><input type="checkbox" id="coupon-chk"><label for="coupon-chk"><span class="coupon-label">Coupon</span> Apply ${Math.round(dp/3||5)}% coupon. <a href="#" style="color:#007185;text-decoration:none;">Details</a></label></div><hr>
-<div class="offers-section"><h4><i class="fa-solid fa-tags" style="color:#ffa41c;margin-right:8px;"></i> Offers</h4><div class="offers-grid"><div class="offer-card"><strong>Cashback</strong> Upto ₹50 cashback as Velora Pay balance.</div><div class="offer-card"><strong>Bank Offer</strong> Upto ₹750 discount on select Credit Cards.</div><div class="offer-card"><strong>Partner Offers</strong> Buy 2 and get 10% off on qualifying items.</div></div></div>
-<div class="services-row"><div class="service-item"><i class="fa-solid fa-money-bill-wave"></i><span>Pay on Delivery</span></div><div class="service-item"><i class="fa-solid fa-arrow-rotate-left"></i><span>${p.returnPolicy||'30 Days Returnable'}</span></div><div class="service-item"><i class="fa-solid fa-truck-fast"></i><span>${p.shippingInformation||'Ships in 3-5 days'}</span></div><div class="service-item"><i class="fa-solid fa-lock"></i><span>Secure Transaction</span></div></div><hr>
-<div class="specs-table-container"><h4>Product Specifications</h4><table class="specs-table"><tr><td>Brand</td><td>${p.brand||'VELORA'}</td></tr><tr><td>Category</td><td>${p.category}</td></tr><tr><td>SKU</td><td>${p.sku||'N/A'}</td></tr><tr><td>Weight</td><td>${p.weight?p.weight+'g':'N/A'}</td></tr><tr><td>Dimensions</td><td>${p.dimensions?`${p.dimensions.width} x ${p.dimensions.height} x ${p.dimensions.depth} cm`:'N/A'}</td></tr><tr><td>Warranty</td><td>${p.warrantyInformation||'N/A'}</td></tr></table></div><hr>
-<div style="margin-top:10px;"><h4 style="font-size:16px;margin-bottom:10px;color:#111;">About this item</h4><p style="font-size:14px;line-height:1.6;color:#333;">${p.description}</p></div></div>
-<div class="product-buy-box"><div class="buy-box-price">${fp}</div><p class="delivery-info"><strong>FREE delivery</strong> by <strong>${fd}</strong>.</p><p class="delivery-info" style="font-size:12px;color:#565959;">Or fastest delivery <strong>Tomorrow</strong>. Order within <strong>53 mins</strong>.</p>
-<p class="location-info"><i class="fa-solid fa-location-dot"></i> Delivering to Gurugram 122001 - Update location</p>
+<div class="product-rating-stars"><span class="stars">${stars}</span><span class="rating-value">${p.rating||5} out of 5</span><a href="#" class="rating-link">(${p.reviews?p.reviews.length:12} reviews)</a></div><hr>
+<div class="price-box"><div class="price-row"><span class="discount-badge">-${dp}%</span><span class="current-price">${fp}</span></div><div class="mrp-price">M.R.P.: <span>${fm}</span></div></div>
+<div class="coupon-box"><input type="checkbox" id="coupon-chk"><label for="coupon-chk"><span class="coupon-label">Coupon</span> Apply ${Math.round(dp/3||5)}% coupon.</label></div><hr>
+<div class="offers-section"><h4>Offers</h4><div class="offers-grid"><div class="offer-card"><strong>Cashback</strong> Upto ₹50 cashback as Velora Pay balance.</div><div class="offer-card"><strong>Bank Offer</strong> Upto ₹750 discount on select Credit Cards.</div></div></div>
+<div class="services-row"><div class="service-item"><i class="fa-solid fa-money-bill-wave"></i><span>Pay on Delivery</span></div><div class="service-item"><i class="fa-solid fa-arrow-rotate-left"></i><span>${p.returnPolicy||'30 Days Returnable'}</span></div><div class="service-item"><i class="fa-solid fa-truck-fast"></i><span>${p.shippingInformation||'Ships in 3-5 days'}</span></div></div><hr>
+<div class="specs-table-container"><h4>Specifications</h4><table class="specs-table"><tr><td>Brand</td><td>${p.brand||'VELORA'}</td></tr><tr><td>Category</td><td>${p.category}</td></tr><tr><td>SKU</td><td>${p.sku||'N/A'}</td></tr></table></div><hr>
+<div><h4 style="font-size:16px;margin-bottom:10px;color:#111;">About this item</h4><p style="font-size:14px;line-height:1.6;color:#333;">${p.description}</p></div></div>
+<div class="product-buy-box"><div class="buy-box-price">${fp}</div><p class="delivery-info"><strong>FREE delivery</strong> by <strong>${fd}</strong>.</p>
 <h3 class="stock-status ${p.stock>0?'in-stock':'low-stock'}">${p.stock>0?'In stock':'Out of stock'}</h3>
-<div class="qty-selector"><span>Quantity:</span><select id="buy-box-qty"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></div>
+<div class="qty-selector"><span>Quantity:</span><select id="buy-box-qty"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></div>
 <div class="buy-box-btns"><button class="cart-btn">ADD TO CART</button><button class="buy-now-btn">BUY NOW</button></div>
 <div class="buy-box-merchant"><table><tr><td>Ships from</td><td style="color:#333;">Velora</td></tr><tr><td>Sold by</td><td style="color:#333;">${p.brand||'VELORA'}</td></tr></table></div>
 <button class="wishlist-btn"><i class="fa-regular fa-heart" style="margin-right:8px;"></i> Add to Wish List</button></div>`;
@@ -211,7 +211,7 @@ async function initCatalogPage(){
   const dg=document.getElementById("dresses-grid-container");if(!dg)return;
   const cats=["womens-dresses","tops","womens-bags","womens-shoes","mens-shirts"];
   dg.innerHTML=`<div class="loading-state"><div class="spinner"></div><p>Loading premium collection...</p></div>`;
-  try{const r=await Promise.all(cats.map(c=>fetchCategoryProducts(c)));catalogProducts=r.flat()}catch(e){dg.innerHTML=`<p style="grid-column:1/-1;text-align:center;color:red;">Failed to load collection.</p>`;return}
+  try{const r=await Promise.all(cats.map(fetchCategoryProducts));catalogProducts=r.flat()}catch(e){dg.innerHTML=`<p style="grid-column:1/-1;text-align:center;color:red;">Failed to load collection.</p>`;return}
   setupCatalogListeners();applyFiltersAndSort();
 }
 function setupCatalogListeners(){
