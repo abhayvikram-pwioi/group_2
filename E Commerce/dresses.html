@@ -17,15 +17,18 @@
                 <a href="index.html" style="text-decoration: none; color: inherit; font-weight: bold; font-family: inherit;">VELORA</a>
             </div>
             <div class="nav-icons">
-                <i class="fa-solid fa-magnifying-glass" id="searchBtn"></i>
-                <i class="fa-regular fa-heart"></i>
+                <i class="fa-solid fa-magnifying-glass" id="searchBtn" style="cursor: pointer;"></i>
+                <i class="fa-regular fa-heart" id="wishlistBtn" style="cursor: pointer;"></i>
+                <span class="wishlist-count" id="wishlistBadge">0</span>
                 <div class="cart-icon">
                     <a href="cart.html">
                         <i class="fa-solid fa-bag-shopping"></i>
                         <span id="cart-badge">0</span>
                     </a>
                 </div>
-                <i class="fa-regular fa-user"></i>
+                <a href="account.html" class="user-link">
+                    <i class="fa-regular fa-user"></i>
+                </a>
             </div>
         </div>
 
@@ -78,6 +81,22 @@
                     <h3 class="recommended-title">RECOMMENDED FOR YOU</h3>
                     <div class="recommended-products" id="recommended-products-grid">
                         <!-- Will be dynamically populated -->
+                    </div>
+                    <!-- DRESSES RESULTS (hidden by default) -->
+                    <div id="dressResults" aria-hidden="true" style="display: none;">
+                        <div class="dress-results-inner">
+                            <h2>DRESSES</h2>
+                            <div class="dress-filters">
+                                <button>Birthday Dresses</button>
+                                <button>Midi Dresses</button>
+                                <button>Mini Dresses</button>
+                                <button>Party Wear</button>
+                                <button>Floral Dresses</button>
+                            </div>
+                            <div class="dress-grid product-grid">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -170,6 +189,29 @@
             </div>
         </div>
     </section>
+
+    <!-- Wishlist Modal -->
+    <div class="wishlist-overlay" id="wishlistOverlay"></div>
+    <div class="wishlist-modal" id="wishlistModal">
+        <div class="wishlist-header">
+            <div>
+                <p class="wishlist-label">Wishlist</p>
+                <h2>My Saved Items</h2>
+            </div>
+            <button class="wishlist-close" id="closeWishlist">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div class="wishlist-meta">
+            <span id="wishlistCount">0 items</span>
+            <p>Track your favorite looks and move them to cart anytime.</p>
+        </div>
+        <div class="wishlist-grid" id="wishlistGrid"></div>
+        <div class="wishlist-empty" id="wishlistEmpty">
+            <p>Your wishlist is empty.</p>
+            <small>Tap the heart on a product to save it here.</small>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

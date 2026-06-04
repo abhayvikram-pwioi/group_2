@@ -111,12 +111,24 @@ function showRecommended() {
   if (dressResults) { dressResults.classList.remove('active'); dressResults.style.display = 'none'; }
   const results = document.querySelector('.search-results'); if (results) results.remove();
 }
-function showDressResults() {
+async function showDressResults() {
   if (searchCategories) searchCategories.style.display = 'none';
   if (recommendedTitle) recommendedTitle.style.display = 'none';
   if (recommendedProducts) recommendedProducts.style.display = 'none';
   if (dressResults) { dressResults.classList.add('active'); dressResults.style.display = 'block'; }
   const results = document.querySelector('.search-results'); if (results) results.remove();
+
+  const dg = dressResults ? dressResults.querySelector('.dress-grid') : null;
+  if (dg) {
+    dg.innerHTML = `<div class="loading-state" style="grid-column: 1/-1; text-align: center; padding: 40px 0;"><div class="spinner" style="margin: 0 auto 10px;"></div><p>Loading dresses...</p></div>`;
+    const dresses = await fetchCategoryProducts("womens-dresses");
+    if (dresses && dresses.length > 0) {
+      dg.innerHTML = dresses.map(createProductCardHTML).join("");
+      syncHearts();
+    } else {
+      dg.innerHTML = `<p style="grid-column: 1/-1; text-align: center; padding: 40px 0;">No dresses found or failed to connect to API.</p>`;
+    }
+  }
 }
 
 if(searchBtn&&searchOverlay)searchBtn.addEventListener("click",()=>{searchOverlay.classList.add("show");showRecommended();if(searchInput)setTimeout(()=>searchInput.focus(),200)});
@@ -140,6 +152,15 @@ if(searchInput)searchInput.addEventListener("input",(e)=>{
   if(!v){showRecommended();return}
   if(v==='d'||v==='dress'||v==='dresses'||v.includes('dress')){showDressResults();return}
   renderSearchResults(v);
+});
+
+document.querySelectorAll('.popular-tags button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (searchInput) {
+      searchInput.value = btn.textContent;
+      searchInput.dispatchEvent(new Event('input'));
+    }
+  });
 });
 
 async function fetchCategoryProducts(cat){try{const r=await fetch(`https://dummyjson.com/products/category/${cat}`);if(!r.ok)throw new Error(r.status);return(await r.json()).products||[]}catch(e){return[]}}
