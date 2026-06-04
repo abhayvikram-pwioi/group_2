@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function discount(price, discountPercentage) {
+    return {
+        result: function () {
+            return price - (price * discountPercentage / 100);
+        }
+    };
+}
+
+
+const item = discount(1000, 20);
+console.log(item.result()); 
+
+    </script>
+</body>
+</html>
+
+
+
+
+<div class="search-right">
+
+    <div class="search-categories">
+
+      <div class="circle-item">
+        <img src="https://i.pinimg.com/1200x/04/ae/ba/04aeba86067b5eb67eefce829bc297b1.jpg">
+        <p>Dresses</p>
+      </div>
+
+      <div class="circle-item">
+        <img src="https://i.pinimg.com/1200x/5e/85/a1/5e85a18dabe6614aa249c12919a36593.jpg">
+        <p>Footwear</p>
+      </div>
+
+      <div class="circle-item">
+        <img src="https://i.pinimg.com/736x/38/a5/49/38a5495e95aa8285e4e977bae6a2ebe4.jpg">
+        <p>Tops</p>
+      </div>
+
+      <div class="circle-item">
+        <img src="https://i.pinimg.com/736x/9e/82/fd/9e82fd86769ef8ae7386afda326acbfb.jpg">
+        <p>Coords</p>
+      </div>
+
+      <div class="circle-item">
+        <img src="https://i.pinimg.com/736x/10/22/cd/1022cd8442a350d833a2e76c1c9d19ab.jpg">
+        <p>Trousers</p>
+      </div>
+
+      <div class="circle-item">
+        <img src="https://i.pinimg.com/736x/8c/dc/b0/8cdcb00670bd36c7d350ad7ef8b0780c.jpg">
+        <p>Curve</p>
+      </div>
+
+    </div>
+
+    <div id="searchResults" style="display:none;">

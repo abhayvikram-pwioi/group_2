@@ -28,7 +28,8 @@
 
         <i class="fa-solid fa-magnifying-glass" id="searchBtn"></i>
 
-        <i class="fa-regular fa-heart"></i>
+        <i class="fa-regular fa-heart" id="wishlistBtn"></i>
+        <span class="wishlist-count" id="wishlistBadge">0</span>
 
         <div class="cart-icon">
           <a href="cart.html">
@@ -37,7 +38,9 @@
           </a>
         </div>
 
-        <i class="fa-regular fa-user"></i>
+        <a href="account/account.html" class="user-link">
+                     <i class="fa-regular fa-user"></i>
+        </a>
 
       </div>
 
@@ -54,6 +57,7 @@
       <i class="fa-solid fa-magnifying-glass"></i>
 
       <input
+        id="searchInput"
         type="text"
         placeholder="Search For Dresses, Tops, Handbags..."
       >
@@ -162,6 +166,65 @@
         <span>₹649</span>
       </div>
 
+    </div>
+
+    <!-- DRESSES RESULTS (hidden by default) -->
+    <div id="dressResults" aria-hidden="true">
+      <div class="dress-results-inner">
+        <h2>DRESSES</h2>
+
+        <div class="dress-filters">
+          <button>Birthday Dresses</button>
+          <button>Midi Dresses</button>
+          <button>Mini Dresses</button>
+          <button>Party Wear</button>
+          <button>Floral Dresses</button>
+        </div>
+
+        <div class="dress-grid">
+          <!-- 8 sample dress cards -->
+          <div class="dress-card">
+            <img src="https://i.pinimg.com/1200x/2f/cd/30/2fcd3055447c4a775f920cf586a73f88.jpg" alt="Dress 1">
+            <h4>Ruched Mini Dress</h4>
+            <div class="price">₹699</div>
+          </div>
+          <div class="dress-card">
+            <img src="https://i.pinimg.com/1200x/a0/6f/11/a06f11631632ef63543dfa3477eab2c8.jpg" alt="Dress 2">
+            <h4>Slip Midi Dress</h4>
+            <div class="price">₹899</div>
+          </div>
+          <div class="dress-card">
+            <img src="https://i.pinimg.com/736x/e5/89/e4/e589e45b57adfe13e8d27d5b2a554dab.jpg" alt="Dress 3">
+            <h4>Floral Midi</h4>
+            <div class="price">₹999</div>
+          </div>
+          <div class="dress-card">
+            <img src="https://i.pinimg.com/736x/ef/30/b8/ef30b86fac8a5fc4f5ce004cae86beb2.jpg" alt="Dress 4">
+            <h4>Party Bodycon</h4>
+            <div class="price">₹899</div>
+          </div>
+          <div class="dress-card">
+            <img src="https://i.pinimg.com/1200x/46/8a/23/468a2327f7815a4bddd856dc8a07c9be.jpg" alt="Dress 5">
+            <h4>Tiered Mini</h4>
+            <div class="price">₹649</div>
+          </div>
+          <div class="dress-card">
+            <img src="https://i.pinimg.com/736x/38/a5/49/38a5495e95aa8285e4e977bae6a2ebe4.jpg" alt="Dress 6">
+            <h4>Summer Maxi</h4>
+            <div class="price">₹1,299</div>
+          </div>
+          <div class="dress-card">
+            <img src="https://i.pinimg.com/736x/9e/82/fd/9e82fd86769ef8ae7386afda326acbfb.jpg" alt="Dress 7">
+            <h4>Birthday Dress</h4>
+            <div class="price">₹1,099</div>
+          </div>
+          <div class="dress-card">
+            <img src="https://i.pinimg.com/736x/10/22/cd/1022cd8442a350d833a2e76c1c9d19ab.jpg" alt="Dress 8">
+            <h4>Mini Lace</h4>
+            <div class="price">₹799</div>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -334,7 +397,7 @@
 
       <!-- CARD 1 -->
 
-      <div class="product-card">
+      <div class="product-card" data-id="1">
 
         <div class="product-image">
 
@@ -363,7 +426,7 @@
 
       <!-- CARD 2 -->
 
-      <div class="product-card">
+      <div class="product-card" data-id="2">
 
         <div class="product-image">
 
@@ -389,7 +452,7 @@
 
       <!-- CARD 3 -->
 
-      <div class="product-card">
+      <div class="product-card" data-id="3">
 
         <div class="product-image">
 
@@ -416,7 +479,7 @@
 
       <!-- CARD 4 -->
 
-      <div class="product-card">
+      <div class="product-card" data-id="4">
 
         <div class="product-image">
 
@@ -460,7 +523,7 @@
 
       <!-- Product 5 -->
 
-      <div class="product-card">
+      <div class="product-card" data-id="5">
 
         <div class="product-image">
 
@@ -486,7 +549,7 @@
 
       <!-- Product 6 -->
 
-      <div class="product-card">
+      <div class="product-card" data-id="6">
 
         <div class="product-image">
 
@@ -512,7 +575,7 @@
 
       <!-- Product 7 -->
 
-      <div class="product-card">
+      <div class="product-card" data-id="7">
 
         <div class="product-image">
 
@@ -538,7 +601,7 @@
 
       <!-- Product 8 -->
 
-      <div class="product-card">
+      <div class="product-card" data-id="8">
 
         <div class="product-image">
 
@@ -651,6 +714,32 @@
     </div>
 
   </footer>
+
+  <div class="wishlist-overlay" id="wishlistOverlay"></div>
+
+  <div class="wishlist-modal" id="wishlistModal">
+    <div class="wishlist-header">
+      <div>
+        <p class="wishlist-label">Wishlist</p>
+        <h2>My Saved Items</h2>
+      </div>
+      <button class="wishlist-close" id="closeWishlist">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="wishlist-meta">
+      <span id="wishlistCount">0 items</span>
+      <p>Track your favorite looks and move them to cart anytime.</p>
+    </div>
+
+    <div class="wishlist-grid" id="wishlistGrid"></div>
+
+    <div class="wishlist-empty" id="wishlistEmpty">
+      <p>Your wishlist is empty.</p>
+      <small>Tap the heart on a product to save it here.</small>
+    </div>
+  </div>
 
   <!-- ================= JS ================= -->
 

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Checkout | E-commerce Store</title>
+    <meta name="description" content="Complete your purchase securely. Enter your shipping address and choose your payment method.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="checkout.css">
+</head>
+<body>
+    <div class="top-navbar">
+      <div class="logo">
+            <a href="index.html">
+                VELORA
+            </a>
+      </div>
+      <div class="nav-icons">
+            <i class="fa-solid fa-magnifying-glass" id="searchBtn"></i>
+            <i class="fa-regular fa-heart"></i>
+            <div class="cart-icon">
+                <a href="cart.html">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                </a>
+            </div>
+            <i class="fa-regular fa-user"></i>
+        </div>
+    </div>
+
+
+    <main class="checkout-container">
+        <h1 class="page-title">Secure Checkout</h1>
+        <div class="checkout-layout">
+            <section class="checkout-main">
+                <form id="checkout-form" novalidate>
+                    <div class="card checkout-card">
+                        <div class="card-header">
+                            <span class="step-badge">1</span>
+                            <h2>Shipping Information</h2>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label for="full-name">Full Name <span class="required-star">*</span></label>
+                                <div class="input-wrapper">
+                                    <input type="text" id="full-name" name="name" required placeholder="John Doe" autocomplete="name">
+                                    <span class="status-icon" aria-hidden="true"></span>
+                                </div>
+                                <span class="error-message" id="name-error" role="alert">Please enter your name (minimum 3 characters).</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address <span class="required-star">*</span></label>
+                                <div class="input-wrapper">
+                                    <input type="email" id="email" name="email" required placeholder="john.doe@example.com" autocomplete="email">
+                                    <span class="status-icon" aria-hidden="true"></span>
+                                </div>
+                                <span class="error-message" id="email-error" role="alert">Please enter a valid email address.</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number <span class="required-star">*</span></label>
+                                <div class="input-wrapper">
+                                    <span class="input-prefix">+91</span>
+                                    <input type="tel" id="phone" name="phone" required placeholder="98765 43210" autocomplete="tel" maxlength="10">
+                                    <span class="status-icon" aria-hidden="true"></span>
+                                </div>
+                                <span class="error-message" id="phone-error" role="alert">Please enter a valid 10-digit Indian phone number.</span>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="shipping-address">Shipping Address <span class="required-star">*</span></label>
+                                <div class="input-wrapper">
+                                    <textarea id="shipping-address" name="address" required placeholder="House No, Street, Landmark" autocomplete="street-address" rows="3"></textarea>
+                                    <span class="status-icon" aria-hidden="true"></span>
+                                </div>
+                                <span class="error-message" id="address-error" role="alert">Please enter your shipping address.</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="city">City <span class="required-star">*</span></label>
+                                <div class="input-wrapper">
+                                    <input type="text" id="city" name="city" required placeholder="Mumbai" autocomplete="address-level2">
+                                    <span class="status-icon" aria-hidden="true"></span>
+                                </div>
+                                <span class="error-message" id="city-error" role="alert">Please enter your city.</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="pincode">Pincode <span class="required-star">*</span></label>
+                                <div class="input-wrapper">
+                                    <input type="text" id="pincode" name="pincode" required placeholder="400001" maxlength="6" inputmode="numeric">
+                                    <span class="status-icon" aria-hidden="true"></span>
+                                </div>
+                                <span class="error-message" id="pincode-error" role="alert">Please enter a valid 6-digit pin code.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card checkout-card">
+                        <div class="card-header">
+                            <span class="step-badge">2</span>
+                            <h2>Payment Method</h2>
+                        </div>
+                        <div class="payment-selection" role="radiogroup" aria-required="true" aria-label="Payment Method Selection">
+                            <label class="payment-option-label" for="pay-credit">
+                                <input type="radio" id="pay-credit" name="payment-method" value="Credit Card" checked>
+                                <span class="custom-radio"></span>
+                                <span class="payment-icon">💳</span>
+                                <span class="payment-text-group">
+                                    <span class="payment-title">Credit Card</span>
+                                    <span class="payment-desc">Pay securely with Visa, Mastercard, or RuPay</span>
+                                </span>
+                            </label>
+                            <label class="payment-option-label" for="pay-debit">
+                                <input type="radio" id="pay-debit" name="payment-method" value="Debit Card">
+                                <span class="custom-radio"></span>
+                                <span class="payment-icon">🏦</span>
+                                <span class="payment-text-group">
+                                    <span class="payment-title">Debit Card</span>
+                                    <span class="payment-desc">Pay directly from your bank account</span>
+                                </span>
+                            </label>
+                            <label class="payment-option-label" for="pay-upi">
+                                <input type="radio" id="pay-upi" name="payment-method" value="UPI">
+                                <span class="custom-radio"></span>
+                                <span class="payment-icon">📱</span>
+                                <span class="payment-text-group">
+                                    <span class="payment-title">UPI / Net Banking</span>
+                                    <span class="payment-desc">Google Pay, PhonePe, Paytm, or BHIM</span>
+                                </span>
+                            </label>
+                            <label class="payment-option-label" for="pay-cod">
+                                <input type="radio" id="pay-cod" name="payment-method" value="Cash on Delivery">
+                                <span class="custom-radio"></span>
+                                <span class="payment-icon">💵</span>
+                                <span class="payment-text-group">
+                                    <span class="payment-title">Cash on Delivery</span>
+                                    <span class="payment-desc">Pay with cash or card at your doorstep</span>
+                                </span>
+                            </label>
+                        </div>
+
+                        <div class="payment-sub-forms-container">
+                            <div id="cod-details-panel" class="payment-details-panel">
+                                <div class="cod-info-box">
+                                    <span class="info-icon">ℹ️</span>
+                                    <p>An additional service charge of <strong>Rs 49</strong> may apply for Cash on Delivery. Please keep exact change ready during delivery.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </section>
+
+            <aside class="checkout-sidebar">
+                <div class="sticky-card">
+                    <div class="summary-header">
+                        <h2>Order Summary</h2>
+                        <span class="items-count-badge">3 Items</span>
+                    </div>
+                    <div class="summary-items">
+                        <div class="summary-item-row">
+                            <div class="item-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100" alt="Wireless Headphones PX7">
+                            </div>
+                            <div class="item-meta">
+                                <h3 class="item-title">Wireless Headphones PX7</h3>
+                                <p class="item-qty">Qty: 1</p>
+                            </div>
+                            <span class="item-price">Rs 2,999</span>
+                        </div>
+                        <div class="summary-item-row">
+                            <div class="item-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=100" alt="Mechanical Keyboard Pro">
+                            </div>
+                            <div class="item-meta">
+                                <h3 class="item-title">Mechanical Keyboard Pro</h3>
+                                <p class="item-qty">Qty: 1</p>
+                            </div>
+                            <span class="item-price">Rs 4,999</span>
+                        </div>
+                        <div class="summary-item-row">
+                            <div class="item-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=100" alt="Ergonomic Wireless Mouse">
+                            </div>
+                            <div class="item-meta">
+                                <h3 class="item-title">Ergonomic Wireless Mouse</h3>
+                                <p class="item-qty">Qty: 1</p>
+                            </div>
+                            <span class="item-price">Rs 1,599</span>
+                        </div>
+                    </div>
+                    <div class="pricing-breakdown">
+                        <div class="price-row"><span>Subtotal</span><span>Rs 9,597</span></div>
+                        <div class="price-row"><span>Delivery Charges</span><span class="text-free">FREE</span></div>
+                        <div class="price-row"><span>Taxes (GST)</span><span>Rs 500</span></div>
+                        <hr class="summary-divider">
+                        <div class="price-row grand-total-row">
+                            <strong>Grand Total</strong>
+                            <strong class="total-price">Rs 10,097</strong>
+                        </div>
+                    </div>
+                    <button type="submit" form="checkout-form" class="btn-checkout">Complete Payment</button>
+                    <div class="secure-checkout-badge"><span class="lock-icon">🔒</span> Secure 256-bit SSL encrypted connection</div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <div id="success-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-card">
+            <div class="success-icon-wrapper">
+                <div class="success-icon">
+                    <svg viewBox="0 0 52 52">
+                        <circle class="success-icon-circle" cx="26" cy="26" r="25" fill="none"/>
+                        <path class="success-icon-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                    </svg>
+                </div>
+            </div>
+            <h2 id="modal-title">Order Placed Successfully!</h2>
+            <p class="modal-subtitle">Thank you for shopping with us. Your order has been confirmed.</p>
+            <div class="modal-details-card">
+                <div class="modal-details-row"><span class="details-label">Customer Name:</span><strong class="details-value" id="modal-customer-name">-</strong></div>
+                <div class="modal-details-row"><span class="details-label">Email Address:</span><strong class="details-value" id="modal-email">-</strong></div>
+                <div class="modal-details-row"><span class="details-label">Payment Method:</span><strong class="details-value" id="modal-payment-method">-</strong></div>
+                <div class="modal-details-row"><span class="details-label">Order Number:</span><strong class="details-value code" id="modal-order-number">TC-98317-2938</strong></div>
+            </div>
+            <div class="confirmation-message">
+                <p>We've sent a detailed confirmation email with invoice details and shipment tracking link to your email address.</p>
+            </div>
+            <div class="modal-actions">
+                <a href="index.html" class="btn-modal-primary" id="btn-continue-shopping">Continue Shopping</a>
+            </div>
+        </div>
+    </div>
+    <script src="checkout.js"></script>
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VELORA | My Account</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="account.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- ================= HEADER ================= -->
+
+  <header class="header">
+
+    <div class="top-navbar">
+
+      <div class="logo">
+        VELORA
+      </div>
+
+      <div class="nav-icons">
+
+        <i class="fa-solid fa-magnifying-glass" id="searchBtn"></i>
+
+        <i class="fa-regular fa-heart" id="wishlistBtn"></i>
+        <span class="wishlist-count" id="wishlistBadge">0</span>
+
+        <div class="cart-icon">
+
+          <a href="../cart.html">
+            <i class="fa-solid fa-bag-shopping"></i>
+          </a>
+          <span>2</span>
+
+        </div>
+
+        <i class="fa-regular fa-user"></i>
+
+      </div>
+
+    </div>
+
+    <!-- SEARCH OVERLAY -->
+
+    <div class="search-overlay" id="searchOverlay">
+
+      <div class="search-container">
+
+        <div class="search-box">
+
+          <i class="fa-solid fa-magnifying-glass"></i>
+
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="Search For Dresses, Tops, Handbags..."
+          >
+
+        </div>
+
+        <button id="closeSearch">
+          Cancel
+        </button>
+
+      </div>
+
+      <!-- POPULAR CHOICES -->
+
+      <div class="search-layout">
+
+        <!-- LEFT -->
+
+        <div class="search-left">
+
+          <h3>POPULAR CHOICES</h3>
+
+          <div class="popular-tags">
+
+            <button>Casual Wear</button>
+            <button>Party Wear</button>
+            <button>Dresses</button>
+            <button>Formal Wear</button>
+            <button>Mini Dresses</button>
+
+          </div>
+
+        </div>
+
+        <!-- RIGHT -->
+
+        <div class="search-right">
+
+          <div class="search-categories">
+
+            <div class="circle-item">
+              <img src="https://i.pinimg.com/1200x/04/ae/ba/04aeba86067b5eb67eefce829bc297b1.jpg">
+              <p>Dresses</p>
+            </div>
+
+            <div class="circle-item">
+              <img src="https://i.pinimg.com/1200x/5e/85/a1/5e85a18dabe6614aa249c12919a36593.jpg">
+              <p>Footwear</p>
+            </div>
+
+            <div class="circle-item">
+              <img src="https://i.pinimg.com/736x/38/a5/49/38a5495e95aa8285e4e977bae6a2ebe4.jpg">
+              <p>Tops</p>
+            </div>
+
+            <div class="circle-item">
+              <img src="https://i.pinimg.com/736x/9e/82/fd/9e82fd86769ef8ae7386afda326acbfb.jpg">
+              <p>Coords</p>
+            </div>
+
+            <div class="circle-item">
+              <img src="https://i.pinimg.com/736x/10/22/cd/1022cd8442a350d833a2e76c1c9d19ab.jpg">
+              <p>Trousers</p>
+            </div>
+
+            <div class="circle-item">
+              <img src="https://i.pinimg.com/736x/8c/dc/b0/8cdcb00670bd36c7d350ad7ef8b0780c.jpg">
+              <p>Curve</p>
+            </div>
+
+          </div>
+
+          <h3 class="recommended-title">
+            RECOMMENDED FOR YOU
+          </h3>
+
+          <div class="recommended-products">
+
+            <div class="recommend-card">
+              <img src="https://i.pinimg.com/1200x/2f/cd/30/2fcd3055447c4a775f920cf586a73f88.jpg">
+              <p>Corset Top</p>
+              <span>₹699</span>
+            </div>
+
+            <div class="recommend-card">
+              <img src="https://i.pinimg.com/1200x/a0/6f/11/a06f11631632ef63543dfa3477eab2c8.jpg">
+              <p>Brown Top</p>
+              <span>₹899</span>
+            </div>
+
+            <div class="recommend-card">
+              <img src="https://i.pinimg.com/736x/e5/89/e4/e589e45b57adfe13e8d27d5b2a554dab.jpg">
+              <p>Mini Dress</p>
+              <span>₹999</span>
+            </div>
+
+            <div class="recommend-card">
+              <img src="https://i.pinimg.com/736x/ef/30/b8/ef30b86fac8a5fc4f5ce004cae86beb2.jpg">
+              <p>Lace Top</p>
+              <span>₹899</span>
+            </div>
+
+            <div class="recommend-card">
+              <img src="https://i.pinimg.com/1200x/46/8a/23/468a2327f7815a4bddd856dc8a07c9be.jpg">
+              <p>Summer Dress</p>
+              <span>₹649</span>
+            </div>
+
+          </div>
+
+          <div id="dressResults" aria-hidden="true"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CATEGORY BAR -->
+
+    <nav class="category-navbar">
+
+      <a href="#new-arrivals">New Arrivals</a>
+
+      <a href="#handbags">Handbags</a>
+
+      <a href="#clothing">Clothing</a>
+
+      <a href="#footwear">Footwear</a>
+
+      <a href="#curve">Curve</a>
+
+      <a href="#accessories">Accessories</a>
+
+      <a href="#summer">Summer Collection</a>
+
+    </nav>
+
+  </header>
+
+  <!-- ================= ACCOUNT PAGE ================= -->
+
+  <main class="account-page">
+
+    <section class="account-hero">
+      <div class="account-header">
+        <div>
+          <p class="section-label">Profile</p>
+          <h1>My Account</h1>
+          <p>View your profile details, vouchers, quick actions, and policies in one place.</p>
+        </div>
+        <div class="profile-card">
+          <div class="profile-avatar">
+            <img src="https://i.pinimg.com/736x/4a/7a/28/4a7a28044ec965c36843d1b8235c0bb2.jpg" alt="Profile picture">
+          </div>
+          <div class="profile-info">
+            <h2>ISHIKA</h2>
+            <p><strong>Phone</strong> 9812345678</p>
+            <p><strong>Email</strong> ishika@example.com</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="account-voucher">
+      <div class="section-label">Credit Voucher</div>
+      <div class="voucher-card">
+        <div class="voucher-top">
+          <span>Balance Remaining</span>
+          <strong>₹900</strong>
+        </div>
+        <div class="voucher-details">
+          <div>
+            <p>Voucher Number</p>
+            <strong>VL-092821</strong>
+          </div>
+          <div>
+            <p>Expiry Date</p>
+            <strong>31 Dec 2026</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="quick-actions-section">
+      <div class="section-label">Quick Actions</div>
+      <div class="quick-actions-grid">
+        <div class="action-card">
+          <i class="fa-solid fa-box-open"></i>
+          <span>My Orders</span>
+        </div>
+        <div class="action-card">
+          <i class="fa-solid fa-location-dot"></i>
+          <span>Addresses</span>
+        </div>
+        <div class="action-card contact-card" id="contactUsCard">
+          <i class="fa-brands fa-whatsapp"></i>
+          <span>Contact Us</span>
+        </div>
+        <div class="action-card">
+          <i class="fa-solid fa-circle-question"></i>
+          <span>FAQ</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="policy-section">
+      <div class="section-label">Policies</div>
+      <div class="policy-list">
+        <div class="policy-row">
+          <div>
+            <h3>Shipping Policy</h3>
+          </div>
+          <i class="fa-solid fa-chevron-down"></i>
+          <div class="policy-content">
+            <p>Enjoy fast delivery across India with tracking on all orders and premium packaging.</p>
+          </div>
+        </div>
+        <div class="policy-row">
+          <div>
+            <h3>Return Policy</h3>
+          </div>
+          <i class="fa-solid fa-chevron-down"></i>
+          <div class="policy-content">
+            <p>Return your order within 7 days of delivery if it didn't fit or match your expectations.</p>
+          </div>
+        </div>
+        <div class="policy-row">
+          <div>
+            <h3>Exchange Policy</h3>
+          </div>
+          <i class="fa-solid fa-chevron-down"></i>
+          <div class="policy-content">
+            <p>Exchange eligible items within 10 days with easy pickup and replacement options.</p>
+          </div>
+        </div>
+        <div class="policy-row">
+          <div>
+            <h3>Privacy Policy</h3>
+          </div>
+          <i class="fa-solid fa-chevron-down"></i>
+          <div class="policy-content">
+            <p>Your data is protected and used only to improve your shopping experience at VELORA.</p>
+          </div>
+        </div>
+        <div class="policy-row">
+          <div>
+            <h3>Terms of Service</h3>
+          </div>
+          <i class="fa-solid fa-chevron-down"></i>
+          <div class="policy-content">
+            <p>Review the terms for using our platform, placing orders, and managing your account.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="logout-wrap">
+      <button class="logout-button" id="logoutBtn">LOG OUT</button>
+    </div>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer class="footer">
+
+    <div class="footer-container">
+
+      <!-- LEFT -->
+
+      <div class="footer-left">
+
+        <h2>VELORA</h2>
+
+        <div class="social-icons">
+
+          <i class="fa-brands fa-facebook-f"></i>
+          <i class="fa-brands fa-youtube"></i>
+          <i class="fa-brands fa-instagram"></i>
+          <i class="fa-brands fa-snapchat"></i>
+
+        </div>
+
+        <p>Velora Fashion Pvt Ltd</p>
+
+        <p>Building No. D-257, Sector 63</p>
+
+        <p>Noida, Uttar Pradesh, India</p>
+
+        <p>201301</p>
+
+      </div>
+
+      <!-- CENTER -->
+
+      <div class="footer-column">
+
+        <h3>Shop</h3>
+
+        <a href="#">New Arrivals</a>
+        <a href="#">Tops</a>
+        <a href="#">Footwear</a>
+        <a href="#">Dresses</a>
+        <a href="#">Co-ords</a>
+        <a href="#">Handbags</a>
+
+      </div>
+
+      <!-- RIGHT -->
+
+      <div class="footer-column">
+
+        <h3>Support</h3>
+
+        <a href="#">Return Policy</a>
+        <a href="#">Shipping</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms Of Service</a>
+        <a href="#">FAQ</a>
+        <a href="#">Contact Us</a>
+
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+      <div class="payment-icons">
+
+        <span>VISA</span>
+        <span>MASTERCARD</span>
+        <span>AMEX</span>
+        <span>UPI</span>
+
+      </div>
+
+      <p>
+        © 2026 Velora Fashion. All Rights Reserved.
+      </p>
+
+    </div>
+
+  </footer>
+
+  <script src="account.js"></script>
+
+</body>
+
+</html>
