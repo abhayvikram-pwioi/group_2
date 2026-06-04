@@ -154,9 +154,9 @@
                 <div class="sticky-card">
                     <div class="summary-header">
                         <h2>Order Summary</h2>
-                        <span class="items-count-badge">3 Items</span>
+                        <span class="items-count-badge" id="checkout-items-count">3 Items</span>
                     </div>
-                    <div class="summary-items">
+                    <div class="summary-items" id="checkout-items-container">
                         <div class="summary-item-row">
                             <div class="item-img-wrapper">
                                 <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100" alt="Wireless Headphones PX7">
@@ -189,13 +189,15 @@
                         </div>
                     </div>
                     <div class="pricing-breakdown">
-                        <div class="price-row"><span>Subtotal</span><span>Rs 9,597</span></div>
+                        <div class="price-row"><span>Subtotal</span><span id="checkout-subtotal">Rs 9,597</span></div>
+                        <div class="price-row" id="checkout-discount-row" style="display: none; color: #16a34a; font-weight: bold;"><span>Discount</span><span id="checkout-discount">-Rs 0</span></div>
+                        <div class="price-row" id="checkout-giftwrap-row" style="display: none;"><span>Gift Wrapping</span><span id="checkout-giftwrap">Rs 0</span></div>
                         <div class="price-row"><span>Delivery Charges</span><span class="text-free">FREE</span></div>
-                        <div class="price-row"><span>Taxes (GST)</span><span>Rs 500</span></div>
+                        <div class="price-row"><span>Taxes (GST)</span><span id="checkout-tax">Rs 500</span></div>
                         <hr class="summary-divider">
                         <div class="price-row grand-total-row">
                             <strong>Grand Total</strong>
-                            <strong class="total-price">Rs 10,097</strong>
+                            <strong class="total-price" id="checkout-total">Rs 10,097</strong>
                         </div>
                     </div>
                     <button type="submit" form="checkout-form" class="btn-checkout">Complete Payment</button>

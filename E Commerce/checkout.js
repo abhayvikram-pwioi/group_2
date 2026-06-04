@@ -1,6 +1,95 @@
 document.addEventListener('DOMContentLoaded', () => {
     const $ = s => document.getElementById(s);
     const form = $('checkout-form'), successModal = $('success-modal'), continueShoppingBtn = $('btn-continue-shopping');
+
+    function getCart() {
+        try {
+            return JSON.parse(localStorage.getItem("velora_cart")) || [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    const cart = getCart();
+    if (cart.length === 0) {
+        alert("Your cart is empty! Redirecting to Cart page...");
+        window.location.href = "cart.html";
+        return;
+    }
+
+    // Dynamic Summary Loading
+    const itemsCountEl = $('checkout-items-count');
+    const itemsContainerEl = $('checkout-items-container');
+    const subtotalEl = $('checkout-subtotal');
+    const taxEl = $('checkout-tax');
+    const totalEl = $('checkout-total');
+
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    if (itemsCountEl) {
+        itemsCountEl.textContent = `${totalItems} Item${totalItems === 1 ? '' : 's'}`;
+    }
+
+    let itemsHtml = "";
+    let subtotal = 0;
+    cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        subtotal += itemTotal;
+        itemsHtml += `
+        <div class="summary-item-row">
+            <div class="item-img-wrapper">
+                <img src="${item.image}" alt="${item.title}">
+            </div>
+            <div class="item-meta">
+                <h3 class="item-title">${item.title}</h3>
+                <p class="item-qty">Qty: ${item.quantity}</p>
+            </div>
+            <span class="item-price">Rs ${itemTotal.toLocaleString('en-IN')}</span>
+        </div>
+        `;
+    });
+
+    if (itemsContainerEl) {
+        itemsContainerEl.innerHTML = itemsHtml;
+    }
+
+    // Retrieve discount and giftwrap states
+    const discountPercent = parseInt(localStorage.getItem("velora_discount_percent") || "0", 10);
+    const isGiftWrap = localStorage.getItem("velora_gift_wrap") === "true";
+
+    const discount = Math.round(subtotal * (discountPercent / 100));
+    const discountRow = $('checkout-discount-row');
+    const discountVal = $('checkout-discount');
+    if (discountPercent > 0 && discountRow && discountVal) {
+        discountVal.textContent = `-Rs ${discount.toLocaleString('en-IN')}`;
+        discountRow.style.display = 'flex';
+    } else if (discountRow) {
+        discountRow.style.display = 'none';
+    }
+
+    const giftwrapCost = isGiftWrap ? 50 : 0;
+    const giftwrapRow = $('checkout-giftwrap-row');
+    const giftwrapVal = $('checkout-giftwrap');
+    if (isGiftWrap && giftwrapRow && giftwrapVal) {
+        giftwrapVal.textContent = `Rs ${giftwrapCost}`;
+        giftwrapRow.style.display = 'flex';
+    } else if (giftwrapRow) {
+        giftwrapRow.style.display = 'none';
+    }
+
+    const taxableAmount = Math.max(0, subtotal - discount + giftwrapCost);
+    const tax = Math.round(taxableAmount * 0.05);
+    const grandTotal = taxableAmount + tax;
+
+    if (subtotalEl) {
+        subtotalEl.textContent = `Rs ${subtotal.toLocaleString('en-IN')}`;
+    }
+    if (taxEl) {
+        taxEl.textContent = `Rs ${tax.toLocaleString('en-IN')}`;
+    }
+    if (totalEl) {
+        totalEl.textContent = `Rs ${grandTotal.toLocaleString('en-IN')}`;
+    }
+
     const fields = {
         'full-name': [v => v.length >= 3, "Full Name must be at least 3 characters."],
         'email': [v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), "Enter a valid email address."],
@@ -43,6 +132,12 @@ document.addEventListener('DOMContentLoaded', () => {
             $('modal-email').textContent = $('email').value;
             $('modal-payment-method').textContent = form.querySelector('input[name="payment-method"]:checked').value;
             $('modal-order-number').textContent = `TC-${Math.floor(100000 + Math.random() * 900000)}-IND`;
+            
+            // Clear cart on successful order placement
+            localStorage.setItem("velora_cart", JSON.stringify([]));
+            localStorage.removeItem("velora_discount_percent");
+            localStorage.removeItem("velora_gift_wrap");
+
             successModal.classList.remove('hidden');
             setTimeout(() => continueShoppingBtn?.focus(), 100);
             document.addEventListener('keydown', trapFocus);

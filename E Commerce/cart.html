@@ -122,12 +122,45 @@
         <div class="summary-box">
             <h2>Order Summary</h2>
             <hr>
-            <p id="cart-summary-subtotal">Subtotal : Rs 0</p>
-            <p>Shipping : FREE</p>
-            <p id="cart-summary-tax">Tax : Rs 0</p>
+            <div class="summary-details">
+                <p id="cart-summary-subtotal">Subtotal : Rs 0</p>
+                <p id="cart-summary-discount" style="display: none; color: #16a34a; font-weight: bold;">Discount : -Rs 0</p>
+                <p id="cart-summary-giftwrap" style="display: none;">Gift Wrapping : Rs 0</p>
+                <p>Shipping : FREE</p>
+                <p id="cart-summary-tax">Tax : Rs 0</p>
+            </div>
             <hr>
             <h2 id="cart-summary-total">Total : Rs 0</h2>
+            
+            <!-- Interactive Gift Wrap -->
+            <div class="gift-wrap-container">
+                <label for="gift-wrap-checkbox" class="gift-wrap-label">
+                    <input type="checkbox" id="gift-wrap-checkbox">
+                    <span>🎁 Add Premium Gift Wrap (+ Rs 50)</span>
+                </label>
+            </div>
+
+            <!-- Interactive Promo Code -->
+            <div class="promo-container">
+                <div class="promo-input-group">
+                    <input type="text" id="promo-code-input" placeholder="Promo Code (e.g. VELORA10)">
+                    <button id="apply-promo-btn">Apply</button>
+                </div>
+                <p id="promo-status-msg" style="display: none; margin: 8px 0 0; font-size: 13px; font-weight: 600;"></p>
+            </div>
+
             <a href="checkout.html"><button id="cart-checkout-btn">Proceed to Checkout</button></a>
+
+            <!-- Premium Trust Badges -->
+            <div class="payment-icons-strip">
+                <span>SECURE CHECKOUT GUARANTEED</span>
+                <div class="payment-logos">
+                    <i class="fa-brands fa-cc-visa" style="color: #1a1f71;"></i>
+                    <i class="fa-brands fa-cc-mastercard" style="color: #eb001b;"></i>
+                    <i class="fa-solid fa-mobile-screen-button" style="color: #008f39;" title="UPI Payments"></i>
+                    <i class="fa-solid fa-truck" style="color: #000000;" title="Cash on Delivery"></i>
+                </div>
+            </div>
         </div>
     </div>
 
