@@ -981,6 +981,7 @@ a{
   height:100vh;
   background:white;
   z-index:2000;
+  overflow-y:auto;
 
   opacity:0;
   visibility:hidden;
@@ -2068,5 +2069,25 @@ cursor:pointer;
   }
   .drag-drop-zone i {
     font-size: 18px;
+  }
+  .search-layout {
+    flex-direction: column;
+    gap: 30px;
+    padding: 0 20px 40px;
+  }
+  .search-left {
+    width: 100%;
+  }
+  .search-right {
+    border-left: none;
+    padding-left: 0;
+  }
+  .search-categories {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  .circle-item img {
+    width: 80px;
+    height: 80px;
   }
 }

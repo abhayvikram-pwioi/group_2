@@ -5,14 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VELORA | My Account</title>
-  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="account.css">
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -24,26 +22,26 @@
     <div class="top-navbar">
 
       <div class="logo">
-        VELORA
+        <a href="index.html" style="text-decoration: none; color: inherit; font-weight: bold; font-family: inherit;">VELORA</a>
       </div>
 
       <div class="nav-icons">
 
-        <i class="fa-solid fa-magnifying-glass" id="searchBtn"></i>
+        <i class="fa-solid fa-magnifying-glass" id="searchBtn" style="cursor: pointer;"></i>
 
-        <i class="fa-regular fa-heart" id="wishlistBtn"></i>
+        <i class="fa-regular fa-heart" id="wishlistBtn" style="cursor: pointer;"></i>
         <span class="wishlist-count" id="wishlistBadge">0</span>
 
         <div class="cart-icon">
-
-          <a href="../cart.html">
+          <a href="cart.html">
             <i class="fa-solid fa-bag-shopping"></i>
+            <span id="cart-badge">0</span>
           </a>
-          <span>2</span>
-
         </div>
 
-        <i class="fa-regular fa-user"></i>
+        <a href="account.html" class="user-link">
+          <i class="fa-regular fa-user"></i>
+        </a>
 
       </div>
 
@@ -59,11 +57,7 @@
 
           <i class="fa-solid fa-magnifying-glass"></i>
 
-          <input
-            id="searchInput"
-            type="text"
-            placeholder="Search For Dresses, Tops, Handbags..."
-          >
+          <input id="searchInput" type="text" placeholder="Search For Dresses, Tops, Handbags...">
 
         </div>
 
@@ -137,41 +131,26 @@
             RECOMMENDED FOR YOU
           </h3>
 
-          <div class="recommended-products">
-
-            <div class="recommend-card">
-              <img src="https://i.pinimg.com/1200x/2f/cd/30/2fcd3055447c4a775f920cf586a73f88.jpg">
-              <p>Corset Top</p>
-              <span>₹699</span>
-            </div>
-
-            <div class="recommend-card">
-              <img src="https://i.pinimg.com/1200x/a0/6f/11/a06f11631632ef63543dfa3477eab2c8.jpg">
-              <p>Brown Top</p>
-              <span>₹899</span>
-            </div>
-
-            <div class="recommend-card">
-              <img src="https://i.pinimg.com/736x/e5/89/e4/e589e45b57adfe13e8d27d5b2a554dab.jpg">
-              <p>Mini Dress</p>
-              <span>₹999</span>
-            </div>
-
-            <div class="recommend-card">
-              <img src="https://i.pinimg.com/736x/ef/30/b8/ef30b86fac8a5fc4f5ce004cae86beb2.jpg">
-              <p>Lace Top</p>
-              <span>₹899</span>
-            </div>
-
-            <div class="recommend-card">
-              <img src="https://i.pinimg.com/1200x/46/8a/23/468a2327f7815a4bddd856dc8a07c9be.jpg">
-              <p>Summer Dress</p>
-              <span>₹649</span>
-            </div>
-
+          <div class="recommended-products" id="recommended-products-grid">
+            <!-- Will be dynamically populated -->
           </div>
 
-          <div id="dressResults" aria-hidden="true"></div>
+          <!-- DRESSES RESULTS (hidden by default) -->
+          <div id="dressResults" aria-hidden="true" style="display: none;">
+            <div class="dress-results-inner">
+              <h2>DRESSES</h2>
+              <div class="dress-filters">
+                <button>Birthday Dresses</button>
+                <button>Midi Dresses</button>
+                <button>Mini Dresses</button>
+                <button>Party Wear</button>
+                <button>Floral Dresses</button>
+              </div>
+              <div class="dress-grid product-grid">
+                <!-- Populated dynamically -->
+              </div>
+            </div>
+          </div>
 
         </div>
 
@@ -183,19 +162,19 @@
 
     <nav class="category-navbar">
 
-      <a href="#new-arrivals">New Arrivals</a>
+      <a href="index.html#new-arrivals">New Arrivals</a>
 
-      <a href="#handbags">Handbags</a>
+      <a href="index.html#handbags">Handbags</a>
 
-      <a href="#clothing">Clothing</a>
+      <a href="index.html#clothing">Clothing</a>
 
-      <a href="#footwear">Footwear</a>
+      <a href="index.html#footwear">Footwear</a>
 
-      <a href="#curve">Curve</a>
+      <a href="index.html#curve">Curve</a>
 
-      <a href="#accessories">Accessories</a>
+      <a href="index.html#accessories">Accessories</a>
 
-      <a href="#summer">Summer Collection</a>
+      <a href="index.html#summer">Summer Collection</a>
 
     </nav>
 
@@ -218,7 +197,7 @@
           </div>
           <div class="profile-info">
             <h2>ISHIKA</h2>
-            <p><strong>Phone</strong> 9812345678</p>
+            <p><strong>Phone</strong> +91 98123 45678</p>
             <p><strong>Email</strong> ishika@example.com</p>
           </div>
         </div>
@@ -406,6 +385,30 @@
 
   </footer>
 
+  <!-- Wishlist Modal -->
+  <div class="wishlist-overlay" id="wishlistOverlay"></div>
+  <div class="wishlist-modal" id="wishlistModal">
+    <div class="wishlist-header">
+      <div>
+        <p class="wishlist-label">Wishlist</p>
+        <h2>My Saved Items</h2>
+      </div>
+      <button class="wishlist-close" id="closeWishlist">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="wishlist-meta">
+      <span id="wishlistCount">0 items</span>
+      <p>Track your favorite looks and move them to cart anytime.</p>
+    </div>
+    <div class="wishlist-grid" id="wishlistGrid"></div>
+    <div class="wishlist-empty" id="wishlistEmpty">
+      <p>Your wishlist is empty.</p>
+      <small>Tap the heart on a product to save it here.</small>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
   <script src="account.js"></script>
 
 </body>
