@@ -1585,8 +1585,14 @@ cursor:pointer;
   border-radius: 4px;
   border: 1px solid #ccd0d2;
   background-color: #f0f2f2;
+  color: #000;
   margin-left: 8px;
   cursor: pointer;
+}
+
+.qty-selector select option {
+  color: #000;
+  background-color: #fff;
 }
 
 .product-buy-box .buy-box-btns {
@@ -1645,7 +1651,9 @@ cursor:pointer;
 }
 
 .product-buy-box .wishlist-btn {
+  position: static;
   width: 100%;
+  height: auto;
   padding: 10px;
   background-color: #fff;
   border: 1px solid #adb1b8;
@@ -1750,11 +1758,17 @@ cursor:pointer;
   border: 1px solid #ccc;
   border-radius: 4px;
   background: #fff;
+  color: #000;
   font-size: 15px;
   font-weight: 500;
   cursor: pointer;
   outline: none;
   transition: border-color 0.2s;
+}
+
+.sort-select-wrapper select option {
+  color: #000;
+  background-color: #fff;
 }
 
 .sort-select-wrapper select:hover {

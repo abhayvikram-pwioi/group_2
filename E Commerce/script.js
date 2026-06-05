@@ -112,22 +112,136 @@ function showRecommended() {
   if (dressResults) { dressResults.classList.remove('active'); dressResults.style.display = 'none'; }
   const results = document.querySelector('.search-results'); if (results) results.remove();
 }
+let searchResultsProducts = [];
+function applySearchResultsFilters() {
+  const dg = dressResults ? dressResults.querySelector('.dress-grid') : null;
+  if (!dg) return;
+  const catVal = document.getElementById("search-filter-category")?.value || "all";
+  const priceVal = document.getElementById("search-filter-price")?.value || "all";
+  const ratingVal = document.getElementById("search-filter-rating")?.value || "all";
+  const sortVal = document.getElementById("search-sort")?.value || "featured";
+  const activeSubbtn = document.querySelector(".dress-filters button.active");
+  const subcatVal = activeSubbtn ? activeSubbtn.textContent.trim().toLowerCase() : "";
+  let filtered = [...searchResultsProducts];
+  if (subcatVal) {
+    filtered = filtered.filter(p => {
+      const title = p.title.toLowerCase();
+      const desc = p.description.toLowerCase();
+      if (subcatVal.includes("midi")) return title.includes("skirt") || title.includes("suit") || title.includes("midi");
+      if (subcatVal.includes("mini")) return title.includes("corset") || title.includes("short") || title.includes("mini");
+      if (subcatVal.includes("party")) return title.includes("gown") || title.includes("suit") || title.includes("leather") || desc.includes("party") || desc.includes("event");
+      if (subcatVal.includes("floral")) return title.includes("pea") || title.includes("flower") || title.includes("floral") || desc.includes("playful");
+      return true;
+    });
+  }
+  if (catVal !== "all") filtered = filtered.filter(p => p.category === catVal);
+  if (priceVal !== "all") {
+    filtered = filtered.filter(p => {
+      const ip = Math.round(p.price * EXCHANGE_RATE);
+      if (priceVal === "under-2500") return ip < 2500;
+      if (priceVal === "2500-5000") return ip >= 2500 && ip <= 5000;
+      if (priceVal === "above-5000") return ip > 5000;
+      return true;
+    });
+  }
+  if (ratingVal !== "all") {
+    const minRating = parseFloat(ratingVal);
+    filtered = filtered.filter(p => p.rating >= minRating);
+  }
+  if (sortVal === "price-asc") filtered.sort((a, b) => a.price - b.price);
+  else if (sortVal === "price-desc") filtered.sort((a, b) => b.price - a.price);
+  else if (sortVal === "rating-desc") filtered.sort((a, b) => b.rating - a.rating);
+  if (filtered.length === 0) {
+    dg.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px 0;"><p style="font-weight:bold;color:#666;margin:0;">No matching products found.</p><p style="color:gray;font-size:13px;margin:5px 0 0;">Try resetting your filters.</p></div>`;
+  } else {
+    dg.innerHTML = filtered.map(createProductCardHTML).join("");
+    syncHearts();
+  }
+}
 async function showDressResults() {
   if (searchCategories) searchCategories.style.display = 'none';
   if (recommendedTitle) recommendedTitle.style.display = 'none';
   if (recommendedProducts) recommendedProducts.style.display = 'none';
   if (dressResults) { dressResults.classList.add('active'); dressResults.style.display = 'block'; }
   const results = document.querySelector('.search-results'); if (results) results.remove();
-
+  const inner = dressResults ? dressResults.querySelector('.dress-results-inner') : null;
   const dg = dressResults ? dressResults.querySelector('.dress-grid') : null;
-  if (dg) {
+  if (dg && inner) {
+    let filterBar = inner.querySelector(".search-filter-bar");
+    if (!filterBar) {
+      filterBar = document.createElement("div");
+      filterBar.className = "search-filter-bar";
+      filterBar.style.cssText = "display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px; align-items: center; padding: 12px 18px; background: #fafafa; border-radius: 12px; border: 1px solid #eee;";
+      filterBar.innerHTML = `
+        <div class="filter-item" style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 13px; font-weight: bold; color: #555;">Category:</span>
+          <select id="search-filter-category" style="padding: 6px 12px; border-radius: 6px; border: 1px solid #ccc; font-size: 13px; background: #fff; cursor: pointer; color: #000;">
+            <option value="all">All Categories</option>
+            <option value="womens-dresses">Womens Dresses</option>
+            <option value="tops">Tops</option>
+          </select>
+        </div>
+        <div class="filter-item" style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 13px; font-weight: bold; color: #555;">Price:</span>
+          <select id="search-filter-price" style="padding: 6px 12px; border-radius: 6px; border: 1px solid #ccc; font-size: 13px; background: #fff; cursor: pointer; color: #000;">
+            <option value="all">All Prices</option>
+            <option value="under-2500">Under ₹2,500</option>
+            <option value="2500-5000">₹2,500 - ₹5,000</option>
+            <option value="above-5000">Over ₹5,000</option>
+          </select>
+        </div>
+        <div class="filter-item" style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 13px; font-weight: bold; color: #555;">Rating:</span>
+          <select id="search-filter-rating" style="padding: 6px 12px; border-radius: 6px; border: 1px solid #ccc; font-size: 13px; background: #fff; cursor: pointer; color: #000;">
+            <option value="all">All Ratings</option>
+            <option value="4">4 Stars & Up</option>
+            <option value="3">3 Stars & Up</option>
+          </select>
+        </div>
+        <div class="filter-item" style="display: flex; align-items: center; gap: 8px; margin-left: auto;">
+          <span style="font-size: 13px; font-weight: bold; color: #555;">Sort By:</span>
+          <select id="search-sort" style="padding: 6px 12px; border-radius: 6px; border: 1px solid #ccc; font-size: 13px; background: #fff; cursor: pointer; color: #000;">
+            <option value="featured">Featured</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="rating-desc">Customer Rating</option>
+          </select>
+        </div>
+      `;
+      inner.insertBefore(filterBar, dg);
+      filterBar.querySelectorAll("select").forEach(sel => {
+        sel.addEventListener("change", applySearchResultsFilters);
+      });
+      const subBtns = inner.querySelectorAll(".dress-filters button");
+      subBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const wasActive = btn.classList.contains("active");
+          subBtns.forEach(b => {
+            b.classList.remove("active");
+            b.style.background = "#fff";
+            b.style.color = "#000";
+            b.style.borderColor = "#eee";
+          });
+          if (!wasActive) {
+            btn.classList.add("active");
+            btn.style.background = "#000";
+            btn.style.color = "#fff";
+            btn.style.borderColor = "#000";
+          }
+          applySearchResultsFilters();
+        });
+      });
+    }
     dg.innerHTML = `<div class="loading-state" style="grid-column: 1/-1; text-align: center; padding: 40px 0;"><div class="spinner" style="margin: 0 auto 10px;"></div><p>Loading dresses...</p></div>`;
-    const dresses = await fetchCategoryProducts("womens-dresses");
-    if (dresses && dresses.length > 0) {
-      dg.innerHTML = dresses.map(createProductCardHTML).join("");
-      syncHearts();
-    } else {
-      dg.innerHTML = `<p style="grid-column: 1/-1; text-align: center; padding: 40px 0;">No dresses found or failed to connect to API.</p>`;
+    try {
+      const [dresses, tops] = await Promise.all([
+        fetchCategoryProducts("womens-dresses"),
+        fetchCategoryProducts("tops")
+      ]);
+      searchResultsProducts = [...dresses, ...tops];
+      applySearchResultsFilters();
+    } catch (e) {
+      dg.innerHTML = `<p style="grid-column: 1/-1; text-align: center; padding: 40px 0; color: red;">Failed to load dresses collection.</p>`;
     }
   }
 }
@@ -223,6 +337,7 @@ function setupCatalogListeners(){
   if(tss)tss.addEventListener("change",()=>{ssr.forEach(r=>{if(r.value===tss.value)r.checked=true});applyFiltersAndSort()});
   ssr.forEach(r=>r.addEventListener("change",()=>{if(r.checked){if(tss)tss.value=r.value;applyFiltersAndSort()}}));
   const ab=document.getElementById("sidebarApplyBtn");if(ab)ab.addEventListener("click",()=>{applyFiltersAndSort();showFeedbackToast("Filters applied!")});
+  document.querySelectorAll(".cat-filter, .price-filter, .rating-filter").forEach(cb=>cb.addEventListener("change",applyFiltersAndSort));
   const clb=document.getElementById("sidebarClearBtn");
   if(clb)clb.addEventListener("click",()=>{document.querySelectorAll(".cat-filter").forEach(cb=>cb.checked=(cb.value==="womens-dresses"||cb.value==="tops"));document.querySelectorAll(".price-filter").forEach(cb=>cb.checked=false);document.querySelectorAll(".rating-filter").forEach(cb=>cb.checked=false);if(tss)tss.value="featured";ssr.forEach(r=>r.checked=(r.value==="featured"));applyFiltersAndSort();showFeedbackToast("Filters cleared.")});
 }
