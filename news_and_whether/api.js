@@ -1,0 +1,102 @@
+const newsGrid = document.getElementById("news-grid");
+const locationInput = document.getElementById("location-input");
+const weatherInfo = document.getElementById("weather-info");
+
+async function fetchNews() {
+    try {
+        let response = await fetch(
+            "https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en"
+        );
+
+        let data = await response.json();
+
+        let html = "";
+
+        for (let i = 0; i < data.items.length; i++) {
+            html += `
+                <div class="news-card">
+                    <h3>${data.items[i].title}</h3>
+                    <a href="${data.items[i].link}" target="_blank">
+                        Read More
+                    </a>
+                </div>
+            `;
+        }
+
+        newsGrid.innerHTML = html;
+    } catch {
+        newsGrid.innerHTML = "Error loading news";
+    }
+}
+
+async function fetchWeather() {
+    let city = locationInput.value;
+
+    if (city === "") {
+        weatherInfo.innerHTML = "Enter a city name";
+        return;
+    }
+
+    try {
+        let geoResponse = await fetch(
+            "https://geocoding-api.open-meteo.com/v1/search?name=" + city
+        );
+
+        let geoData = await geoResponse.json();
+
+        if (!geoData.results) {
+            weatherInfo.innerHTML = "City not found";
+            return;
+        }
+
+        let lat = geoData.results[0].latitude;
+        let lon = geoData.results[0].longitude;
+        let name = geoData.results[0].name;
+
+        let weatherResponse = await fetch(
+            "https://api.open-meteo.com/v1/forecast?latitude=" +
+            lat +
+            "&longitude=" +
+            lon +
+            "&current=temperature_2m"
+        );
+
+        let weatherData = await weatherResponse.json();
+
+        weatherInfo.innerHTML = `
+            <h3>${name}</h3>
+            <p>Temperature: ${weatherData.current.temperature_2m} °C</p>
+        `;
+    } catch {
+        weatherInfo.innerHTML = "Weather not found";
+    }
+}
+
+document.getElementById("get-weather-btn")
+    .addEventListener("click", fetchWeather);
+
+let mode = "news"; // tracks current mode
+
+document.getElementById("toggle-mode-btn").addEventListener("click", function () {
+    if (mode === "news") {
+        mode = "weather";
+
+        document.getElementById("toggle-mode-btn").textContent = "Switch to News";
+        document.getElementById("news-grid").style.display = "none";
+        document.getElementById("weather-controls").style.display = "block";
+        document.getElementById("weather-info").style.display = "block";
+
+        fetchWeather();
+    } else {
+        mode = "news";
+
+        document.getElementById("toggle-mode-btn").textContent = "Switch to Weather";
+        document.getElementById("news-grid").style.display = "block";
+        document.getElementById("weather-controls").style.display = "none";
+        document.getElementById("weather-info").style.display = "none";
+
+        fetchNews();
+    }
+});
+
+fetchNews();
