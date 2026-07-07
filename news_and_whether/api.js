@@ -245,8 +245,9 @@ function renderNewsCards(articles) {
             const source = article.source || "Breaking News";
             const published = formatDate(article.publishedAt || article.publishedDate);
             const description = article.description?.replace(/<[^>]+>/g, "").trim() || "Read the full story to learn more.";
+            const fallbackImage = `data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MDAiIGhlaWdodD0iMzAwIiB2aWV3Qm94PSIwIDAgNTAwIDMwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzFlMjkzYiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjOTRhM2I4IiBmb250LXdlaWdodD0iNjAwIj5Ob3J0aHN0YXIgSW50ZWxsaWdlbmNlPC90ZXh0Pjwvc3ZnPg==`;
             const imageMarkup = image
-                ? `<img class="news-card-image" src="${image}" alt="${article.title}" loading="lazy">`
+                ? `<img class="news-card-image" src="${image}" alt="${article.title}" loading="lazy" onerror="this.onerror=null; this.src='${fallbackImage}';">`
                 : `<div class="news-image-fallback">No Image Available</div>`;
 
             return `

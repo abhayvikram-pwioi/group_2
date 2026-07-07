@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A premium dedicated weather portal built with vanilla HTML, CSS, and JavaScript.">
+    <title>Northstar Weather</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-shell">
+        <header class="topbar">
+            <div class="brand">
+                <div class="brand-mark" aria-hidden="true">🌦️</div>
+                <div>
+                    <p class="eyebrow">Live Intelligence Hub</p>
+                    <h1 id="title-header">Northstar Weather</h1>
+                    <p id="sub-header">Inspect local and global conditions in real-time using live meteorological datasets.</p>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">Dashboard</a>
+                <a href="weather.html" class="nav-link active">Weather</a>
+                <a href="news.html" class="nav-link">News</a>
+            </nav>
+        </header>
+
+        <main class="dashboard-grid">
+            <!-- Settings panel for API Key -->
+            <section class="settings-panel" aria-label="API Configuration">
+                <div class="settings-header">
+                    <h4>OpenWeather API Configuration</h4>
+                    <span id="key-status" class="status-pill">No Key Set (Using Fallback)</span>
+                </div>
+                <div class="settings-input-group">
+                    <label class="sr-only" for="api-key-input">OpenWeather API Key</label>
+                    <input type="password" id="api-key-input" placeholder="Enter OpenWeather API Key" autocomplete="off">
+                    <button type="button" id="save-key-btn" class="secondary-btn">Save Key</button>
+                    <button type="button" id="clear-key-btn" class="secondary-btn" style="background: rgba(251, 113, 133, 0.15); color: #fb7185;">Clear</button>
+                </div>
+            </section>
+
+            <!-- Search Panel -->
+            <section id="weather-panel" class="panel" aria-labelledby="weather-heading">
+                <div class="panel-header">
+                    <div>
+                        <p class="eyebrow">Location Search</p>
+                        <h3 id="weather-heading">Weather Forecast</h3>
+                    </div>
+                    <div class="panel-actions">
+                        <button type="button" id="geolocate-btn" class="secondary-btn" aria-label="Use current location">
+                            📍 Locate Me
+                        </button>
+                        <div id="weather-controls" class="search-box" role="group" aria-label="Weather search">
+                            <label class="sr-only" for="location-input">Search city</label>
+                            <input type="text" id="location-input" value="Delhi" placeholder="Search city" autocomplete="off" aria-label="Search city">
+                            <button type="button" id="get-weather-btn" class="secondary-btn" aria-label="Get weather">Search</button>
+                        </div>
+                        <span id="weather-status" class="status-pill">Locating</span>
+                    </div>
+                </div>
+                <!-- Weather Info Container -->
+                <div id="weather-info" class="weather-shell"></div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>Made by Ishika Gangwar</p>
+        <p>Powered by OpenWeather API · Open Meteo API</p>
+        <p>© <span id="year"></span> Northstar Dashboard</p>
+    </footer>
+
+    <script src="weather.js"></script>
+</body>
+
+</html>

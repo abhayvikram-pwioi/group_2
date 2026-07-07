@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A premium news and weather dashboard built with vanilla HTML, CSS, and JavaScript.">
+    <meta name="description"
+        content="A premium news and weather dashboard built with vanilla HTML, CSS, and JavaScript.">
     <title>Northstar Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="app-shell">
         <header class="topbar">
@@ -18,6 +21,11 @@
                     <p id="sub-header">Stay informed and prepared with curated headlines and live weather insights.</p>
                 </div>
             </div>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link active">Dashboard</a>
+                <a href="weather.html" class="nav-link">Weather</a>
+                <a href="news.html" class="nav-link">News</a>
+            </nav>
         </header>
 
         <main class="dashboard-grid">
@@ -27,11 +35,11 @@
                     <h2>Monitor the world with clarity, speed, and calm.</h2>
                     <p>Browse trusted news stories and live weather conditions from a premium, responsive workspace.</p>
                 </div>
-                <div class="hero-badges" aria-label="Highlights">
+                <!-- <div class="hero-badges" aria-label="Highlights">
                     <div class="stat-pill">⚡ Live headlines</div>
                     <div class="stat-pill">🌦️ Live weather</div>
                     <div class="stat-pill">📱 Responsive layout</div>
-                </div>
+                </div> -->
             </section>
 
             <section id="weather-panel" class="panel" aria-labelledby="weather-heading">
@@ -43,8 +51,10 @@
                     <div class="panel-actions">
                         <div id="weather-controls" class="search-box" role="group" aria-label="Weather search">
                             <label class="sr-only" for="location-input">Search city</label>
-                            <input type="text" id="location-input" value="Delhi" placeholder="Search city" autocomplete="off" aria-label="Search city">
-                            <button type="button" id="get-weather-btn" class="secondary-btn" aria-label="Get weather">Search</button>
+                            <input type="text" id="location-input" value="Delhi" placeholder="Search city"
+                                autocomplete="off" aria-label="Search city">
+                            <button type="button" id="get-weather-btn" class="secondary-btn"
+                                aria-label="Get weather">Search</button>
                         </div>
                         <span id="weather-status" class="status-pill">Locating</span>
                     </div>
@@ -77,11 +87,12 @@
     </div>
 
     <footer class="footer">
-        <p>Made by Ishika Gangwar</p>
+        <p>Made by The Ishika Gangwar (Project Manager #GoGirls)</p>
         <p>Powered by Open Meteo API · News API</p>
         <p>© <span id="year"></span> Northstar Dashboard</p>
     </footer>
 
     <script src="api.js"></script>
 </body>
+
 </html>

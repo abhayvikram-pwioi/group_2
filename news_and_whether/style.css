@@ -38,6 +38,11 @@ body::before {
 }
 
 .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
     padding: 24px 28px;
     border: 1px solid var(--border);
     background: rgba(15, 23, 42, 0.74);
@@ -45,6 +50,74 @@ body::before {
     border-radius: 24px;
     box-shadow: var(--shadow);
 }
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    padding: 4px;
+    border-radius: 999px;
+}
+
+.nav-link {
+    padding: 8px 16px;
+    border-radius: 999px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.nav-link:hover {
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-link.active {
+    color: #ffffff;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+}
+
+.settings-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(16px);
+    margin-bottom: 24px;
+}
+
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.settings-header h4 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.settings-input-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.settings-input-group input {
+    flex: 1;
+    min-width: 240px;
+}
+
 
 .brand {
     display: flex;

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A premium dedicated news portal built with vanilla HTML, CSS, and JavaScript.">
+    <title>Northstar News</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-shell">
+        <header class="topbar">
+            <div class="brand">
+                <div class="brand-mark" aria-hidden="true">📰</div>
+                <div>
+                    <p class="eyebrow">Live Intelligence Hub</p>
+                    <h1 id="title-header">Northstar News</h1>
+                    <p id="sub-header">Stay ahead of global events with curated, real-time headlines across multiple categories.</p>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">Dashboard</a>
+                <a href="weather.html" class="nav-link">Weather</a>
+                <a href="news.html" class="nav-link active">News</a>
+            </nav>
+        </header>
+
+        <main class="dashboard-grid">
+            <!-- Settings panel for API Key -->
+            <section class="settings-panel" aria-label="API Configuration">
+                <div class="settings-header">
+                    <h4>NewsAPI Configuration</h4>
+                    <span id="key-status" class="status-pill">No Key Set (Using Fallback)</span>
+                </div>
+                <div class="settings-input-group">
+                    <label class="sr-only" for="api-key-input">NewsAPI Key</label>
+                    <input type="password" id="api-key-input" placeholder="Enter NewsAPI Key" autocomplete="off">
+                    <button type="button" id="save-key-btn" class="secondary-btn">Save Key</button>
+                    <button type="button" id="clear-key-btn" class="secondary-btn" style="background: rgba(251, 113, 133, 0.15); color: #fb7185;">Clear</button>
+                </div>
+            </section>
+
+            <!-- News Feed Panel -->
+            <section id="news-panel" class="panel" aria-labelledby="news-heading">
+                <div class="panel-header">
+                    <div>
+                        <p class="eyebrow">Curated Feed</p>
+                        <h3 id="news-heading">Global Stories</h3>
+                    </div>
+                    <div class="panel-actions">
+                        <!-- Country/Location Selector -->
+                        <label class="sr-only" for="country-select">Country</label>
+                        <select id="country-select" class="control-select" aria-label="Choose country source">
+                            <option value="in">🇮🇳 India</option>
+                            <option value="us">🇺🇸 United States</option>
+                            <option value="gb">🇬🇧 United Kingdom</option>
+                            <option value="ca">🇨🇦 Canada</option>
+                            <option value="au">🇦🇺 Australia</option>
+                            <option value="sg">🇸🇬 Singapore</option>
+                        </select>
+
+                        <!-- Category Selector -->
+                        <label class="sr-only" for="category-select">News category</label>
+                        <select id="category-select" class="control-select" aria-label="Choose news category">
+                            <option value="general">General</option>
+                            <option value="technology">Technology</option>
+                            <option value="sports">Sports</option>
+                            <option value="business">Business</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="health">Health</option>
+                        </select>
+                        <span id="news-status" class="status-pill">Loading</span>
+                    </div>
+                </div>
+                <!-- News Grid -->
+                <div id="news-grid" class="news-grid" role="list"></div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>Made by Ishika Gangwar</p>
+        <p>Powered by NewsAPI · GNews API</p>
+        <p>© <span id="year"></span> Northstar Dashboard</p>
+    </footer>
+
+    <script src="news.js"></script>
+</body>
+
+</html>
