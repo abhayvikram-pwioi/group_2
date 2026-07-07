@@ -1,29 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>India Top Headlines - Live News Portal</title>
+    <meta name="description" content="A premium news and weather dashboard built with vanilla HTML, CSS, and JavaScript.">
+    <title>Northstar Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <div class="container">
-        <header>
-            <h1 id="title-header">India Top Headlines</h1>
-            <p id="sub-header">Live, real-time news articles from top publishers in India</p>
-            <div>
-                <button id="toggle-mode-btn">Switch to Weather</button>
-            </div>
-            <div id="weather-controls" style="display: none; margin-top: 15px; margin-bottom: 15px;">
-                <input type="text" id="location-input" value="Delhi" placeholder="Enter city name">
-                <button id="get-weather-btn">Get Weather</button>
+    <div class="app-shell">
+        <header class="topbar">
+            <div class="brand">
+                <div class="brand-mark" aria-hidden="true">☁</div>
+                <div>
+                    <p class="eyebrow">Live Intelligence Hub</p>
+                    <h1 id="title-header">Northstar Dashboard</h1>
+                    <p id="sub-header">Stay informed and prepared with curated headlines and live weather insights.</p>
+                </div>
             </div>
         </header>
-        <main id="news-grid" class="news-grid"></main>
-        <div id="weather-info" style="display: none; margin-top: 15px;"></div>
+
+        <main class="dashboard-grid">
+            <section class="hero-card" aria-label="Dashboard overview">
+                <div class="hero-copy">
+                    <p class="eyebrow">Today at a glance</p>
+                    <h2>Monitor the world with clarity, speed, and calm.</h2>
+                    <p>Browse trusted news stories and live weather conditions from a premium, responsive workspace.</p>
+                </div>
+                <div class="hero-badges" aria-label="Highlights">
+                    <div class="stat-pill">⚡ Live headlines</div>
+                    <div class="stat-pill">🌦️ Live weather</div>
+                    <div class="stat-pill">📱 Responsive layout</div>
+                </div>
+            </section>
+
+            <section id="weather-panel" class="panel" aria-labelledby="weather-heading">
+                <div class="panel-header">
+                    <div>
+                        <p class="eyebrow">Weather Dashboard</p>
+                        <h3 id="weather-heading">Current weather</h3>
+                    </div>
+                    <div class="panel-actions">
+                        <div id="weather-controls" class="search-box" role="group" aria-label="Weather search">
+                            <label class="sr-only" for="location-input">Search city</label>
+                            <input type="text" id="location-input" value="Delhi" placeholder="Search city" autocomplete="off" aria-label="Search city">
+                            <button type="button" id="get-weather-btn" class="secondary-btn" aria-label="Get weather">Search</button>
+                        </div>
+                        <span id="weather-status" class="status-pill">Locating</span>
+                    </div>
+                </div>
+                <div id="weather-info" class="weather-shell"></div>
+            </section>
+
+            <section id="news-panel" class="panel" aria-labelledby="news-heading">
+                <div class="panel-header">
+                    <div>
+                        <p class="eyebrow">Latest News</p>
+                        <h3 id="news-heading">Top stories</h3>
+                    </div>
+                    <div class="panel-actions">
+                        <label class="sr-only" for="category-select">News category</label>
+                        <select id="category-select" class="control-select" aria-label="Choose news category">
+                            <option value="general">General</option>
+                            <option value="technology">Technology</option>
+                            <option value="sports">Sports</option>
+                            <option value="business">Business</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="health">Health</option>
+                        </select>
+                        <span id="news-status" class="status-pill">Loading</span>
+                    </div>
+                </div>
+                <div id="news-grid" class="news-grid" role="list"></div>
+            </section>
+        </main>
     </div>
+
+    <footer class="footer">
+        <p>Made by Ishika Gangwar</p>
+        <p>Powered by Open Meteo API · News API</p>
+        <p>© <span id="year"></span> Northstar Dashboard</p>
+    </footer>
+
     <script src="api.js"></script>
 </body>
-
 </html>
