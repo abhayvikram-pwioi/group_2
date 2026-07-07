@@ -3,10 +3,6 @@ const countrySelect = document.getElementById("country-select");
 const categorySelect = document.getElementById("category-select");
 const newsStatus = document.getElementById("news-status");
 const yearEl = document.getElementById("year");
-const apiKeyInput = document.getElementById("api-key-input");
-const saveKeyBtn = document.getElementById("save-key-btn");
-const clearKeyBtn = document.getElementById("clear-key-btn");
-const keyStatus = document.getElementById("key-status");
 
 const DEMO_ARTICLES = {
     general: [
@@ -36,19 +32,6 @@ const DEMO_ARTICLES = {
 };
 
 const getK = () => localStorage.getItem("newsApiKey") || "";
-
-function updateKeyUI() {
-    const k = getK();
-    keyStatus.textContent = k ? "Key Set (Using NewsAPI)" : "No Key Set (Using Fallback)";
-    keyStatus.style.cssText = k ? "background:rgba(56,189,248,0.16);color:#bae6fd;" : "background:rgba(255,255,255,0.08);color:#cbd5e1;";
-    apiKeyInput.value = k ? "••••••••••••••••••••" : "";
-}
-
-saveKeyBtn.onclick = () => {
-    const k = apiKeyInput.value.trim();
-    if (k && k !== "••••••••••••••••••••") { localStorage.setItem("newsApiKey", k); updateKeyUI(); fetchNews(); }
-};
-clearKeyBtn.onclick = () => { localStorage.removeItem("newsApiKey"); updateKeyUI(); fetchNews(); };
 
 const formatDate = (v) => v ? new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" }).format(new Date(v)) : "Recently published";
 
@@ -123,5 +106,4 @@ countrySelect.onchange = fetchNews;
 
 yearEl.textContent = new Date().getFullYear();
 detectUserCountry();
-updateKeyUI();
 fetchNews();

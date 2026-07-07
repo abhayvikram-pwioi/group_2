@@ -4,28 +4,11 @@ const weatherStatus = document.getElementById("weather-status");
 const yearEl = document.getElementById("year");
 const getWeatherBtn = document.getElementById("get-weather-btn");
 const geolocateBtn = document.getElementById("geolocate-btn");
-const apiKeyInput = document.getElementById("api-key-input");
-const saveKeyBtn = document.getElementById("save-key-btn");
-const clearKeyBtn = document.getElementById("clear-key-btn");
-const keyStatus = document.getElementById("key-status");
 
 const MAP = {0:"☀️",1:"🌤️",2:"⛅",3:"☁️",45:"🌫️",48:"🌫️",51:"🌦️",53:"🌦️",55:"🌧️",61:"🌧️",63:"🌧️",65:"⛈️",71:"🌨️",73:"❄️",75:"❄️",95:"⛈️",96:"⛈️",99:"⛈️"};
 const LBL = {0:"Clear sky",1:"Mainly clear",2:"Partly cloudy",3:"Overcast",45:"Fog",48:"Rime fog",51:"Light drizzle",53:"Moderate drizzle",55:"Dense drizzle",61:"Light rain",63:"Moderate rain",65:"Heavy rain",71:"Light snow",73:"Moderate snow",75:"Heavy snow",95:"Thunderstorm",96:"Thunderstorm with hail",99:"Heavy thunderstorm"};
 
 const getK = () => localStorage.getItem("openWeatherApiKey") || "";
-
-function updateKeyUI() {
-    const k = getK();
-    keyStatus.textContent = k ? "Key Set (Using OpenWeather)" : "No Key Set (Using Fallback)";
-    keyStatus.style.cssText = k ? "background:rgba(56,189,248,0.16);color:#bae6fd;" : "background:rgba(255,255,255,0.08);color:#cbd5e1;";
-    apiKeyInput.value = k ? "••••••••••••••••••••" : "";
-}
-
-saveKeyBtn.onclick = () => {
-    const k = apiKeyInput.value.trim();
-    if (k && k !== "••••••••••••••••••••") { localStorage.setItem("openWeatherApiKey", k); updateKeyUI(); fetchWeather(); }
-};
-clearKeyBtn.onclick = () => { localStorage.removeItem("openWeatherApiKey"); updateKeyUI(); fetchWeather(); };
 
 const showLoad = () => {
     weatherInfo.innerHTML = `<div class="weather-main"><div class="weather-card"><div class="skeleton-card"><div class="skeleton skeleton-line medium"></div><div class="skeleton skeleton-line long"></div><div class="skeleton skeleton-line short"></div></div></div><div class="weather-grid">${Array(6).fill('<div class="stat-card"><div class="skeleton skeleton-line short"></div><div class="skeleton skeleton-line medium"></div></div>').join("")}</div></div>`;
@@ -43,7 +26,7 @@ function renderCard(d) {
         ? `<img class="weather-icon-img" src="${iconUrl}" alt="${desc}" onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='block';" style="width:80px;height:80px;filter:drop-shadow(0 8px 16px rgba(0,0,0,0.2));"><div class="weather-icon" style="display:none;font-size:3.6rem;">${iconEmoji || '🌦️'}</div>`
         : `<div class="weather-icon" style="font-size:3.6rem;">${iconEmoji || '🌦️'}</div>`;
     weatherInfo.innerHTML = `<div class="weather-main"><div class="weather-card"><div class="weather-hero"><div><h4 style="font-size:1.6rem;font-weight:700;margin:0 0 4px;">${name}</h4><p style="margin:0 0 16px;font-weight:500;text-transform:capitalize;">${desc}</p><div style="font-size:3.4rem;font-weight:800;background:linear-gradient(to right,#ffffff,#93c5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">${temp}°C</div><div style="margin-top:10px;font-size:0.95rem;color:#bae6fd;">Humidity ${humidity}% • Wind ${wind} km/h</div><p style="margin:12px 0 0;font-size:0.8rem;color:var(--muted);">Last updated ${new Date().toLocaleString([],{hour:"numeric",minute:"2-digit"})}</p></div>${icon}</div></div><div class="weather-grid"><div class="stat-card"><span class="label">Feels Like</span><span class="value">${feels}°C</span></div><div class="stat-card"><span class="label">Humidity</span><span class="value">${humidity}%</span></div><div class="stat-card"><span class="label">Wind Speed</span><span class="value">${wind} km/h</span></div><div class="stat-card"><span class="label">Pressure</span><span class="value">${press} hPa</span></div><div class="stat-card"><span class="label">Min Temp</span><span class="value">${min}°C</span></div><div class="stat-card"><span class="label">Max Temp</span><span class="value">${max}°C</span></div></div></div>`;
-    weatherStatus.textContent = getK() ? "OpenWeather" : "Fallback";
+    weatherStatus.textContent = getK() ? "OpenWeather" : "Live";
 }
 
 async function fetchOW(city, coords) {
@@ -99,7 +82,6 @@ async function fetchWeather(city = locationInput.value.trim(), coords = null) {
                 renderCard(await fetchOW(city, coords));
             } catch (err) {
                 renderCard(await fetchOM(city, coords));
-                weatherStatus.textContent = "Fallback (OpenWeather Key Error)";
             }
         } else {
             renderCard(await fetchOM(city, coords));
@@ -121,5 +103,4 @@ getWeatherBtn.onclick = () => fetchWeather();
 locationInput.onkeydown = e => { if (e.key === "Enter") fetchWeather(); };
 geolocateBtn.onclick = () => requestLocation();
 yearEl.textContent = new Date().getFullYear();
-updateKeyUI();
 requestLocation();
