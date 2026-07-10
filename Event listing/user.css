@@ -1,0 +1,804 @@
+/*==========================
+        GLOBAL
+==========================*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#F7F8FC;
+}
+
+.dashboard{
+    display:flex;
+    min-height:100vh;
+}
+
+/*==========================
+        SIDEBAR
+==========================*/
+
+.sidebar{
+
+    width:250px;
+
+    height:100vh;
+
+    background:#fff;
+
+    border-right:1px solid #ececec;
+
+    position:fixed;
+
+    left:0;
+
+    top:0;
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.sidebar-top{
+
+    padding:30px 20px;
+
+}
+
+/* Logo */
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:45px;
+
+}
+
+.logo i{
+
+    width:48px;
+
+    height:48px;
+
+    border-radius:12px;
+
+    background:#6C3EF4;
+
+    color:#fff;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:20px;
+
+}
+
+.logo h2{
+
+    font-size:30px;
+
+}
+
+.logo span{
+
+    color:#6C3EF4;
+
+}
+
+/* Menu */
+
+.menu{
+
+    list-style:none;
+
+}
+
+.menu li{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:16px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    margin-bottom:10px;
+
+    transition:.3s;
+
+}
+
+.menu li:hover{
+
+    background:#F4EFFF;
+
+    color:#6C3EF4;
+
+}
+
+.menu .active{
+
+    background:#F4EFFF;
+
+    color:#6C3EF4;
+
+    font-weight:600;
+
+}
+
+/*==========================
+      MAIN CONTENT
+==========================*/
+
+.main-content{
+
+    margin-left:250px;
+
+    width:calc(100% - 250px);
+
+}
+
+/*==========================
+        TOPBAR
+==========================*/
+
+.topbar{
+
+    background:#fff;
+
+    height:85px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 40px;
+
+    border-bottom:1px solid #ececec;
+
+}
+
+.topbar h1{
+
+    font-size:34px;
+
+}
+
+.topbar p{
+
+    color:#666;
+
+    margin-top:4px;
+
+}
+
+/*==========================
+      USER PROFILE
+==========================*/
+
+.user-profile{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    cursor:pointer;
+
+}
+
+.avatar{
+
+    width:50px;
+
+    height:50px;
+
+    border-radius:50%;
+
+    background:#6C3EF4;
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-weight:600;
+
+}
+
+.user-profile h4{
+
+    font-size:16px;
+
+}
+
+.user-profile span{
+
+    color:#777;
+
+    font-size:13px;
+
+}
+
+/*==========================
+      FILTER BAR
+==========================*/
+
+.filter-section{
+
+    background:#fff;
+
+    margin:30px;
+
+    padding:20px;
+
+    border-radius:18px;
+
+    display:flex;
+
+    gap:15px;
+
+    align-items:center;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.05);
+
+}
+
+.filter-section input{
+
+    flex:1;
+
+    height:50px;
+
+    border:1px solid #ddd;
+
+    border-radius:12px;
+
+    padding:0 15px;
+
+    outline:none;
+
+}
+
+.filter-section select{
+
+    width:190px;
+
+    height:50px;
+
+    border:1px solid #ddd;
+
+    border-radius:12px;
+
+    padding:0 15px;
+
+    outline:none;
+
+}
+
+.filter-section button{
+
+    height:50px;
+
+    width:130px;
+
+    border:none;
+
+    background:#6C3EF4;
+
+    color:white;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.filter-section button:hover{
+
+    background:#5930D8;
+
+}
+
+/*==========================
+    EVENTS SECTION
+==========================*/
+
+.events-section{
+
+    padding:0 30px 30px;
+
+}
+
+.events-section h2{
+
+    margin-bottom:25px;
+
+    font-size:30px;
+
+}
+
+.event-container{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:22px;
+
+}
+/*==========================
+ MY REGISTRATIONS
+==========================*/
+
+.registration-section{
+
+    padding:0 30px 40px;
+
+}
+
+.registration-section h2{
+
+    margin-bottom:20px;
+
+}
+
+/*==========================
+        EVENT CARD
+==========================*/
+
+.event-card{
+
+    background:#fff;
+
+    border-radius:10px;
+
+    overflow:hidden;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+    transition:.35s;
+    
+
+}
+
+.event-card:hover{
+
+    transform:translateY(-8px);
+
+}
+
+.event-card img{
+
+    width:100%;
+
+    height:180px;
+
+    object-fit:cover;
+
+}
+
+.event-content{
+
+    padding:18px;
+
+}
+
+.category{
+
+    display:inline-block;
+
+    background:#F3ECFF;
+
+    color:#6C3EF4;
+
+    padding:7px 16px;
+
+    border-radius:30px;
+
+    font-size:14px;
+
+    margin-bottom:15px;
+
+}
+
+.event-content h3{
+
+    font-size:18px;
+
+    margin-bottom:10px;
+
+    color:#222;
+
+}
+
+.event-info{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+    color:#666;
+
+    font-size:14px;
+
+}
+
+.event-info i{
+
+    color:#6C3EF4;
+
+    width:20px;
+
+}
+
+.count{
+
+    font-weight:600;
+
+}
+
+.register-btn{
+
+    width:100%;
+
+    height:40px;
+
+    margin-top:12px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#6C3EF4;
+
+    color:white;
+
+    font-size:14px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.register-btn:hover{
+
+    background:#5930D8;
+
+}
+/*==========================
+    REGISTER MODAL
+==========================*/
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.5);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:9999;
+
+}
+
+.register-modal{
+
+    width:420px;
+
+    background:white;
+
+    border-radius:22px;
+
+    padding:40px;
+
+    text-align:center;
+
+    animation:popup .3s ease;
+
+}
+
+.success-circle{
+
+    width:90px;
+
+    height:90px;
+
+    border-radius:50%;
+
+    background:#EAFBF2;
+
+    margin:auto;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+.success-circle i{
+
+    color:#22C55E;
+
+    font-size:42px;
+
+}
+
+.register-modal h2{
+
+    margin-bottom:15px;
+
+}
+
+.register-modal p{
+
+    color:#666;
+
+    margin-bottom:30px;
+
+    line-height:28px;
+
+}
+
+#okBtn{
+
+    width:100%;
+
+    height:50px;
+
+    border:none;
+
+    background:#6C3EF4;
+
+    color:white;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+}
+
+/*==========================
+    MY REGISTRATIONS
+==========================*/
+
+.registration-section{
+
+    padding:30px;
+
+}
+
+.registration-container{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:20px;
+
+}
+
+.empty-state{
+
+    grid-column:1/-1;
+
+    background:white;
+
+    padding:60px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.05);
+
+}
+
+.empty-state i{
+
+    font-size:55px;
+
+    color:#6C3EF4;
+
+    margin-bottom:20px;
+
+}
+
+.empty-state h3{
+
+    margin-bottom:10px;
+
+}
+
+.empty-state p{
+
+    color:#666;
+
+}
+
+/* Registered Card */
+
+.registered-card{
+
+    background:white;
+
+    border-radius:10px;
+
+    overflow:hidden;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.06);
+
+    width: 370px;
+
+}
+
+.registered-card img{
+
+    width:100%;
+
+    height:180px;
+
+    object-fit:cover;
+
+}
+
+.registered-content{
+
+    padding:10px;
+
+}
+
+.registered-content h3{
+
+    margin-bottom:8px;
+
+}
+
+.registered-badge{
+
+    display:inline-block;
+
+    background:#DCFCE7;
+
+    color:#15803D;
+
+    padding:7px 15px;
+
+    border-radius:25px;
+
+    font-size:12px;
+
+    margin-top:14px;
+
+}
+
+/*==========================
+    PROFILE MENU
+==========================*/
+
+.topbar{
+
+    position:relative;
+
+}
+
+.profile-menu{
+
+    position:absolute;
+
+    right:40px;
+
+    top:90px;
+
+    width:240px;
+
+    background:#fff;
+
+    border-radius:18px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.12);
+
+    padding:20px;
+
+    display:none;
+
+    z-index:999;
+
+}
+
+.profile-info{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.profile-info p{
+
+    color:#777;
+
+    font-size:14px;
+
+}
+
+.profile-menu hr{
+
+    margin:18px 0;
+
+    border:none;
+
+    border-top:1px solid #eee;
+
+}
+
+.profile-menu button{
+
+    width:100%;
+
+    height:48px;
+
+    border:none;
+
+    background:#F4EFFF;
+
+    color:#6C3EF4;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    font-size:16px;
+
+}
+
+.profile-menu button:hover{
+
+    background:#6C3EF4;
+
+    color:white;
+
+}
