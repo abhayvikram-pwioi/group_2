@@ -252,6 +252,56 @@ eventsLink.addEventListener("click",()=>{
 
 });
 
+
+
+dashboardLink.addEventListener("click",()=>{
+
+    dashboardLink.classList.add("active");
+
+    eventsLink.classList.remove("active");
+
+});
+
+eventsLink.addEventListener("click",()=>{
+
+    eventsLink.classList.add("active");
+
+    dashboardLink.classList.remove("active");
+
+});
+
+/*==========================
+    PROFILE DROPDOWN
+==========================*/
+
+const profileBtn = document.getElementById("profileBtn");
+
+const profileMenu = document.getElementById("profileMenu");
+
+profileBtn.addEventListener("click",function(e){
+
+    e.stopPropagation();
+
+    if(profileMenu.style.display==="block"){
+
+        profileMenu.style.display="none";
+
+    }
+
+    else{
+
+        profileMenu.style.display="block";
+
+    }
+
+});
+
+document.addEventListener("click",function(){
+
+    profileMenu.style.display="none";
+
+});
+
 /*==========================
         LOGOUT
 ==========================*/
@@ -267,21 +317,5 @@ logoutBtn.addEventListener("click",()=>{
         window.location.href="home.html";
 
     }
-
-});
-
-dashboardLink.addEventListener("click",()=>{
-
-    dashboardLink.classList.add("active");
-
-    eventsLink.classList.remove("active");
-
-});
-
-eventsLink.addEventListener("click",()=>{
-
-    eventsLink.classList.add("active");
-
-    dashboardLink.classList.remove("active");
 
 });

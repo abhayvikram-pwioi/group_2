@@ -719,3 +719,107 @@ select{
     background:#5B2FE2;
 
 }
+
+/*==========================
+    PROFILE MENU
+==========================*/
+
+.topbar{
+
+    position:relative;
+
+}
+
+.admin-profile{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    cursor:pointer;
+
+}
+
+.profile-menu{
+
+    position:absolute;
+
+    top:85px;
+
+    right:40px;
+
+    width:240px;
+
+    background:white;
+
+    border-radius:18px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.15);
+
+    padding:20px;
+
+    display:none;
+
+    z-index:999;
+
+}
+
+.profile-info{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.profile-info p{
+
+    color:#777;
+
+    font-size:14px;
+
+}
+
+.profile-menu hr{
+
+    margin:18px 0;
+
+    border:none;
+
+    border-top:1px solid #eee;
+
+}
+
+.profile-menu button{
+
+    width:100%;
+
+    height:48px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#F4EFFF;
+
+    color:#6C3EF4;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    transition:.3s;
+
+}
+
+.profile-menu button:hover{
+
+    background:#6C3EF4;
+
+    color:white;
+
+}
