@@ -138,4 +138,26 @@ logoutBtn.addEventListener("click",function(){
     }
 
 });
+/*==========================
+      CHATBOT
+==========================*/
+
+const chatbotBtn=document.getElementById("chatbotBtn");
+
+const chatbot=document.getElementById("chatbot");
+
+const closeChat=document.getElementById("closeChat");
+
+chatbotBtn.addEventListener("click",function(){
+
+    chatbot.style.display="flex";
+
+});
+
+closeChat.addEventListener("click",function(){
+
+    chatbot.style.display="none";
+
+});
+
 

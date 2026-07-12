@@ -1,4 +1,17 @@
 /*==========================
+      LOAD EVENTS
+==========================*/
+
+function getEvents(){
+
+    return JSON.parse(
+
+        localStorage.getItem("events")
+
+    ) || [];
+
+}
+/*==========================
       EDIT VARIABLES
 ==========================*/
 
@@ -148,6 +161,32 @@ eventForm.addEventListener("submit", function(e){
         `;
 
         tableBody.appendChild(newRow);
+
+        /*==========================
+      SAVE EVENT
+==========================*/
+
+let events = JSON.parse(localStorage.getItem("events")) || [];
+
+events.push({
+
+    name: name,
+
+    date: date,
+
+    location: location,
+
+    category: document.getElementById("eventCategory").value
+
+});
+
+localStorage.setItem(
+
+    "events",
+
+    JSON.stringify(events)
+
+);
 
     }
 

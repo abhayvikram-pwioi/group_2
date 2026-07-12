@@ -217,3 +217,265 @@ goLoginBtn.addEventListener("click",function(){
     roleStep.style.display="block";
 
 });
+
+/*==========================
+      CHATBOT
+==========================*/
+
+const chatbotBtn=document.getElementById("chatbotBtn");
+
+const chatbot=document.getElementById("chatbot");
+
+const closeChat=document.getElementById("closeChat");
+
+chatbotBtn.addEventListener("click",function(){
+
+    chatbot.style.display="flex";
+
+});
+
+closeChat.addEventListener("click",function(){
+
+    chatbot.style.display="none";
+
+});
+/*==========================
+      CHAT MESSAGE
+==========================*/
+
+const sendBtn=document.getElementById("sendBtn");
+
+const userInput=document.getElementById("userInput");
+
+const chatBody=document.getElementById("chatBody");
+
+
+function sendMessage(){
+
+    const message=userInput.value.trim();
+
+    if(message==="") return;
+
+    // User Message
+
+    const userDiv=document.createElement("div");
+
+    userDiv.className="user-msg";
+
+    userDiv.innerText=message;
+
+    chatBody.appendChild(userDiv);
+
+    // Bot Reply after 800ms
+
+    const typing = document.createElement("div");
+
+typing.className = "bot-msg";
+
+typing.id = "typing";
+
+typing.innerHTML = "✍️ Typing...";
+
+chatBody.appendChild(typing);
+
+chatBody.scrollTop = chatBody.scrollHeight;
+
+document.getElementById("typing").remove();
+
+setTimeout(function(){
+
+    const botDiv = document.createElement("div");
+
+    botDiv.className = "bot-msg";
+
+    const msg = message.toLowerCase();
+
+    if(
+
+msg.includes("tech")
+
+||
+
+msg.includes("technology")
+
+){
+
+    let techEvents = getEvents()
+
+    .filter(event=>event.category==="Technology");
+
+    if(techEvents.length===0){
+
+        botDiv.innerHTML=
+
+        "❌ No Technology Events Found.";
+
+    }
+
+    else{
+
+        let html=
+
+        "💻 <b>Technology Events</b><br><br>";
+
+        techEvents.forEach(event=>{
+
+            html+=`
+
+            • ${event.name}<br>
+
+            📅 ${event.date}<br>
+
+            📍 ${event.location}<br><br>
+
+            `;
+
+        });
+
+        botDiv.innerHTML=html;
+
+    }
+
+}
+
+    chatBody.appendChild(botDiv);
+
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+},800);
+
+    userInput.value="";
+
+    chatBody.scrollTop=chatBody.scrollHeight;
+
+}
+
+sendBtn.addEventListener("click",sendMessage);
+
+userInput.addEventListener("keypress",function(e){
+
+    if(e.key==="Enter"){
+
+        sendMessage();
+
+    }
+
+})
+
+ if(msg.includes("workshop")){
+
+    let workshopEvents = getEvents()
+
+    .filter(event=>event.category==="Workshop");
+
+    if(workshopEvents.length===0){
+
+        botDiv.innerHTML=
+
+        "❌ No Workshops Found.";
+
+    }
+
+    else {
+
+        let html=
+
+        "🛠 <b>Workshop Events</b><br><br>";
+
+        workshopEvents.forEach(event=>{
+
+            html+=`
+
+            • ${event.name}<br>
+
+            📅 ${event.date}<br>
+
+            📍 ${event.location}<br><br>
+
+            `;
+
+        });
+
+        botDiv.innerHTML=html;
+
+    }
+
+}
+else if(msg.includes("music")){
+
+    let musicEvents = getEvents()
+
+    .filter(event=>event.category==="Music");
+
+    if(musicEvents.length===0){
+
+        botDiv.innerHTML=
+
+        "❌ No Music Events Found.";
+
+    }
+
+    else{
+
+        let html=
+
+        "🎵 <b>Music Events</b><br><br>";
+
+        musicEvents.forEach(event=>{
+
+            html+=`
+
+            • ${event.name}<br>
+
+            📅 ${event.date}<br>
+
+            📍 ${event.location}<br><br>
+
+            `;
+
+        });
+
+        botDiv.innerHTML=html;
+
+    }
+
+}
+else if(msg.includes("sports")){
+
+    let sportsEvents = getEvents()
+
+    .filter(event=>event.category==="Sports");
+
+    if(sportsEvents.length===0){
+
+        botDiv.innerHTML=
+
+        "❌ No Sports Events Found.";
+
+    }
+
+    else{
+
+        let html=
+
+        "⚽ <b>Sports Events</b><br><br>";
+
+        sportsEvents.forEach(event=>{
+
+            html+=`
+
+            • ${event.name}<br>
+
+            📅 ${event.date}<br>
+
+            📍 ${event.location}<br><br>
+
+            `;
+
+        });
+
+        botDiv.innerHTML=html;
+
+    }
+
+}
