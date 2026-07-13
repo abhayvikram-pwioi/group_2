@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "title": "Tech Summit 2026",
+    "description": "Discover the latest trends in web development, cloud computing, and artificial intelligence from industry leaders. This summit includes interactive workshops and networking sessions.",
+    "category": "Technology",
+    "date": "2026-07-25",
+    "time": "10:00 AM",
+    "location": "Auditorium, Block A",
+    "image": "assets/techmeetup.jpeg",
+    "maxAttendees": 200,
+    "attendees": 120
+  },
+  {
+    "id": 2,
+    "title": "AI & ML Workshop",
+    "description": "A hands-on workshop focused on building and training machine learning models using popular open-source libraries. Perfect for beginners and intermediate developers.",
+    "category": "Workshop",
+    "date": "2026-08-28",
+    "time": "02:00 PM",
+    "location": "Online (Zoom)",
+    "image": "assets/workshop.jpeg",
+    "maxAttendees": 150,
+    "attendees": 80
+  },
+  {
+    "id": 3,
+    "title": "Music Fiesta",
+    "description": "An evening filled with acoustic performances, indie bands, and electronic music. Come join us for a celebration of music and culture.",
+    "category": "Music",
+    "date": "2026-07-27",
+    "time": "06:00 PM",
+    "location": "Mumbai, India",
+    "image": "assets/music.jpeg",
+    "maxAttendees": 500,
+    "attendees": 250
+  },
+  {
+    "id": 4,
+    "title": "Football Championship",
+    "description": "The annual inter-college soccer championship. Cheer for your favorite team as they battle it out for the trophy.",
+    "category": "Sports",
+    "date": "2026-08-05",
+    "time": "09:00 AM",
+    "location": "Delhi, India",
+    "image": "assets/footbal.jpeg",
+    "maxAttendees": 100,
+    "attendees": 60
+  }
+]

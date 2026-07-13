@@ -97,13 +97,123 @@ if (!localStorage.getItem("registrations")) {
   localStorage.setItem("registrations", JSON.stringify([]));
 }
 
+// Simple IndexedDB helper to persist DirectoryHandle
+const DB_NAME = "EventHubWorkspaceDB";
+const STORE_NAME = "workspaceStore";
+const KEY_NAME = "directoryHandle";
+
+function getDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(DB_NAME, 1);
+    request.onupgradeneeded = (e) => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains(STORE_NAME)) {
+        db.createObjectStore(STORE_NAME);
+      }
+    };
+    request.onsuccess = (e) => resolve(e.target.result);
+    request.onerror = (e) => reject(e.target.error);
+  });
+}
+
+async function getSavedDirectoryHandle() {
+  try {
+    const db = await getDB();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction(STORE_NAME, "readonly");
+      const store = transaction.objectStore(STORE_NAME);
+      const request = store.get(KEY_NAME);
+      request.onsuccess = () => resolve(request.result || null);
+      request.onerror = () => reject(request.error);
+    });
+  } catch (e) {
+    console.error("IndexedDB error:", e);
+    return null;
+  }
+}
+
+async function saveDirectoryHandle(handle) {
+  try {
+    const db = await getDB();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction(STORE_NAME, "readwrite");
+      const store = transaction.objectStore(STORE_NAME);
+      const request = store.put(handle, KEY_NAME);
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+  } catch (e) {
+    console.error("IndexedDB error:", e);
+  }
+}
+
+async function syncWithConnectedWorkspace() {
+  try {
+    const dirHandle = await getSavedDirectoryHandle();
+    if (!dirHandle) return false;
+    
+    if (await dirHandle.queryPermission({ mode: 'readwrite' }) !== 'granted') {
+      return false;
+    }
+    
+    const fileHandle = await dirHandle.getFileHandle("events.json", { create: false });
+    const file = await fileHandle.getFile();
+    const text = await file.text();
+    const events = JSON.parse(text);
+    if (Array.isArray(events)) {
+      localStorage.setItem("events", JSON.stringify(events));
+      window.dispatchEvent(new CustomEvent("events-synced"));
+      return true;
+    }
+  } catch (e) {
+    console.error("Error syncing with connected workspace:", e);
+  }
+  return false;
+}
+
+async function loadEventsFromJSON() {
+  try {
+    const response = await fetch("events.json");
+    if (response.ok) {
+      const events = await response.json();
+      if (Array.isArray(events) && events.length > 0) {
+        localStorage.setItem("events", JSON.stringify(events));
+        window.dispatchEvent(new CustomEvent("events-synced"));
+      }
+    }
+  } catch (e) {
+    console.warn("Unable to fetch events.json automatically (likely file:// protocol without a server). Using localStorage fallback.", e);
+  }
+}
+
 // Database Helpers
 function getEvents() {
   return JSON.parse(localStorage.getItem("events")) || [];
 }
 
-function saveEvents(events) {
+async function saveEvents(events) {
   localStorage.setItem("events", JSON.stringify(events));
+  
+  // Update UI immediately
+  if (typeof renderHomeEvents === "function") renderHomeEvents();
+  if (typeof renderAdminTable === "function") renderAdminTable();
+
+  // Try to write to the connected workspace folder if we have it
+  try {
+    const dirHandle = await getSavedDirectoryHandle();
+    if (dirHandle && await dirHandle.queryPermission({ mode: 'readwrite' }) === 'granted') {
+      const fileHandle = await dirHandle.getFileHandle("events.json", { create: true });
+      const writable = await fileHandle.createWritable();
+      await writable.write(JSON.stringify(events, null, 2));
+      await writable.close();
+      showToast("Workspace events.json updated automatically!", "success");
+      return;
+    }
+  } catch (e) {
+    console.error("Failed to auto-write to events.json:", e);
+  }
+  
+  showToast("Saved to browser storage! Set up workspace connection to auto-sync events.json.", "info");
 }
 
 function getUsers() {
@@ -400,4 +510,277 @@ function initChatbot() {
           if (e.key === "Enter") sendChatMessage();
       });
   }
+}
+
+// Database initialization on script load
+async function initDatabase() {
+  const synced = await syncWithConnectedWorkspace();
+  if (!synced) {
+    await loadEventsFromJSON();
+  }
+}
+initDatabase();
+
+// Workspace sync UI Widget
+async function initWorkspaceSync() {
+  // Inject widget CSS
+  const style = document.createElement("style");
+  style.innerHTML = `
+    .workspace-widget {
+      position: fixed;
+      bottom: 110px;
+      right: 30px;
+      z-index: 9998;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      font-family: 'Outfit', 'Poppins', sans-serif;
+    }
+    .workspace-btn {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #1a202c;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 22px;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .workspace-btn:hover {
+      transform: scale(1.08);
+      background: #2d3748;
+    }
+    .workspace-status-dot {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #a0aec0;
+      border: 2px solid #1a202c;
+      transition: background 0.3s;
+    }
+    .workspace-status-dot.connected {
+      background: #48bb78;
+    }
+    .workspace-status-dot.pending {
+      background: #ecc94b;
+    }
+    .workspace-status-dot.error {
+      background: #f56565;
+    }
+    .workspace-panel {
+      position: absolute;
+      bottom: 75px;
+      right: 0;
+      width: 320px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      border: 1px solid #e2e8f0;
+      padding: 20px;
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 9999;
+      color: #2d3748;
+    }
+    .workspace-panel h4 {
+      font-size: 16px;
+      margin: 0;
+      color: #1a202c;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .workspace-panel p {
+      font-size: 13px;
+      color: #718096;
+      margin: 0;
+      line-height: 1.5;
+    }
+    .workspace-panel-btn {
+      width: 100%;
+      height: 40px;
+      border-radius: 8px;
+      border: none;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .workspace-panel-btn-primary {
+      background: #6C3EF4;
+      color: #fff;
+    }
+    .workspace-panel-btn-primary:hover {
+      background: #5527d9;
+    }
+    .workspace-panel-btn-secondary {
+      background: #edf2f7;
+      color: #4a5568;
+    }
+    .workspace-panel-btn-secondary:hover {
+      background: #e2e8f0;
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Create widget container
+  const widget = document.createElement("div");
+  widget.className = "workspace-widget";
+  widget.innerHTML = `
+    <div class="workspace-btn" id="workspaceBtn" title="Sync Local JSON File">
+      <i class="fa-solid fa-folder-open"></i>
+      <div class="workspace-status-dot" id="workspaceStatusDot"></div>
+    </div>
+    <div class="workspace-panel" id="workspacePanel">
+      <h4><i class="fa-solid fa-rotate"></i> Workspace Sync</h4>
+      <p id="workspaceInfo">Connect your project's local directory to enable automatic events.json saving and real-time synchronization.</p>
+      <button class="workspace-panel-btn workspace-panel-btn-primary" id="workspaceActionBtn">
+        <i class="fa-solid fa-link"></i> Connect Folder
+      </button>
+      <button class="workspace-panel-btn workspace-panel-btn-secondary" id="workspaceManualBtn" style="display:none;">
+        <i class="fa-solid fa-download"></i> Download events.json
+      </button>
+    </div>
+  `;
+  document.body.appendChild(widget);
+
+  const workspaceBtn = document.getElementById("workspaceBtn");
+  const workspacePanel = document.getElementById("workspacePanel");
+  const workspaceStatusDot = document.getElementById("workspaceStatusDot");
+  const workspaceInfo = document.getElementById("workspaceInfo");
+  const workspaceActionBtn = document.getElementById("workspaceActionBtn");
+  const workspaceManualBtn = document.getElementById("workspaceManualBtn");
+
+  // Toggle Panel
+  workspaceBtn.addEventListener("click", function (e) {
+    e.stopPropagation();
+    const isShowing = workspacePanel.style.display === "flex";
+    workspacePanel.style.display = isShowing ? "none" : "flex";
+  });
+
+  // Close panel on outside click
+  document.addEventListener("click", function (e) {
+    if (!widget.contains(e.target)) {
+      workspacePanel.style.display = "none";
+    }
+  });
+
+  // Update Status UI
+  async function updateStatusUI() {
+    const handle = await getSavedDirectoryHandle();
+    if (!handle) {
+      workspaceStatusDot.className = "workspace-status-dot";
+      workspaceInfo.innerHTML = "Connect your project's local directory to enable automatic <b>events.json</b> saving and real-time synchronization.";
+      workspaceActionBtn.innerHTML = '<i class="fa-solid fa-link"></i> Connect Folder';
+      workspaceManualBtn.style.display = "none";
+      return;
+    }
+
+    try {
+      const permission = await handle.queryPermission({ mode: 'readwrite' });
+      if (permission === 'granted') {
+        workspaceStatusDot.className = "workspace-status-dot connected";
+        workspaceInfo.innerHTML = `Connected to: <b>${handle.name}</b><br>✓ events.json is automatically synchronized.`;
+        workspaceActionBtn.innerHTML = '<i class="fa-solid fa-unlink"></i> Disconnect Folder';
+        workspaceManualBtn.style.display = "none";
+      } else {
+        workspaceStatusDot.className = "workspace-status-dot pending";
+        workspaceInfo.innerHTML = `Connected to: <b>${handle.name}</b><br>⚠️ Awaiting folder write permission.`;
+        workspaceActionBtn.innerHTML = '<i class="fa-solid fa-key"></i> Grant Permission';
+        workspaceManualBtn.style.display = "flex";
+      }
+    } catch (e) {
+      workspaceStatusDot.className = "workspace-status-dot error";
+      workspaceInfo.innerHTML = "Error verifying folder permission.";
+      workspaceActionBtn.innerHTML = '<i class="fa-solid fa-link"></i> Connect Folder';
+      workspaceManualBtn.style.display = "flex";
+    }
+  }
+
+  // Handle Action Button click
+  workspaceActionBtn.addEventListener("click", async function () {
+    const handle = await getSavedDirectoryHandle();
+    if (!handle) {
+      // Connect new folder
+      try {
+        const newHandle = await window.showDirectoryPicker();
+        await saveDirectoryHandle(newHandle);
+        const permission = await newHandle.requestPermission({ mode: 'readwrite' });
+        if (permission === 'granted') {
+          showToast("Workspace folder connected successfully!", "success");
+          // Sync immediately
+          const synced = await syncWithConnectedWorkspace();
+          if (synced) {
+            showToast("Loaded events from workspace events.json!", "success");
+            if (typeof renderHomeEvents === "function") renderHomeEvents();
+            if (typeof renderAdminTable === "function") renderAdminTable();
+          }
+        }
+      } catch (e) {
+        console.error(e);
+        showToast("Failed to connect workspace folder.", "error");
+      }
+    } else {
+      const permission = await handle.queryPermission({ mode: 'readwrite' });
+      if (permission !== 'granted') {
+        // Request permission
+        try {
+          const req = await handle.requestPermission({ mode: 'readwrite' });
+          if (req === 'granted') {
+            showToast("Workspace permission granted!", "success");
+            const synced = await syncWithConnectedWorkspace();
+            if (synced) {
+              if (typeof renderHomeEvents === "function") renderHomeEvents();
+              if (typeof renderAdminTable === "function") renderAdminTable();
+            }
+          }
+        } catch (e) {
+          console.error(e);
+          showToast("Failed to obtain workspace permission.", "error");
+        }
+      } else {
+        // Disconnect
+        if (confirm("Disconnect workspace folder? Automatic events.json saves will stop.")) {
+          await saveDirectoryHandle(null);
+          showToast("Workspace folder disconnected.", "info");
+        }
+      }
+    }
+    updateStatusUI();
+  });
+
+  // Handle Manual Download click
+  workspaceManualBtn.addEventListener("click", function () {
+    const events = getEvents();
+    const blob = new Blob([JSON.stringify(events, null, 2)], { type: "application/json" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "events.json";
+    link.click();
+    showToast("Downloaded events.json. Please save it to your project folder.", "success");
+  });
+
+  // Initial Status update
+  updateStatusUI();
+}
+
+// Automatically initialize workspace connection UI on page load
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initWorkspaceSync);
+} else {
+  initWorkspaceSync();
 }

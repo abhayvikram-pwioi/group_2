@@ -1,8 +1,118 @@
 document.addEventListener("DOMContentLoaded", function () {
     const currentUser = getCurrentUser();
     if (!currentUser || currentUser.role !== "admin") {
-        alert("Access Denied. Admin privileges required.");
-        window.location.href = "home.html";
+        // Apply styling and display "Nice Try" layout
+        document.body.className = "nice-try-active";
+        document.body.innerHTML = `
+            <style>
+            @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+            
+            body.nice-try-active {
+                margin: 0;
+                padding: 0;
+                width: 100vw;
+                height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: radial-gradient(circle at center, #1e1b4b, #0f172a) !important;
+                font-family: 'Outfit', sans-serif;
+                overflow: hidden;
+            }
+            .nice-try-container {
+                animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+            }
+            .nice-try-card {
+                background: rgba(255, 255, 255, 0.03);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 24px;
+                padding: 50px 40px;
+                text-align: center;
+                max-width: 450px;
+                width: 90%;
+                box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 0 0 100px rgba(108, 62, 244, 0.15);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+            .nice-try-icon {
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                background: rgba(239, 68, 68, 0.1);
+                border: 1px solid rgba(239, 68, 68, 0.2);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #ef4444;
+                font-size: 32px;
+                margin-bottom: 10px;
+                animation: pulse 2s infinite;
+            }
+            .nice-try-card h1 {
+                color: #fff;
+                font-size: 36px;
+                font-weight: 800;
+                margin: 0;
+                letter-spacing: -0.5px;
+            }
+            .nice-try-card p {
+                color: #94a3b8;
+                font-size: 16px;
+                line-height: 1.6;
+                margin: 0;
+            }
+            .nice-try-btn {
+                background: linear-gradient(135deg, #6C3EF4, #4f46e5);
+                color: #fff;
+                border: none;
+                padding: 14px 28px;
+                font-size: 15px;
+                font-weight: 600;
+                border-radius: 12px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                box-shadow: 0 10px 20px rgba(108, 62, 244, 0.25);
+                transition: all 0.3s ease;
+                margin-top: 10px;
+            }
+            .nice-try-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 15px 25px rgba(108, 62, 244, 0.35);
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; transform: scale(0.95); }
+                to { opacity: 1; transform: scale(1); }
+            }
+            @keyframes pulse {
+                0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+                70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
+                100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+            }
+            </style>
+            <div class="nice-try-container">
+                <div class="nice-try-card">
+                    <div class="nice-try-icon">
+                        <i class="fa-solid fa-user-shield"></i>
+                    </div>
+                    <h1>Nice Try! ✋</h1>
+                    <p>You do not have administrative clearance to access the control deck.</p>
+                    <button onclick="window.location.href='home.html'" class="nice-try-btn">
+                        <i class="fa-solid fa-house"></i> Return Home
+                    </button>
+                </div>
+            </div>
+        `;
         return;
     }
 
@@ -346,3 +456,6 @@ function setupSidebarNavigation() {
         eventsSection.scrollIntoView({ behavior: "smooth" });
     });
 }
+
+// Listen for workspace JSON synchronization event
+window.addEventListener("events-synced", renderAdminTable);

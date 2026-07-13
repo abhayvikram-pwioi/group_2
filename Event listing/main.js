@@ -506,3 +506,6 @@ function handleRegistrationTrigger(eventId) {
 
 if (closeConfirmReg) closeConfirmReg.addEventListener("click", () => confirmRegModal.style.display = "none");
 if (confirmRegCancelBtn) confirmRegCancelBtn.addEventListener("click", () => confirmRegModal.style.display = "none");
+
+// Listen for workspace JSON synchronization event
+window.addEventListener("events-synced", renderHomeEvents);

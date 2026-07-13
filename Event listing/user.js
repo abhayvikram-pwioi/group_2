@@ -444,3 +444,9 @@ if (logoutBtn) {
         }
     });
 }
+
+// Listen for workspace JSON synchronization event
+window.addEventListener("events-synced", function () {
+    renderUserEvents();
+    renderMyRegistrations();
+});
