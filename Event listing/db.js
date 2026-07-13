@@ -1,207 +1,79 @@
-// Default data for the application
 const defaultEvents = [
-  {
-    id: 1,
-    title: "Tech Summit 2026",
-    description: "Discover the latest trends in web development, cloud computing, and artificial intelligence from industry leaders. This summit includes interactive workshops and networking sessions.",
-    category: "Technology",
-    date: "2026-07-25",
-    time: "10:00 AM",
-    location: "Auditorium, Block A",
-    image: "assets/techmeetup.jpeg",
-    maxAttendees: 200,
-    attendees: 120
-  },
-  {
-    id: 2,
-    title: "AI & ML Workshop",
-    description: "A hands-on workshop focused on building and training machine learning models using popular open-source libraries. Perfect for beginners and intermediate developers.",
-    category: "Workshop",
-    date: "2026-08-28",
-    time: "02:00 PM",
-    location: "Online (Zoom)",
-    image: "assets/workshop.jpeg",
-    maxAttendees: 150,
-    attendees: 80
-  },
-  {
-    id: 3,
-    title: "Music Fiesta",
-    description: "An evening filled with acoustic performances, indie bands, and electronic music. Come join us for a celebration of music and culture.",
-    category: "Music",
-    date: "2026-07-27",
-    time: "06:00 PM",
-    location: "Mumbai, India",
-    image: "assets/music.jpeg",
-    maxAttendees: 500,
-    attendees: 250
-  },
-  {
-    id: 4,
-    title: "Football Championship",
-    description: "The annual inter-college soccer championship. Cheer for your favorite team as they battle it out for the trophy.",
-    category: "Sports",
-    date: "2026-08-05",
-    time: "09:00 AM",
-    location: "Delhi, India",
-    image: "assets/footbal.jpeg",
-    maxAttendees: 100,
-    attendees: 60
-  }
+  { id: 1, title: "Tech Summit 2026", description: "Discover latest web trends.", category: "Technology", date: "2026-07-25", time: "10:00 AM", location: "Auditorium, Block A", image: "assets/techmeetup.jpeg", maxAttendees: 200, attendees: 120 },
+  { id: 2, title: "AI & ML Workshop", description: "Hands-on machine learning.", category: "Workshop", date: "2026-08-28", time: "02:00 PM", location: "Online (Zoom)", image: "assets/workshop.jpeg", maxAttendees: 150, attendees: 80 }
 ];
 
 const defaultUsers = [
-  {
-    email: "user@connect.com",
-    password: "password",
-    role: "user",
-    name: "John Doe",
-    phone: "9876543210",
-    college: "State College"
-  },
-  {
-    email: "admin@connect.com",
-    password: "password",
-    role: "admin",
-    name: "Admin Organizer",
-    org: "Connect Events Inc.",
-    phone: "9876543211",
-    designation: "Event Coordinator"
-  }
+  { email: "user@connect.com", password: "password", role: "user", name: "John Doe", college: "State College" },
+  { email: "admin@connect.com", password: "password", role: "admin", name: "Admin Organizer" }
 ];
 
-// Initialize localStorage
-if (!localStorage.getItem("events")) {
-  localStorage.setItem("events", JSON.stringify(defaultEvents));
-} else {
-  // Migrate existing events paths to assets/
-  let events = JSON.parse(localStorage.getItem("events"));
-  if (events) {
-    let migrated = false;
-    for (let i = 0; i < events.length; i++) {
-      let ev = events[i];
-      if (ev.image && ev.image.indexOf("assets/") !== 0 && ev.image.indexOf("data:") !== 0 && ev.image.indexOf("http") !== 0) {
-        ev.image = "assets/" + ev.image;
-        migrated = true;
-      }
-    }
-    if (migrated) {
-      localStorage.setItem("events", JSON.stringify(events));
-    }
-  }
-}
-if (!localStorage.getItem("users")) {
-  localStorage.setItem("users", JSON.stringify(defaultUsers));
-}
-if (!localStorage.getItem("registrations")) {
-  localStorage.setItem("registrations", JSON.stringify([]));
-}
+if (!localStorage.getItem("events")) localStorage.setItem("events", JSON.stringify(defaultEvents));
+if (!localStorage.getItem("users")) localStorage.setItem("users", JSON.stringify(defaultUsers));
+if (!localStorage.getItem("registrations")) localStorage.setItem("registrations", JSON.stringify([]));
 
-// Simple IndexedDB helper to persist DirectoryHandle
-const DB_NAME = "EventHubWorkspaceDB";
-const STORE_NAME = "workspaceStore";
-const KEY_NAME = "directoryHandle";
-
-function getDB() {
-  return new Promise((resolve, reject) => {
-    const request = indexedDB.open(DB_NAME, 1);
-    request.onupgradeneeded = (e) => {
-      const db = e.target.result;
-      if (!db.objectStoreNames.contains(STORE_NAME)) {
-        db.createObjectStore(STORE_NAME);
-      }
-    };
-    request.onsuccess = (e) => resolve(e.target.result);
-    request.onerror = (e) => reject(e.target.error);
+async function dbOp(mode, op, value, key = "directoryHandle") {
+  const db = await new Promise((res, rej) => {
+    const req = indexedDB.open("WorkspaceDB", 1);
+    req.onupgradeneeded = e => { if (!e.target.result.objectStoreNames.contains("store")) e.target.result.createObjectStore("store"); };
+    req.onsuccess = e => res(e.target.result);
+    req.onerror = e => rej(e.target.error);
+  });
+  return new Promise((res, rej) => {
+    const store = db.transaction("store", mode).objectStore("store");
+    const req = op === "get" ? store.get(key) : store.put(value, key);
+    req.onsuccess = () => res(req.result);
+    req.onerror = () => rej(req.error);
   });
 }
 
-async function getSavedDirectoryHandle() {
-  try {
-    const db = await getDB();
-    return new Promise((resolve, reject) => {
-      const transaction = db.transaction(STORE_NAME, "readonly");
-      const store = transaction.objectStore(STORE_NAME);
-      const request = store.get(KEY_NAME);
-      request.onsuccess = () => resolve(request.result || null);
-      request.onerror = () => reject(request.error);
-    });
-  } catch (e) {
-    console.error("IndexedDB error:", e);
-    return null;
-  }
-}
-
-async function saveDirectoryHandle(handle) {
-  try {
-    const db = await getDB();
-    return new Promise((resolve, reject) => {
-      const transaction = db.transaction(STORE_NAME, "readwrite");
-      const store = transaction.objectStore(STORE_NAME);
-      const request = store.put(handle, KEY_NAME);
-      request.onsuccess = () => resolve();
-      request.onerror = () => reject(request.error);
-    });
-  } catch (e) {
-    console.error("IndexedDB error:", e);
-  }
-}
+const getSavedDirectoryHandle = () => dbOp("readonly", "get", null);
+const saveDirectoryHandle = handle => dbOp("readwrite", "put", handle);
 
 async function syncWithConnectedWorkspace() {
   try {
     const dirHandle = await getSavedDirectoryHandle();
-    if (!dirHandle) return false;
-    
-    if (await dirHandle.queryPermission({ mode: 'readwrite' }) !== 'granted') {
-      return false;
-    }
-    
+    if (!dirHandle || await dirHandle.queryPermission({ mode: "readwrite" }) !== "granted") return false;
     const fileHandle = await dirHandle.getFileHandle("events.json", { create: false });
     const file = await fileHandle.getFile();
-    const text = await file.text();
-    const events = JSON.parse(text);
+    const events = JSON.parse(await file.text());
     if (Array.isArray(events)) {
       localStorage.setItem("events", JSON.stringify(events));
       window.dispatchEvent(new CustomEvent("events-synced"));
       return true;
     }
-  } catch (e) {
-    console.error("Error syncing with connected workspace:", e);
-  }
+  } catch (e) { console.error("Workspace sync error:", e); }
   return false;
 }
 
 async function loadEventsFromJSON() {
   try {
-    const response = await fetch("events.json");
-    if (response.ok) {
-      const events = await response.json();
-      if (Array.isArray(events) && events.length > 0) {
+    const res = await fetch("events.json");
+    if (res.ok) {
+      const events = await res.json();
+      if (Array.isArray(events) && events.length) {
         localStorage.setItem("events", JSON.stringify(events));
         window.dispatchEvent(new CustomEvent("events-synced"));
       }
     }
-  } catch (e) {
-    console.warn("Unable to fetch events.json automatically (likely file:// protocol without a server). Using localStorage fallback.", e);
-  }
+  } catch (e) { console.warn("Fetch events.json fallback to localStorage", e); }
 }
 
-// Database Helpers
-function getEvents() {
-  return JSON.parse(localStorage.getItem("events")) || [];
-}
+const getEvents = () => JSON.parse(localStorage.getItem("events")) || [];
+const getUsers = () => JSON.parse(localStorage.getItem("users")) || [];
+const getRegistrations = () => JSON.parse(localStorage.getItem("registrations")) || [];
+const saveUsers = users => localStorage.setItem("users", JSON.stringify(users));
+const saveRegistrations = regs => localStorage.setItem("registrations", JSON.stringify(regs));
+const getCurrentUser = () => JSON.parse(localStorage.getItem("currentUser")) || null;
+const setCurrentUser = user => user ? localStorage.setItem("currentUser", JSON.stringify(user)) : localStorage.removeItem("currentUser");
 
 async function saveEvents(events) {
   localStorage.setItem("events", JSON.stringify(events));
-  
-  // Update UI immediately
   if (typeof renderHomeEvents === "function") renderHomeEvents();
   if (typeof renderAdminTable === "function") renderAdminTable();
-
-  // Try to write to the connected workspace folder if we have it
   try {
     const dirHandle = await getSavedDirectoryHandle();
-    if (dirHandle && await dirHandle.queryPermission({ mode: 'readwrite' }) === 'granted') {
+    if (dirHandle && await dirHandle.queryPermission({ mode: "readwrite" }) === "granted") {
       const fileHandle = await dirHandle.getFileHandle("events.json", { create: true });
       const writable = await fileHandle.createWritable();
       await writable.write(JSON.stringify(events, null, 2));
@@ -209,42 +81,10 @@ async function saveEvents(events) {
       showToast("Workspace events.json updated automatically!", "success");
       return;
     }
-  } catch (e) {
-    console.error("Failed to auto-write to events.json:", e);
-  }
-  
-  showToast("Saved to browser storage! Set up workspace connection to auto-sync events.json.", "info");
+  } catch (e) { console.error("Failed to write to events.json:", e); }
+  showToast("Saved to browser storage! Connect workspace to auto-sync events.json.", "info");
 }
 
-function getUsers() {
-  return JSON.parse(localStorage.getItem("users")) || [];
-}
-
-function saveUsers(users) {
-  localStorage.setItem("users", JSON.stringify(users));
-}
-
-function getRegistrations() {
-  return JSON.parse(localStorage.getItem("registrations")) || [];
-}
-
-function saveRegistrations(regs) {
-  localStorage.setItem("registrations", JSON.stringify(regs));
-}
-
-function getCurrentUser() {
-  return JSON.parse(localStorage.getItem("currentUser")) || null;
-}
-
-function setCurrentUser(user) {
-  if (user) {
-    localStorage.setItem("currentUser", JSON.stringify(user));
-  } else {
-    localStorage.removeItem("currentUser");
-  }
-}
-
-// Toast Helper
 function showToast(message, type = "success") {
   let container = document.getElementById("toastContainer");
   if (!container) {
@@ -253,325 +93,120 @@ function showToast(message, type = "success") {
     container.className = "toast-container";
     document.body.appendChild(container);
   }
-  
   const toast = document.createElement("div");
   toast.className = `toast toast-${type}`;
-  
-  let icon = "fa-circle-check";
-  if (type === "error") icon = "fa-circle-xmark";
-  if (type === "info") icon = "fa-circle-info";
-  
-  toast.innerHTML = `
-    <i class="fa-solid ${icon}"></i>
-    <span>${message}</span>
-  `;
-  
+  const icon = type === "error" ? "fa-circle-xmark" : type === "info" ? "fa-circle-info" : "fa-circle-check";
+  toast.innerHTML = `<i class="fa-solid ${icon}"></i><span>${message}</span>`;
   container.appendChild(toast);
-  
-  // Trigger entry animation
   setTimeout(() => toast.classList.add("show"), 10);
-  
-  // Dismiss toast
   setTimeout(() => {
     toast.classList.remove("show");
     setTimeout(() => toast.remove(), 300);
   }, 3000);
 }
 
-// Shared Formatting Helpers
 function formatDate(dateStr) {
   if (!dateStr) return "";
   const date = new Date(dateStr);
-  if (isNaN(date.getTime())) {
-      return dateStr;
-  }
+  if (isNaN(date.getTime())) return dateStr;
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  return months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
+  return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
 }
 
 function getCategoryPlaceholder(category) {
-  if (!category) return "assets/workshop.jpeg";
-  let catLower = category.toLowerCase();
-  if (catLower === "technology") return "assets/techmeetup.jpeg";
-  if (catLower === "workshop") return "assets/workshop.jpeg";
-  if (catLower === "music") return "assets/music.jpeg";
-  if (catLower === "sports") return "assets/footbal.jpeg";
-  return "assets/workshop.jpeg";
+  const placeholders = { technology: "assets/techmeetup.jpeg", workshop: "assets/workshop.jpeg", music: "assets/music.jpeg", sports: "assets/footbal.jpeg" };
+  return placeholders[category?.toLowerCase()] || "assets/workshop.jpeg";
 }
 
-// Shared Chatbot setup
 function initChatbot() {
-  const chatbotBtn = document.getElementById("chatbotBtn");
-  const chatbot = document.getElementById("chatbot");
-  const closeChat = document.getElementById("closeChat");
-  const sendBtn = document.getElementById("sendBtn");
-  const userInput = document.getElementById("userInput");
-  const chatBody = document.getElementById("chatBody");
+  const btn = document.getElementById("chatbotBtn"), chatbot = document.getElementById("chatbot");
+  const close = document.getElementById("closeChat"), send = document.getElementById("sendBtn");
+  const input = document.getElementById("userInput"), body = document.getElementById("chatBody");
+  if (!btn || !chatbot || !body) return;
 
-  if (!chatbotBtn || !chatbot || !chatBody) return;
+  btn.addEventListener("click", () => { chatbot.style.display = "flex"; body.scrollTop = body.scrollHeight; });
+  if (close) close.addEventListener("click", () => chatbot.style.display = "none");
 
-  chatbotBtn.addEventListener("click", function () {
-      chatbot.style.display = "flex";
-      chatBody.scrollTop = chatBody.scrollHeight;
+  const getFormattedTime = () => {
+    const now = new Date();
+    const hours = now.getHours(), mins = now.getMinutes();
+    return `${hours % 12 || 12}:${mins < 10 ? "0" + mins : mins} ${hours >= 12 ? "PM" : "AM"}`;
+  };
+
+  const addChatMessage = (msg, sender) => {
+    const div = document.createElement("div");
+    div.className = sender === "user" ? "user-msg" : "bot-msg";
+    div.innerHTML = `<div>${msg}</div><span class="msg-time">${getFormattedTime()}</span>`;
+    body.appendChild(div);
+    body.scrollTop = body.scrollHeight;
+  };
+
+  let chips = chatbot.querySelector(".chat-chips");
+  if (!chips) {
+    chips = document.createElement("div");
+    chips.className = "chat-chips";
+    chips.innerHTML = `
+      <div class="chat-chip" data-query="Show me tech events">💻 Tech</div>
+      <div class="chat-chip" data-query="Any workshops this weekend?">🛠 Workshops</div>
+      <div class="chat-chip" data-query="Music events available?">🎵 Music</div>
+      <div class="chat-chip" data-query="List all events">📅 All Events</div>`;
+    chatbot.insertBefore(chips, chatbot.querySelector(".chat-input"));
+  }
+  chips.querySelectorAll(".chat-chip").forEach(c => {
+    c.addEventListener("click", () => { input.value = c.getAttribute("data-query"); sendChatMessage(); });
   });
 
-  if (closeChat) {
-      closeChat.addEventListener("click", function () {
-          chatbot.style.display = "none";
-      });
-  }
-
-  function getFormattedTime() {
-      const now = new Date();
-      let hours = now.getHours();
-      let minutes = now.getMinutes();
-      if (minutes < 10) {
-          minutes = "0" + minutes;
-      }
-      const ampm = hours >= 12 ? "PM" : "AM";
-      hours = hours % 12;
-      if (hours === 0) {
-          hours = 12;
-      }
-      return hours + ":" + minutes + " " + ampm;
-  }
-
-  function addChatMessage(message, sender) {
-      const messageDiv = document.createElement("div");
-      messageDiv.className = sender === "user" ? "user-msg" : "bot-msg";
-      messageDiv.innerHTML = `
-          <div>${message}</div>
-          <span class="msg-time">${getFormattedTime()}</span>
-      `;
-      chatBody.appendChild(messageDiv);
-      chatBody.scrollTop = chatBody.scrollHeight;
-  }
-
-  // Generate Chips
-  let chipsDiv = chatbot.querySelector(".chat-chips");
-  if (!chipsDiv) {
-      chipsDiv = document.createElement("div");
-      chipsDiv.className = "chat-chips";
-      chipsDiv.innerHTML = `
-          <div class="chat-chip" data-query="Show me tech events">💻 Tech</div>
-          <div class="chat-chip" data-query="Any workshops this weekend?">🛠 Workshops</div>
-          <div class="chat-chip" data-query="Music events available?">🎵 Music</div>
-          <div class="chat-chip" data-query="List all events">📅 All Events</div>
-      `;
-      const inputDiv = chatbot.querySelector(".chat-input");
-      chatbot.insertBefore(chipsDiv, inputDiv);
-  }
-
-  const chips = chipsDiv.querySelectorAll(".chat-chip");
-  for (let i = 0; i < chips.length; i++) {
-      chips[i].addEventListener("click", function () {
-          userInput.value = this.getAttribute("data-query");
-          sendChatMessage();
-      });
-  }
-
   function sendChatMessage() {
-      const message = userInput.value.trim();
-      if (!message) return;
+    const msg = input.value.trim();
+    if (!msg) return;
+    addChatMessage(msg, "user");
+    input.value = "";
 
-      addChatMessage(message, "user");
-      userInput.value = "";
+    const typing = document.createElement("div");
+    typing.className = "bot-msg";
+    typing.id = "chat-typing";
+    typing.innerHTML = "✍️ Typing...";
+    body.appendChild(typing);
+    body.scrollTop = body.scrollHeight;
 
-      const typingDiv = document.createElement("div");
-      typingDiv.className = "bot-msg";
-      typingDiv.id = "chat-typing";
-      typingDiv.innerHTML = "✍️ Typing...";
-      chatBody.appendChild(typingDiv);
-      chatBody.scrollTop = chatBody.scrollHeight;
+    setTimeout(() => {
+      document.getElementById("chat-typing")?.remove();
+      const query = msg.toLowerCase(), events = getEvents();
+      let res = "";
 
-      setTimeout(() => {
-          const indicator = document.getElementById("chat-typing");
-          if (indicator) indicator.remove();
+      const categories = ["technology", "workshop", "music", "sports"];
+      const matched = categories.find(cat => query.includes(cat) || (cat === "technology" && query.includes("tech")) || (cat === "sports" && query.includes("sport")));
 
-          const query = message.toLowerCase();
-          let botResponse = "";
-          const allEvents = getEvents();
-
-          const categories = ["technology", "workshop", "music", "sports"];
-          const matchedCategory = categories.find(cat => 
-              query.includes(cat) || 
-              (cat === "technology" && query.includes("tech")) || 
-              (cat === "sports" && query.includes("sport"))
-          );
-
-          if (matchedCategory) {
-              const matches = allEvents.filter(e => e.category.toLowerCase() === matchedCategory);
-              if (matches.length === 0) {
-                  botResponse = `❌ No ${matchedCategory.charAt(0).toUpperCase() + matchedCategory.slice(1)} events found.`;
-              } else {
-                  const icons = { technology: "💻", workshop: "🛠", music: "🎵", sports: "⚽" };
-                  botResponse = `${icons[matchedCategory]} <b>${matchedCategory.charAt(0).toUpperCase() + matchedCategory.slice(1)} Events:</b><br><br>` +
-                      matches.map(e => `• <b>${e.title}</b><br>📅 ${formatDate(e.date)} at ${e.time || '10:00 AM'}<br>📍 ${e.location}<br><br>`).join("");
-              }
-          } 
-          else if (query.includes("weekend")) {
-              const weekendEvents = allEvents.filter(e => {
-                  const day = new Date(e.date).getDay();
-                  return day === 0 || day === 6;
-              });
-              if (weekendEvents.length === 0) {
-                  botResponse = "📅 No events scheduled for this weekend.";
-              } else {
-                  botResponse = "✨ <b>Upcoming Weekend Activities:</b><br><br>" +
-                      weekendEvents.map(e => `• <b>${e.title}</b> (${e.category})<br>📅 ${formatDate(e.date)} at ${e.time || '10:00 AM'}<br>📍 ${e.location}<br><br>`).join("");
-              }
-          } 
-          else if (query.includes("list") || query.includes("all") || query.includes("event")) {
-              botResponse = "📅 <b>All Scheduled Events:</b><br><br>" +
-                  allEvents.map(e => `• <b>${e.title}</b> (${e.category}) - ${formatDate(e.date)}<br>`).join("");
-          } 
-          else if (query.includes("hello") || query.includes("hi") || query.includes("hey")) {
-              botResponse = "👋 Hello there! How can I help you find events or plan your schedule today?";
-          } 
-          else if (query.includes("help")) {
-              botResponse = "🎯 Ask me about categories like <b>'tech events'</b>, <b>'workshops'</b>, <b>'music'</b>, or <b>'weekend activities'</b>. You can also type <b>'list events'</b> to see everything scheduled.";
-          } 
-          else {
-              botResponse = "🤔 I didn't quite catch that. You can ask me to list events, show tech events, workshops, music, or see what's happening this weekend!";
-          }
-          addChatMessage(botResponse, "bot");
-      }, 800);
+      if (matched) {
+        const matches = events.filter(e => e.category.toLowerCase() === matched);
+        if (!matches.length) res = `❌ No ${matched} events found.`;
+        else {
+          const icons = { technology: "💻", workshop: "🛠", music: "🎵", sports: "⚽" };
+          res = `${icons[matched]} <b>${matched.charAt(0).toUpperCase() + matched.slice(1)} Events:</b><br><br>` +
+            matches.map(e => `• <b>${e.title}</b><br>📅 ${formatDate(e.date)} at ${e.time || "10:00 AM"}<br>📍 ${e.location}<br><br>`).join("");
+        }
+      } else if (query.includes("weekend")) {
+        const wk = events.filter(e => [0, 6].includes(new Date(e.date).getDay()));
+        res = !wk.length ? "📅 No weekend events found." : "✨ <b>Upcoming Weekend:</b><br><br>" +
+          wk.map(e => `• <b>${e.title}</b> (${e.category})<br>📅 ${formatDate(e.date)} at ${e.time || "10:00 AM"}<br>📍 ${e.location}<br><br>`).join("");
+      } else if (query.includes("list") || query.includes("all") || query.includes("event")) {
+        res = "📅 <b>All Events:</b><br><br>" + events.map(e => `• <b>${e.title}</b> (${e.category}) - ${formatDate(e.date)}<br>`).join("");
+      } else if (query.includes("hello") || query.includes("hi") || query.includes("hey")) {
+        res = "👋 Hello there! How can I help you find events or plan your schedule today?";
+      } else if (query.includes("help")) {
+        res = "🎯 Ask me about 'tech events', 'workshops', 'music', 'weekend activities', or 'list events'.";
+      } else {
+        res = "🤔 I didn't quite catch that. Try asking to list events or show tech events!";
+      }
+      addChatMessage(res, "bot");
+    }, 800);
   }
 
-  if (sendBtn) sendBtn.addEventListener("click", sendChatMessage);
-  if (userInput) {
-      userInput.addEventListener("keypress", function (e) {
-          if (e.key === "Enter") sendChatMessage();
-      });
-  }
+  if (send) send.addEventListener("click", sendChatMessage);
+  if (input) input.addEventListener("keypress", e => { if (e.key === "Enter") sendChatMessage(); });
 }
 
-// Database initialization on script load
-async function initDatabase() {
-  const synced = await syncWithConnectedWorkspace();
-  if (!synced) {
-    await loadEventsFromJSON();
-  }
-}
-initDatabase();
-
-// Workspace sync UI Widget
 async function initWorkspaceSync() {
-  // Inject widget CSS
-  const style = document.createElement("style");
-  style.innerHTML = `
-    .workspace-widget {
-      position: fixed;
-      bottom: 110px;
-      right: 30px;
-      z-index: 9998;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      font-family: 'Outfit', 'Poppins', sans-serif;
-    }
-    .workspace-btn {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: #1a202c;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 22px;
-      cursor: pointer;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-      transition: all 0.3s ease;
-      position: relative;
-    }
-    .workspace-btn:hover {
-      transform: scale(1.08);
-      background: #2d3748;
-    }
-    .workspace-status-dot {
-      position: absolute;
-      top: 2px;
-      right: 2px;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: #a0aec0;
-      border: 2px solid #1a202c;
-      transition: background 0.3s;
-    }
-    .workspace-status-dot.connected {
-      background: #48bb78;
-    }
-    .workspace-status-dot.pending {
-      background: #ecc94b;
-    }
-    .workspace-status-dot.error {
-      background: #f56565;
-    }
-    .workspace-panel {
-      position: absolute;
-      bottom: 75px;
-      right: 0;
-      width: 320px;
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      border: 1px solid #e2e8f0;
-      padding: 20px;
-      display: none;
-      flex-direction: column;
-      gap: 12px;
-      z-index: 9999;
-      color: #2d3748;
-    }
-    .workspace-panel h4 {
-      font-size: 16px;
-      margin: 0;
-      color: #1a202c;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .workspace-panel p {
-      font-size: 13px;
-      color: #718096;
-      margin: 0;
-      line-height: 1.5;
-    }
-    .workspace-panel-btn {
-      width: 100%;
-      height: 40px;
-      border-radius: 8px;
-      border: none;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s;
-    }
-    .workspace-panel-btn-primary {
-      background: #6C3EF4;
-      color: #fff;
-    }
-    .workspace-panel-btn-primary:hover {
-      background: #5527d9;
-    }
-    .workspace-panel-btn-secondary {
-      background: #edf2f7;
-      color: #4a5568;
-    }
-    .workspace-panel-btn-secondary:hover {
-      background: #e2e8f0;
-    }
-  `;
-  document.head.appendChild(style);
-
-  // Create widget container
   const widget = document.createElement("div");
   widget.className = "workspace-widget";
   widget.innerHTML = `
@@ -581,140 +216,98 @@ async function initWorkspaceSync() {
     </div>
     <div class="workspace-panel" id="workspacePanel">
       <h4><i class="fa-solid fa-rotate"></i> Workspace Sync</h4>
-      <p id="workspaceInfo">Connect your project's local directory to enable automatic events.json saving and real-time synchronization.</p>
-      <button class="workspace-panel-btn workspace-panel-btn-primary" id="workspaceActionBtn">
-        <i class="fa-solid fa-link"></i> Connect Folder
-      </button>
-      <button class="workspace-panel-btn workspace-panel-btn-secondary" id="workspaceManualBtn" style="display:none;">
-        <i class="fa-solid fa-download"></i> Download events.json
-      </button>
-    </div>
-  `;
+      <p id="workspaceInfo">Connect project local directory to auto-sync events.json.</p>
+      <button class="workspace-panel-btn workspace-panel-btn-primary" id="workspaceActionBtn"><i class="fa-solid fa-link"></i> Connect Folder</button>
+      <button class="workspace-panel-btn workspace-panel-btn-secondary" id="workspaceManualBtn" style="display:none;"><i class="fa-solid fa-download"></i> Download events.json</button>
+    </div>`;
   document.body.appendChild(widget);
 
-  const workspaceBtn = document.getElementById("workspaceBtn");
-  const workspacePanel = document.getElementById("workspacePanel");
-  const workspaceStatusDot = document.getElementById("workspaceStatusDot");
-  const workspaceInfo = document.getElementById("workspaceInfo");
-  const workspaceActionBtn = document.getElementById("workspaceActionBtn");
-  const workspaceManualBtn = document.getElementById("workspaceManualBtn");
+  const btn = document.getElementById("workspaceBtn"), panel = document.getElementById("workspacePanel");
+  const statusDot = document.getElementById("workspaceStatusDot"), info = document.getElementById("workspaceInfo");
+  const actionBtn = document.getElementById("workspaceActionBtn"), manualBtn = document.getElementById("workspaceManualBtn");
 
-  // Toggle Panel
-  workspaceBtn.addEventListener("click", function (e) {
-    e.stopPropagation();
-    const isShowing = workspacePanel.style.display === "flex";
-    workspacePanel.style.display = isShowing ? "none" : "flex";
-  });
+  btn.addEventListener("click", e => { e.stopPropagation(); panel.style.display = panel.style.display === "flex" ? "none" : "flex"; });
+  document.addEventListener("click", e => { if (!widget.contains(e.target)) panel.style.display = "none"; });
 
-  // Close panel on outside click
-  document.addEventListener("click", function (e) {
-    if (!widget.contains(e.target)) {
-      workspacePanel.style.display = "none";
-    }
-  });
-
-  // Update Status UI
   async function updateStatusUI() {
     const handle = await getSavedDirectoryHandle();
     if (!handle) {
-      workspaceStatusDot.className = "workspace-status-dot";
-      workspaceInfo.innerHTML = "Connect your project's local directory to enable automatic <b>events.json</b> saving and real-time synchronization.";
-      workspaceActionBtn.innerHTML = '<i class="fa-solid fa-link"></i> Connect Folder';
-      workspaceManualBtn.style.display = "none";
+      statusDot.className = "workspace-status-dot";
+      info.innerHTML = "Connect your project's local directory to enable automatic <b>events.json</b> saving and real-time synchronization.";
+      actionBtn.innerHTML = '<i class="fa-solid fa-link"></i> Connect Folder';
+      manualBtn.style.display = "none";
       return;
     }
-
     try {
-      const permission = await handle.queryPermission({ mode: 'readwrite' });
-      if (permission === 'granted') {
-        workspaceStatusDot.className = "workspace-status-dot connected";
-        workspaceInfo.innerHTML = `Connected to: <b>${handle.name}</b><br>✓ events.json is automatically synchronized.`;
-        workspaceActionBtn.innerHTML = '<i class="fa-solid fa-unlink"></i> Disconnect Folder';
-        workspaceManualBtn.style.display = "none";
+      if (await handle.queryPermission({ mode: "readwrite" }) === "granted") {
+        statusDot.className = "workspace-status-dot connected";
+        info.innerHTML = `Connected to: <b>${handle.name}</b><br>✓ events.json auto-sync enabled.`;
+        actionBtn.innerHTML = '<i class="fa-solid fa-unlink"></i> Disconnect Folder';
+        manualBtn.style.display = "none";
       } else {
-        workspaceStatusDot.className = "workspace-status-dot pending";
-        workspaceInfo.innerHTML = `Connected to: <b>${handle.name}</b><br>⚠️ Awaiting folder write permission.`;
-        workspaceActionBtn.innerHTML = '<i class="fa-solid fa-key"></i> Grant Permission';
-        workspaceManualBtn.style.display = "flex";
+        statusDot.className = "workspace-status-dot pending";
+        info.innerHTML = `Connected to: <b>${handle.name}</b><br>⚠️ Awaiting folder permission.`;
+        actionBtn.innerHTML = '<i class="fa-solid fa-key"></i> Grant Permission';
+        manualBtn.style.display = "flex";
       }
     } catch (e) {
-      workspaceStatusDot.className = "workspace-status-dot error";
-      workspaceInfo.innerHTML = "Error verifying folder permission.";
-      workspaceActionBtn.innerHTML = '<i class="fa-solid fa-link"></i> Connect Folder';
-      workspaceManualBtn.style.display = "flex";
+      statusDot.className = "workspace-status-dot error";
+      info.innerHTML = "Error verifying folder permission.";
+      actionBtn.innerHTML = '<i class="fa-solid fa-link"></i> Connect Folder';
+      manualBtn.style.display = "flex";
     }
   }
 
-  // Handle Action Button click
-  workspaceActionBtn.addEventListener("click", async function () {
+  actionBtn.addEventListener("click", async () => {
     const handle = await getSavedDirectoryHandle();
     if (!handle) {
-      // Connect new folder
       try {
         const newHandle = await window.showDirectoryPicker();
         await saveDirectoryHandle(newHandle);
-        const permission = await newHandle.requestPermission({ mode: 'readwrite' });
-        if (permission === 'granted') {
+        if (await newHandle.requestPermission({ mode: "readwrite" }) === "granted") {
           showToast("Workspace folder connected successfully!", "success");
-          // Sync immediately
-          const synced = await syncWithConnectedWorkspace();
-          if (synced) {
+          if (await syncWithConnectedWorkspace()) {
             showToast("Loaded events from workspace events.json!", "success");
             if (typeof renderHomeEvents === "function") renderHomeEvents();
             if (typeof renderAdminTable === "function") renderAdminTable();
           }
         }
-      } catch (e) {
-        console.error(e);
-        showToast("Failed to connect workspace folder.", "error");
-      }
-    } else {
-      const permission = await handle.queryPermission({ mode: 'readwrite' });
-      if (permission !== 'granted') {
-        // Request permission
-        try {
-          const req = await handle.requestPermission({ mode: 'readwrite' });
-          if (req === 'granted') {
-            showToast("Workspace permission granted!", "success");
-            const synced = await syncWithConnectedWorkspace();
-            if (synced) {
-              if (typeof renderHomeEvents === "function") renderHomeEvents();
-              if (typeof renderAdminTable === "function") renderAdminTable();
-            }
+      } catch (e) { showToast("Failed to connect workspace folder.", "error"); }
+    } else if (await handle.queryPermission({ mode: "readwrite" }) !== "granted") {
+      try {
+        if (await handle.requestPermission({ mode: "readwrite" }) === "granted") {
+          showToast("Workspace permission granted!", "success");
+          if (await syncWithConnectedWorkspace()) {
+            if (typeof renderHomeEvents === "function") renderHomeEvents();
+            if (typeof renderAdminTable === "function") renderAdminTable();
           }
-        } catch (e) {
-          console.error(e);
-          showToast("Failed to obtain workspace permission.", "error");
         }
-      } else {
-        // Disconnect
-        if (confirm("Disconnect workspace folder? Automatic events.json saves will stop.")) {
-          await saveDirectoryHandle(null);
-          showToast("Workspace folder disconnected.", "info");
-        }
+      } catch (e) { showToast("Failed to obtain workspace permission.", "error"); }
+    } else {
+      if (confirm("Disconnect workspace folder? Automatic events.json saves will stop.")) {
+        await saveDirectoryHandle(null);
+        showToast("Workspace folder disconnected.", "info");
       }
     }
     updateStatusUI();
   });
 
-  // Handle Manual Download click
-  workspaceManualBtn.addEventListener("click", function () {
-    const events = getEvents();
-    const blob = new Blob([JSON.stringify(events, null, 2)], { type: "application/json" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "events.json";
-    link.click();
-    showToast("Downloaded events.json. Please save it to your project folder.", "success");
+  manualBtn.addEventListener("click", () => {
+    const blob = new Blob([JSON.stringify(getEvents(), null, 2)], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "events.json";
+    a.click();
+    showToast("Downloaded events.json.", "success");
   });
 
-  // Initial Status update
   updateStatusUI();
 }
 
-// Automatically initialize workspace connection UI on page load
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initWorkspaceSync);
-} else {
-  initWorkspaceSync();
+async function initDatabase() {
+  if (!await syncWithConnectedWorkspace()) await loadEventsFromJSON();
 }
+
+initDatabase();
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initWorkspaceSync);
+else initWorkspaceSync();
