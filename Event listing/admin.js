@@ -1,288 +1,128 @@
-document.addEventListener("DOMContentLoaded", function () {
+let isEditMode = false, editEventId = null, uploadedImageDataUrl = "";
+
+document.addEventListener("DOMContentLoaded", () => {
     const currentUser = getCurrentUser();
     if (!currentUser || currentUser.role !== "admin") {
-        // Apply styling and display "Nice Try" layout
         document.body.className = "nice-try-active";
         document.body.innerHTML = `
-            <style>
-            @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
-            
-            body.nice-try-active {
-                margin: 0;
-                padding: 0;
-                width: 100vw;
-                height: 100vh;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                background: radial-gradient(circle at center, #1e1b4b, #0f172a) !important;
-                font-family: 'Outfit', sans-serif;
-                overflow: hidden;
-            }
-            .nice-try-container {
-                animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 100%;
-                height: 100%;
-            }
-            .nice-try-card {
-                background: rgba(255, 255, 255, 0.03);
-                backdrop-filter: blur(16px);
-                -webkit-backdrop-filter: blur(16px);
-                border: 1px solid rgba(255, 255, 255, 0.08);
-                border-radius: 24px;
-                padding: 50px 40px;
-                text-align: center;
-                max-width: 450px;
-                width: 90%;
-                box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 0 0 100px rgba(108, 62, 244, 0.15);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 20px;
-            }
-            .nice-try-icon {
-                width: 80px;
-                height: 80px;
-                border-radius: 50%;
-                background: rgba(239, 68, 68, 0.1);
-                border: 1px solid rgba(239, 68, 68, 0.2);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                color: #ef4444;
-                font-size: 32px;
-                margin-bottom: 10px;
-                animation: pulse 2s infinite;
-            }
-            .nice-try-card h1 {
-                color: #fff;
-                font-size: 36px;
-                font-weight: 800;
-                margin: 0;
-                letter-spacing: -0.5px;
-            }
-            .nice-try-card p {
-                color: #94a3b8;
-                font-size: 16px;
-                line-height: 1.6;
-                margin: 0;
-            }
-            .nice-try-btn {
-                background: linear-gradient(135deg, #6C3EF4, #4f46e5);
-                color: #fff;
-                border: none;
-                padding: 14px 28px;
-                font-size: 15px;
-                font-weight: 600;
-                border-radius: 12px;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                box-shadow: 0 10px 20px rgba(108, 62, 244, 0.25);
-                transition: all 0.3s ease;
-                margin-top: 10px;
-            }
-            .nice-try-btn:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 15px 25px rgba(108, 62, 244, 0.35);
-            }
-            @keyframes fadeIn {
-                from { opacity: 0; transform: scale(0.95); }
-                to { opacity: 1; transform: scale(1); }
-            }
-            @keyframes pulse {
-                0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-                70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
-                100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-            }
-            </style>
             <div class="nice-try-container">
                 <div class="nice-try-card">
-                    <div class="nice-try-icon">
-                        <i class="fa-solid fa-user-shield"></i>
-                    </div>
+                    <div class="nice-try-icon"><i class="fa-solid fa-user-shield"></i></div>
                     <h1>Nice Try! ✋</h1>
                     <p>You do not have administrative clearance to access the control deck.</p>
                     <button onclick="window.location.href='home.html'" class="nice-try-btn">
                         <i class="fa-solid fa-house"></i> Return Home
                     </button>
                 </div>
-            </div>
-        `;
+            </div>`;
         return;
     }
 
     updateAdminProfileInfo(currentUser);
     renderAdminTable();
 
-    uploadedImageDataUrl = "";
-
-    const imgFileInput = document.getElementById("eventImageFile");
-    if (imgFileInput) {
-        imgFileInput.addEventListener("change", function (e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (evt) {
-                    uploadedImageDataUrl = evt.target.result;
-                };
-                reader.readAsDataURL(file);
-            } else {
-                uploadedImageDataUrl = "";
-            }
-        });
-    }
-
-    const addBtn = document.querySelector(".add-btn");
-    const eventModal = document.getElementById("eventModal");
-    const closeEvent = document.querySelector(".close-event");
-    const saveBtn = document.getElementById("saveBtn");
-    const eventForm = document.getElementById("eventForm");
-
-    if (addBtn) {
-        addBtn.addEventListener("click", function () {
-            isEditMode = false;
-            editEventId = null;
-            eventForm.reset();
+    document.getElementById("eventImageFile")?.addEventListener("change", e => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = evt => { uploadedImageDataUrl = evt.target.result; };
+            reader.readAsDataURL(file);
+        } else {
             uploadedImageDataUrl = "";
-            document.querySelector(".event-modal h2").innerText = "Add New Event";
-            saveBtn.innerText = "Create Event";
-            eventModal.style.display = "flex";
-        });
-    }
-
-    if (closeEvent) closeEvent.addEventListener("click", () => eventModal.style.display = "none");
-
-    window.addEventListener("click", function (e) {
-        if (e.target === eventModal) eventModal.style.display = "none";
+        }
     });
 
-    if (eventForm) {
-        eventForm.addEventListener("submit", function (e) {
-            e.preventDefault();
-            handleEventSubmit();
-        });
-    }
+    const modal = document.getElementById("eventModal"), form = document.getElementById("eventForm");
+    document.querySelector(".add-btn")?.addEventListener("click", () => {
+        isEditMode = false;
+        editEventId = null;
+        form.reset();
+        uploadedImageDataUrl = "";
+        document.querySelector(".event-modal h2").innerText = "Add New Event";
+        document.getElementById("saveBtn").innerText = "Create Event";
+        modal.style.display = "flex";
+    });
 
-    setupSidebarNavigation();
-    setupLogoutTrigger();
+    document.querySelector(".close-event")?.addEventListener("click", () => modal.style.display = "none");
+    window.addEventListener("click", e => { if (e.target === modal) modal.style.display = "none"; });
+    form?.addEventListener("submit", e => { e.preventDefault(); handleEventSubmit(); });
+
+    document.getElementById("dashboardLink")?.addEventListener("click", () => {
+        document.getElementById("dashboardLink").classList.add("active");
+        document.getElementById("eventsLink").classList.remove("active");
+        document.getElementById("dashboardSection").scrollIntoView({ behavior: "smooth" });
+    });
+
+    document.getElementById("eventsLink")?.addEventListener("click", () => {
+        document.getElementById("eventsLink").classList.add("active");
+        document.getElementById("dashboardLink").classList.remove("active");
+        document.getElementById("eventsSection").scrollIntoView({ behavior: "smooth" });
+    });
+
+    document.getElementById("logoutBtn")?.addEventListener("click", e => {
+        e.preventDefault();
+        setCurrentUser(null);
+        showToast("Logging out...", "info");
+        setTimeout(() => { window.location.href = "home.html"; }, 800);
+    });
 });
 
-/*==========================
-      GLOBAL VARIABLES
-==========================*/
-let isEditMode = false;
-let editEventId = null;
-let uploadedImageDataUrl = "";
-
-/*==========================
-      PROFILE VIEW RENDER
-==========================*/
 function updateAdminProfileInfo(admin) {
-    const profileBtn = document.getElementById("profileBtn");
-    if (!profileBtn) return;
-
+    const profileBtn = document.getElementById("profileBtn"), dropdown = document.getElementById("profileMenu");
+    if (!profileBtn || !dropdown) return;
     const avatar = profileBtn.querySelector(".avatar");
     if (avatar && admin.name) {
-        let nameParts = admin.name.split(" ");
-        let initials = "";
-        if (nameParts.length > 0 && nameParts[0]) initials += nameParts[0][0];
-        if (nameParts.length > 1 && nameParts[1]) initials += nameParts[1][0];
-        avatar.innerText = initials.toUpperCase();
+        avatar.innerText = admin.name.split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase();
     }
-
     const nameEl = profileBtn.querySelector("h4");
     if (nameEl) nameEl.innerText = admin.name;
 
-    const dropdown = document.getElementById("profileMenu");
-    if (dropdown) {
-        const dropdownAvatar = dropdown.querySelector(".avatar");
-        const dropdownName = dropdown.querySelector("h4");
-        const dropdownRole = dropdown.querySelector("p");
+    const ddAvatar = dropdown.querySelector(".avatar"), ddName = dropdown.querySelector("h4"), ddRole = dropdown.querySelector("p");
+    if (ddAvatar && avatar) ddAvatar.innerText = avatar.innerText;
+    if (ddName) ddName.innerText = admin.name;
+    if (ddRole) ddRole.innerText = admin.designation || "Administrator";
 
-        if (dropdownAvatar && admin.name) dropdownAvatar.innerText = avatar.innerText;
-        if (dropdownName) dropdownName.innerText = admin.name;
-        if (dropdownRole) dropdownRole.innerText = admin.designation || "Administrator";
-    }
-
-    profileBtn.addEventListener("click", function (e) {
+    profileBtn.addEventListener("click", e => {
         e.stopPropagation();
         dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
     });
-
-    document.addEventListener("click", () => { if (dropdown) dropdown.style.display = "none"; });
+    document.addEventListener("click", () => { dropdown.style.display = "none"; });
 }
 
-/*==========================
-      RENDER ADMIN TABLE
-==========================*/
 function renderAdminTable() {
     const tableBody = document.getElementById("eventTableBody");
     if (!tableBody) return;
-
-    tableBody.innerHTML = "";
-
     const events = getEvents();
 
-    if (events.length === 0) {
+    if (!events.length) {
         tableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #718096;">No events created yet. Click "Add Event" to get started.</td></tr>`;
         return;
     }
 
-    for (let i = 0; i < events.length; i++) {
-        let event = events[i];
-        const row = document.createElement("tr");
-        row.innerHTML = `
-            <td data-label="Event Name" style="font-weight: 500; color: #1a202c;">${event.title}</td>
-            <td data-label="Category"><span class="details-badge">${event.category}</span></td>
-            <td data-label="Date & Time">${formatDate(event.date)} at ${event.time || '10:00 AM'}</td>
-            <td data-label="Location">${event.location}</td>
-            <td data-label="Attendees">👥 ${event.attendees || 0} / ${event.maxAttendees || 100}</td>
+    tableBody.innerHTML = events.map(e => `
+        <tr>
+            <td data-label="Event Name" style="font-weight: 500; color: #1a202c;">${e.title}</td>
+            <td data-label="Category"><span class="details-badge">${e.category}</span></td>
+            <td data-label="Date & Time">${formatDate(e.date)} at ${e.time || '10:00 AM'}</td>
+            <td data-label="Location">${e.location}</td>
+            <td data-label="Attendees">👥 ${e.attendees || 0} / ${e.maxAttendees || 100}</td>
             <td>
-                <button class="edit-btn action-edit" data-id="${event.id}">
-                    <i class="fa-solid fa-pen"></i> Edit
-                </button>
-                <button class="delete-btn action-delete" data-id="${event.id}">
-                    <i class="fa-solid fa-trash"></i> Delete
-                </button>
+                <button class="edit-btn action-edit" data-id="${e.id}"><i class="fa-solid fa-pen"></i> Edit</button>
+                <button class="delete-btn action-delete" data-id="${e.id}"><i class="fa-solid fa-trash"></i> Delete</button>
             </td>
-        `;
-        tableBody.appendChild(row);
-    }
+        </tr>`).join("");
 
-    const editBtns = document.querySelectorAll(".action-edit");
-    for (let i = 0; i < editBtns.length; i++) {
-        editBtns[i].addEventListener("click", function () {
-            let id = parseInt(this.getAttribute("data-id"));
-            prepareEditForm(id);
-        });
-    }
+    tableBody.querySelectorAll(".action-edit").forEach(btn => {
+        btn.addEventListener("click", () => prepareEditForm(parseInt(btn.getAttribute("data-id"))));
+    });
 
-    const deleteBtns = document.querySelectorAll(".action-delete");
-    for (let i = 0; i < deleteBtns.length; i++) {
-        deleteBtns[i].addEventListener("click", function () {
-            let id = parseInt(this.getAttribute("data-id"));
-            deleteEventInstantly(id);
-        });
-    }
+    tableBody.querySelectorAll(".action-delete").forEach(btn => {
+        btn.addEventListener("click", () => deleteEventInstantly(parseInt(btn.getAttribute("data-id"))));
+    });
 }
 
-/*==========================
-      PREPARE EDIT FORM
-==========================*/
 function prepareEditForm(eventId) {
-    const events = getEvents();
-    let event = null;
-    for (let i = 0; i < events.length; i++) {
-        if (events[i].id === eventId) {
-            event = events[i];
-            break;
-        }
-    }
+    const event = getEvents().find(e => e.id === eventId);
     if (!event) return;
 
     isEditMode = true;
@@ -295,10 +135,7 @@ function prepareEditForm(eventId) {
     document.getElementById("eventLocation").value = event.location;
     document.getElementById("eventCategory").value = event.category;
     document.getElementById("eventSeats").value = event.maxAttendees;
-    
-    let originalURL = event.image;
-    if (originalURL && originalURL.indexOf("data:") === 0) originalURL = "";
-    document.getElementById("eventImageURL").value = originalURL;
+    document.getElementById("eventImageURL").value = event.image?.indexOf("data:") === 0 ? "" : event.image || "";
     document.getElementById("eventDescription").value = event.description || "";
     document.getElementById("eventImageFile").value = "";
 
@@ -307,9 +144,6 @@ function prepareEditForm(eventId) {
     document.getElementById("eventModal").style.display = "flex";
 }
 
-/*==========================
-      HANDLE SUBMISSION
-==========================*/
 function handleEventSubmit() {
     const name = document.getElementById("eventName").value.trim();
     const date = document.getElementById("eventDate").value;
@@ -326,136 +160,35 @@ function handleEventSubmit() {
     }
 
     const events = getEvents();
-
-    let finalImage = "";
-    if (uploadedImageDataUrl) {
-        finalImage = uploadedImageDataUrl;
-    } else if (imageURL) {
-        finalImage = imageURL;
-    } else {
-        finalImage = getCategoryPlaceholder(category);
-    }
+    const finalImage = uploadedImageDataUrl || imageURL || getCategoryPlaceholder(category);
 
     if (isEditMode) {
-        let eventIndex = -1;
-        for (let i = 0; i < events.length; i++) {
-            if (events[i].id === editEventId) {
-                eventIndex = i;
-                break;
-            }
-        }
-        if (eventIndex === -1) return;
-
-        let originalEvent = events[eventIndex];
-        if (seats < originalEvent.attendees) {
-            showToast("Seats count cannot be less than registered attendees (" + originalEvent.attendees + ").", "error");
+        const ev = events.find(e => e.id === editEventId);
+        if (!ev) return;
+        if (seats < ev.attendees) {
+            showToast(`Seats count cannot be less than registered attendees (${ev.attendees}).`, "error");
             return;
         }
-
-        originalEvent.title = name;
-        originalEvent.date = date;
-        originalEvent.time = time;
-        originalEvent.location = location;
-        originalEvent.category = category;
-        originalEvent.maxAttendees = seats;
-        originalEvent.image = finalImage;
-        originalEvent.description = description;
-
-        saveEvents(events);
+        Object.assign(ev, { title: name, date, time, location, category, maxAttendees: seats, image: finalImage, description });
         showToast("Event updated successfully", "success");
     } else {
-        let newId = 1;
-        if (events.length > 0) {
-            let maxId = events[0].id;
-            for (let i = 1; i < events.length; i++) {
-                if (events[i].id > maxId) maxId = events[i].id;
-            }
-            newId = maxId + 1;
-        }
-        
-        events.push({
-            id: newId,
-            title: name,
-            description: description,
-            category: category,
-            date: date,
-            time: time,
-            location: location,
-            image: finalImage,
-            maxAttendees: seats,
-            attendees: 0
-        });
-
-        saveEvents(events);
+        const nextId = events.length ? Math.max(...events.map(e => e.id)) + 1 : 1;
+        events.push({ id: nextId, title: name, description, category, date, time, location, image: finalImage, maxAttendees: seats, attendees: 0 });
         showToast("Event created successfully", "success");
     }
 
+    saveEvents(events);
     document.getElementById("eventModal").style.display = "none";
     document.getElementById("eventForm").reset();
     uploadedImageDataUrl = "";
     renderAdminTable();
 }
 
-/*==========================
-      DELETE HANDLER
-==========================*/
 function deleteEventInstantly(eventId) {
-    let events = getEvents();
-    let newEvents = [];
-    for (let i = 0; i < events.length; i++) {
-        if (events[i].id !== eventId) newEvents.push(events[i]);
-    }
-    saveEvents(newEvents);
-
-    let registrations = getRegistrations();
-    let newRegistrations = [];
-    for (let i = 0; i < registrations.length; i++) {
-        if (registrations[i].eventId !== eventId) newRegistrations.push(registrations[i]);
-    }
-    saveRegistrations(newRegistrations);
-
+    saveEvents(getEvents().filter(e => e.id !== eventId));
+    saveRegistrations(getRegistrations().filter(r => r.eventId !== eventId));
     showToast("Event deleted successfully", "success");
     renderAdminTable();
 }
 
-/*==========================
-      LOGOUT HANDLER
-==========================*/
-function setupLogoutTrigger() {
-    const logoutBtn = document.getElementById("logoutBtn");
-    if (logoutBtn) {
-        logoutBtn.addEventListener("click", function (e) {
-            e.preventDefault();
-            setCurrentUser(null);
-            showToast("Logging out...", "info");
-            setTimeout(function () {
-                window.location.href = "home.html";
-            }, 800);
-        });
-    }
-}
-
-/*==========================
-      SIDEBAR NAVIGATION
-==========================*/
-function setupSidebarNavigation() {
-    const dashboardLink = document.getElementById("dashboardLink");
-    const eventsLink = document.getElementById("eventsLink");
-    const dashboardSection = document.getElementById("dashboardSection");
-    const eventsSection = document.getElementById("eventsSection");
-
-    dashboardLink.addEventListener("click", function () {
-        dashboardLink.classList.add("active");
-        eventsLink.classList.remove("active");
-        dashboardSection.scrollIntoView({ behavior: "smooth" });
-    });
-
-    eventsLink.addEventListener("click", function () {
-        eventsLink.classList.add("active");
-        dashboardLink.classList.remove("active");
-        eventsSection.scrollIntoView({ behavior: "smooth" });
-    });
-}
-
-// Listen for workspace JSON synchronization event
 window.addEventListener("events-synced", renderAdminTable);

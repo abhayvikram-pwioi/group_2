@@ -1,437 +1,225 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const currentUser = getCurrentUser();
-    if (!currentUser || currentUser.role !== "user") {
+document.addEventListener("DOMContentLoaded", () => {
+    const user = getCurrentUser();
+    if (!user || user.role !== "user") {
         alert("Access Denied. Please log in first.");
         window.location.href = "home.html";
         return;
     }
 
-    updateUserProfileInfo(currentUser);
+    updateUserProfileInfo(user);
     renderUserEvents();
     renderMyRegistrations();
     setupTabSwitching();
 
-    const searchInput = document.getElementById("searchInput");
-    const dateFilter = document.getElementById("dateFilter");
-    const categoryFilter = document.getElementById("categoryFilter");
-    const resetBtn = document.getElementById("resetBtn");
-
-    if (searchInput) searchInput.addEventListener("input", renderUserEvents);
-    if (dateFilter) dateFilter.addEventListener("change", renderUserEvents);
-    if (categoryFilter) categoryFilter.addEventListener("change", renderUserEvents);
+    ["searchInput", "dateFilter", "categoryFilter"].forEach(id => {
+        document.getElementById(id)?.addEventListener(id === "searchInput" ? "input" : "change", renderUserEvents);
+    });
     
-    if (resetBtn) {
-        resetBtn.addEventListener("click", function () {
-            searchInput.value = "";
-            dateFilter.value = "";
-            categoryFilter.value = "";
-            renderUserEvents();
-            showToast("Filters reset", "info");
-        });
-    }
+    document.getElementById("resetBtn")?.addEventListener("click", () => {
+        document.getElementById("searchInput").value = "";
+        document.getElementById("dateFilter").value = "";
+        document.getElementById("categoryFilter").value = "";
+        renderUserEvents();
+        showToast("Filters reset", "info");
+    });
 
-    // Initialize chatbot from db.js
     initChatbot();
 });
 
-/*==========================
-      PROFILE VIEW RENDER
-==========================*/
 function updateUserProfileInfo(user) {
-    const profileBtn = document.getElementById("profileBtn");
-    if (!profileBtn) return;
-
-    const avatar = profileBtn.querySelector(".avatar");
+    const btn = document.getElementById("profileBtn"), menu = document.getElementById("profileMenu");
+    if (!btn || !menu) return;
+    const avatar = btn.querySelector(".avatar");
     if (avatar && user.name) {
-        let nameParts = user.name.split(" ");
-        let initials = "";
-        if (nameParts.length > 0 && nameParts[0]) initials += nameParts[0][0];
-        if (nameParts.length > 1 && nameParts[1]) initials += nameParts[1][0];
-        avatar.innerText = initials.toUpperCase();
+        avatar.innerText = user.name.split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase();
     }
-
-    const nameEl = profileBtn.querySelector("h4");
-    const detailsEl = profileBtn.querySelector("span");
+    const nameEl = btn.querySelector("h4"), detailsEl = btn.querySelector("span");
     if (nameEl) nameEl.innerText = user.name;
     if (detailsEl) detailsEl.innerText = user.college || "Student";
 
-    const dropdown = document.getElementById("profileMenu");
-    if (dropdown) {
-        const dropdownAvatar = dropdown.querySelector(".avatar");
-        const dropdownName = dropdown.querySelector("h4");
-        const dropdownRole = dropdown.querySelector("p");
+    const mmAvatar = menu.querySelector(".avatar"), mmName = menu.querySelector("h4"), mmRole = menu.querySelector("p");
+    if (mmAvatar && avatar) mmAvatar.innerText = avatar.innerText;
+    if (mmName) mmName.innerText = user.name;
+    if (mmRole) mmRole.innerText = user.college || "Student";
 
-        if (dropdownAvatar && user.name) dropdownAvatar.innerText = avatar.innerText;
-        if (dropdownName) dropdownName.innerText = user.name;
-        if (dropdownRole) dropdownRole.innerText = user.college || "Student";
-    }
+    btn.addEventListener("click", e => { e.stopPropagation(); menu.style.display = menu.style.display === "block" ? "none" : "block"; });
+    document.addEventListener("click", () => menu.style.display = "none");
 }
 
-/*==========================
-      TAB SWITCHING FLOW
-==========================*/
 function setupTabSwitching() {
-    const eventsLink = document.getElementById("eventsLink");
-    const registrationLink = document.getElementById("registrationLink");
-    
-    const filterSection = document.querySelector(".filter-section");
-    const eventsSection = document.querySelector(".events-section");
-    const registrationSection = document.getElementById("registrationSection");
+    const evLink = document.getElementById("eventsLink"), regLink = document.getElementById("registrationLink");
+    const filters = document.querySelector(".filter-section"), evSec = document.querySelector(".events-section"), regSec = document.getElementById("registrationSection");
 
-    if (registrationSection) registrationSection.style.display = "none";
+    if (regSec) regSec.style.display = "none";
 
-    eventsLink.addEventListener("click", function () {
-        eventsLink.classList.add("active");
-        registrationLink.classList.remove("active");
-        
-        if (filterSection) filterSection.style.display = "flex";
-        if (eventsSection) eventsSection.style.display = "block";
-        if (registrationSection) registrationSection.style.display = "none";
-        
+    evLink?.addEventListener("click", () => {
+        evLink.classList.add("active"); regLink.classList.remove("active");
+        if (filters) filters.style.display = "flex";
+        if (evSec) evSec.style.display = "block";
+        if (regSec) regSec.style.display = "none";
         document.querySelector("header h1").innerText = "Events";
         renderUserEvents();
     });
 
-    registrationLink.addEventListener("click", function () {
-        registrationLink.classList.add("active");
-        eventsLink.classList.remove("active");
-        
-        if (filterSection) filterSection.style.display = "none";
-        if (eventsSection) eventsSection.style.display = "none";
-        if (registrationSection) registrationSection.style.display = "block";
-        
+    regLink?.addEventListener("click", () => {
+        regLink.classList.add("active"); evLink.classList.remove("active");
+        if (filters) filters.style.display = "none";
+        if (evSec) evSec.style.display = "none";
+        if (regSec) regSec.style.display = "block";
         document.querySelector("header h1").innerText = "My Registrations";
         renderMyRegistrations();
     });
 }
 
-/*==========================
-      RENDER USER EVENTS
-==========================*/
 function renderUserEvents() {
     const container = document.getElementById("eventContainer");
     if (!container) return;
-
     container.innerHTML = "";
 
-    const events = getEvents();
-    const currentUser = getCurrentUser();
-    const registrations = getRegistrations();
+    const user = getCurrentUser(), events = getEvents(), regs = getRegistrations();
+    const search = document.getElementById("searchInput")?.value.toLowerCase().trim() || "";
+    const date = document.getElementById("dateFilter")?.value || "";
+    const cat = document.getElementById("categoryFilter")?.value || "";
 
-    const searchQuery = document.getElementById("searchInput")?.value.toLowerCase().trim() || "";
-    const dateQuery = document.getElementById("dateFilter")?.value || "";
-    const categoryQuery = document.getElementById("categoryFilter")?.value || "";
+    const filtered = events.filter(e => 
+        e.title.toLowerCase().includes(search) &&
+        (!cat || e.category === cat) &&
+        (!date || e.date === date)
+    );
 
-    const filteredEvents = events.filter(event => {
-        const matchesSearch = event.title.toLowerCase().includes(searchQuery);
-        const matchesCategory = !categoryQuery || event.category === categoryQuery;
-        const matchesDate = !dateQuery || event.date === dateQuery;
-        return matchesSearch && matchesCategory && matchesDate;
-    });
-
-    if (filteredEvents.length === 0) {
+    if (!filtered.length) {
         container.innerHTML = "<div class='no-events-msg'>No events found matching your filters.</div>";
         return;
     }
 
-    filteredEvents.forEach(event => {
+    filtered.forEach(e => {
         const card = document.createElement("div");
         card.className = "event-card";
-        
-        const isRegistered = registrations.some(r => r.userEmail === currentUser.email && r.eventId === event.id);
-        const isFull = (event.attendees || 0) >= (event.maxAttendees || 100);
-        
-        let buttonHTML = `<button class="register-btn user-reg-btn" data-id="${event.id}">Register</button>`;
-        if (isRegistered) {
-            buttonHTML = `<button class="register-btn user-reg-btn" style="background:#22C55E;" disabled>✓ Registered</button>`;
-        } else if (isFull) {
-            buttonHTML = `<button class="register-btn user-reg-btn" style="background:#ef4444;" disabled>Full</button>`;
-        }
+        const registered = regs.some(r => r.userEmail === user.email && r.eventId === e.id);
+        const full = (e.attendees || 0) >= (e.maxAttendees || 100);
+        const btnHTML = registered ? `<button class="register-btn user-reg-btn" style="background:#22C55E;" disabled>✓ Registered</button>`
+            : full ? `<button class="register-btn user-reg-btn" style="background:#ef4444;" disabled>Full</button>`
+            : `<button class="register-btn user-reg-btn" data-id="${e.id}">Register</button>`;
 
-        const imgPath = event.image || getCategoryPlaceholder(event.category);
-
-        card.innerHTML = `
-            <img src="${imgPath}" alt="${event.title}" onerror="this.src='assets/workshop.jpeg'">
+        card.innerHTML = `<img src="${e.image || getCategoryPlaceholder(e.category)}" alt="${e.title}" onerror="this.src='assets/workshop.jpeg'">
             <div class="event-content">
-                <span class="details-badge">${event.category}</span>
-                <h3>${event.title}</h3>
+                <span class="details-badge">${e.category}</span><h3>${e.title}</h3>
                 <div class="event-info">
-                    <p><i class="fa-solid fa-calendar"></i> ${formatDate(event.date)}</p>
-                    <p><i class="fa-solid fa-clock"></i> ${event.time || '10:00 AM'}</p>
-                    <p class="count"><i class="fa-solid fa-users"></i> <span class="registered-count">${event.attendees || 0}</span> / ${event.maxAttendees || 100} Registered</p>
-                </div>
-                <p class="location"><i class="fa-solid fa-location-dot"></i> ${event.location}</p>
-                ${buttonHTML}
-            </div>
-        `;
+                    <p><i class="fa-solid fa-calendar"></i> ${formatDate(e.date)}</p>
+                    <p><i class="fa-solid fa-clock"></i> ${e.time || '10:00 AM'}</p>
+                    <p class="count"><i class="fa-solid fa-users"></i> <span>${e.attendees || 0}</span> / ${e.maxAttendees || 100} Registered</p>
+                </div><p class="location"><i class="fa-solid fa-location-dot"></i> ${e.location}</p>${btnHTML}
+            </div>`;
 
-        card.addEventListener("click", e => {
-            if (!e.target.classList.contains("user-reg-btn")) {
-                openDetailsModal(event.id);
-            }
-        });
-
+        card.addEventListener("click", ev => { if (!ev.target.classList.contains("user-reg-btn")) openDetailsModal(e.id); });
         container.appendChild(card);
     });
 
-    container.querySelectorAll(".user-reg-btn").forEach(btn => {
-        btn.addEventListener("click", e => {
-            e.stopPropagation();
-            handleUserRegistrationTrigger(parseInt(btn.getAttribute("data-id")));
-        });
+    container.querySelectorAll(".user-reg-btn:not([disabled])").forEach(btn => {
+        btn.addEventListener("click", ev => { ev.stopPropagation(); handleUserRegistrationTrigger(parseInt(btn.getAttribute("data-id"))); });
     });
 }
 
-/*==========================
-      RENDER MY REGISTRATIONS
-==========================*/
 function renderMyRegistrations() {
-    const container = document.getElementById("registrationContainer");
-    const emptyState = document.getElementById("emptyState");
+    const container = document.getElementById("registrationContainer"), empty = document.getElementById("emptyState");
     if (!container) return;
+    container.querySelectorAll(".registered-card").forEach(c => c.remove());
 
-    const oldCards = container.querySelectorAll(".registered-card");
-    for (let i = 0; i < oldCards.length; i++) {
-        oldCards[i].remove();
-    }
+    const user = getCurrentUser(), events = getEvents();
+    const userRegs = getRegistrations().filter(r => r.userEmail === user.email);
 
-    const currentUser = getCurrentUser();
-    const allRegistrations = getRegistrations();
-    
-    let userRegistrations = [];
-    for (let i = 0; i < allRegistrations.length; i++) {
-        if (allRegistrations[i].userEmail === currentUser.email) {
-            userRegistrations.push(allRegistrations[i]);
-        }
-    }
-
-    const events = getEvents();
-
-    if (userRegistrations.length === 0) {
-        if (emptyState) emptyState.style.display = "block";
+    if (!userRegs.length) {
+        if (empty) empty.style.display = "block";
         return;
     }
+    if (empty) empty.style.display = "none";
 
-    if (emptyState) emptyState.style.display = "none";
-
-    for (let i = 0; i < userRegistrations.length; i++) {
-        let reg = userRegistrations[i];
-        let event = null;
-        for (let j = 0; j < events.length; j++) {
-            if (events[j].id === reg.eventId) {
-                event = events[j];
-                break;
-            }
-        }
-        if (!event) continue;
-
+    userRegs.forEach(reg => {
+        const ev = events.find(e => e.id === reg.eventId);
+        if (!ev) return;
         const card = document.createElement("div");
         card.className = "registered-card";
-        
-        let imgPath = event.image || getCategoryPlaceholder(event.category);
-
-        card.innerHTML = `
-            <img src="${imgPath}" alt="${event.title}" onerror="this.src='assets/workshop.jpeg'">
+        card.innerHTML = `<img src="${ev.image || getCategoryPlaceholder(ev.category)}" alt="${ev.title}" onerror="this.src='assets/workshop.jpeg'">
             <div class="registered-content">
-                <span class="details-badge">${event.category}</span>
-                <h3>${event.title}</h3>
+                <span class="details-badge">${ev.category}</span><h3>${ev.title}</h3>
                 <div class="event-info">
-                    <p><i class="fa-solid fa-calendar"></i> ${formatDate(event.date)} at ${event.time || '10:00 AM'}</p>
-                    <p><i class="fa-solid fa-location-dot"></i> ${event.location}</p>
-                </div>
-                <span class="registered-badge">✓ Registered</span>
-            </div>
-        `;
-
-        card.addEventListener("click", function () {
-            openDetailsModal(event.id);
-        });
-
+                    <p><i class="fa-solid fa-calendar"></i> ${formatDate(ev.date)} at ${ev.time || '10:00 AM'}</p>
+                    <p><i class="fa-solid fa-location-dot"></i> ${ev.location}</p>
+                </div><span class="registered-badge">✓ Registered</span>
+            </div>`;
+        card.addEventListener("click", () => openDetailsModal(ev.id));
         container.appendChild(card);
-    }
+    });
 }
 
-/*==========================
-      EVENT DETAILS MODAL
-==========================*/
-const detailsModal = document.getElementById("detailsModal");
-const closeDetails = document.getElementById("closeDetails");
-const detailsCancelBtn = document.getElementById("detailsCancelBtn");
-const detailsRegisterBtn = document.getElementById("detailsRegisterBtn");
-
+const detailsModal = document.getElementById("detailsModal"), dRegisterBtn = document.getElementById("detailsRegisterBtn");
 function openDetailsModal(eventId) {
-    const events = getEvents();
-    let event = null;
-    for (let i = 0; i < events.length; i++) {
-        if (events[i].id === eventId) {
-            event = events[i];
-            break;
-        }
-    }
+    const event = getEvents().find(e => e.id === eventId);
     if (!event) return;
+    const body = document.getElementById("detailsBody");
+    if (!body) return;
 
-    const detailsBody = document.getElementById("detailsBody");
-    if (!detailsBody) return;
-
-    let imgPath = event.image || getCategoryPlaceholder(event.category);
-    
-    detailsBody.innerHTML = `
-        <img class="details-image" src="${imgPath}" alt="${event.title}" onerror="this.src='assets/workshop.jpeg'">
-        <span class="details-badge">${event.category}</span>
-        <h2 style="font-size: 24px; color: #1a202c; margin-bottom: 15px;">${event.title}</h2>
+    body.innerHTML = `<img class="details-image" src="${event.image || getCategoryPlaceholder(event.category)}" alt="${event.title}" onerror="this.src='assets/workshop.jpeg'">
+        <span class="details-badge">${event.category}</span><h2 style="font-size: 24px; color: #1a202c; margin-bottom: 15px;">${event.title}</h2>
         <div class="details-meta">
             <div class="details-meta-item"><i class="fa-solid fa-calendar"></i> <span>${formatDate(event.date)}</span></div>
             <div class="details-meta-item"><i class="fa-solid fa-clock"></i> <span>${event.time || '10:00 AM'}</span></div>
             <div class="details-meta-item"><i class="fa-solid fa-location-dot"></i> <span>${event.location}</span></div>
             <div class="details-meta-item"><i class="fa-solid fa-users"></i> <span>${event.attendees || 0} / ${event.maxAttendees || 100} Attendees</span></div>
-        </div>
-        <p class="details-description">${event.description || 'No description provided.'}</p>
-    `;
+        </div><p class="details-description">${event.description || 'No description.'}</p>`;
 
-    detailsRegisterBtn.onclick = function () {
-        detailsModal.style.display = "none";
-        handleUserRegistrationTrigger(eventId);
-    };
+    dRegisterBtn.onclick = () => { detailsModal.style.display = "none"; handleUserRegistrationTrigger(eventId); };
 
-    const currentUser = getCurrentUser();
-    const registrations = getRegistrations();
-    let alreadyReg = false;
-    for (let i = 0; i < registrations.length; i++) {
-        if (registrations[i].userEmail === currentUser.email && registrations[i].eventId === eventId) {
-            alreadyReg = true;
-            break;
-        }
-    }
-    let isFull = (event.attendees || 0) >= (event.maxAttendees || 100);
+    const registered = getRegistrations().some(r => r.userEmail === getCurrentUser().email && r.eventId === eventId);
+    const full = (event.attendees || 0) >= (event.maxAttendees || 100);
 
-    if (alreadyReg) {
-        detailsRegisterBtn.innerText = "✓ Registered";
-        detailsRegisterBtn.disabled = true;
-        detailsRegisterBtn.style.background = "#22C55E";
-    } else if (isFull) {
-        detailsRegisterBtn.innerText = "Full";
-        detailsRegisterBtn.disabled = true;
-        detailsRegisterBtn.style.background = "#ef4444";
-    } else {
-        detailsRegisterBtn.innerText = "Register";
-        detailsRegisterBtn.disabled = false;
-        detailsRegisterBtn.style.background = "#6C3EF4";
-    }
+    dRegisterBtn.innerText = registered ? "✓ Registered" : full ? "Full" : "Register";
+    dRegisterBtn.disabled = registered || full;
+    dRegisterBtn.style.background = registered ? "#22C55E" : full ? "#ef4444" : "#6C3EF4";
 
     if (detailsModal) detailsModal.style.display = "flex";
 }
 
-if (closeDetails) closeDetails.addEventListener("click", () => detailsModal.style.display = "none");
-if (detailsCancelBtn) detailsCancelBtn.addEventListener("click", () => detailsModal.style.display = "none");
+["closeDetails", "detailsCancelBtn"].forEach(id => document.getElementById(id)?.addEventListener("click", () => { detailsModal.style.display = "none"; }));
 
-/*==========================
-      REGISTRATION HANDLER
-==========================*/
-const confirmRegModal = document.getElementById("confirmRegModal");
-const closeConfirmReg = document.getElementById("closeConfirmReg");
-const confirmRegCancelBtn = document.getElementById("confirmRegCancelBtn");
-const confirmRegConfirmBtn = document.getElementById("confirmRegConfirmBtn");
-
+const confirmModal = document.getElementById("confirmRegModal"), confirmBtn = document.getElementById("confirmRegConfirmBtn");
 function handleUserRegistrationTrigger(eventId) {
-    const user = getCurrentUser();
-    const events = getEvents();
-    let event = null;
-    for (let i = 0; i < events.length; i++) {
-        if (events[i].id === eventId) {
-            event = events[i];
-            break;
-        }
-    }
+    const user = getCurrentUser(), event = getEvents().find(e => e.id === eventId), regs = getRegistrations();
     if (!event) return;
 
-    const registrations = getRegistrations();
-    let alreadyReg = false;
-    for (let i = 0; i < registrations.length; i++) {
-        if (registrations[i].userEmail === user.email && registrations[i].eventId === eventId) {
-            alreadyReg = true;
-            break;
-        }
-    }
+    if (regs.some(r => r.userEmail === user.email && r.eventId === eventId)) return showToast("Already registered.", "info");
+    if ((event.attendees || 0) >= (event.maxAttendees || 100)) return showToast("Event is full.", "error");
 
-    if (alreadyReg) {
-        showToast("You are already registered.", "info");
-        return;
-    }
-    if ((event.attendees || 0) >= (event.maxAttendees || 100)) {
-        showToast("Event is full.", "error");
-        return;
-    }
-
-    document.getElementById("confirmRegTitle").innerText = "Register for: " + event.title;
+    document.getElementById("confirmRegTitle").innerText = `Register for: ${event.title}`;
     document.getElementById("confirmUserName").innerText = user.name;
     document.getElementById("confirmUserEmail").innerText = user.email;
-    document.getElementById("confirmEventDate").innerText = formatDate(event.date) + " at " + (event.time || '10:00 AM');
+    document.getElementById("confirmEventDate").innerText = `${formatDate(event.date)} at ${event.time || '10:00 AM'}`;
 
-    if (confirmRegModal) confirmRegModal.style.display = "flex";
+    if (confirmModal) confirmModal.style.display = "flex";
 
-    confirmRegConfirmBtn.onclick = function () {
-        const currentEvents = getEvents();
-        let dbEvent = null;
-        for (let i = 0; i < currentEvents.length; i++) {
-            if (currentEvents[i].id === eventId) {
-                dbEvent = currentEvents[i];
-                break;
-            }
-        }
-        
-        if (dbEvent.attendees >= dbEvent.maxAttendees) {
-            showToast("Event is full.", "error");
-            confirmRegModal.style.display = "none";
-            return;
-        }
+    confirmBtn.onclick = () => {
+        const events = getEvents(), e = events.find(x => x.id === eventId);
+        if (e.attendees >= e.maxAttendees) return showToast("Event is full.", "error");
 
-        registrations.push({ userEmail: user.email, eventId: eventId, registeredAt: new Date().toISOString() });
-        saveRegistrations(registrations);
+        regs.push({ userEmail: user.email, eventId, registeredAt: new Date().toISOString() });
+        saveRegistrations(regs);
+        e.attendees = (e.attendees || 0) + 1;
+        saveEvents(events);
 
-        dbEvent.attendees = (dbEvent.attendees || 0) + 1;
-        saveEvents(currentEvents);
-
-        confirmRegModal.style.display = "none";
+        confirmModal.style.display = "none";
         showToast("Successfully registered!", "success");
-        renderUserEvents();
-        renderMyRegistrations();
+        renderUserEvents(); renderMyRegistrations();
     };
 }
 
-if (closeConfirmReg) closeConfirmReg.addEventListener("click", () => confirmRegModal.style.display = "none");
-if (confirmRegCancelBtn) confirmRegCancelBtn.addEventListener("click", () => confirmRegModal.style.display = "none");
+["closeConfirmReg", "confirmRegCancelBtn"].forEach(id => document.getElementById(id)?.addEventListener("click", () => { confirmModal.style.display = "none"; }));
 
-/*==========================
-      PROFILE MENU
-==========================*/
-const profileBtn = document.getElementById("profileBtn");
-const profileMenu = document.getElementById("profileMenu");
-
-if (profileBtn) {
-    profileBtn.addEventListener("click", function (e) {
-        e.stopPropagation();
-        profileMenu.style.display = profileMenu.style.display === "block" ? "none" : "block";
-    });
-}
-
-document.addEventListener("click", () => { if (profileMenu) profileMenu.style.display = "none"; });
-
-/*==========================
-      LOGOUT FLOW
-==========================*/
-const logoutBtn = document.getElementById("logoutBtn");
-if (logoutBtn) {
-    logoutBtn.addEventListener("click", function () {
-        if (confirm("Are you sure you want to log out?")) {
-            setCurrentUser(null);
-            showToast("Logged out successfully", "info");
-            setTimeout(() => { window.location.href = "home.html"; }, 500);
-        }
-    });
-}
-
-// Listen for workspace JSON synchronization event
-window.addEventListener("events-synced", function () {
-    renderUserEvents();
-    renderMyRegistrations();
+document.getElementById("logoutBtn")?.addEventListener("click", () => {
+    if (confirm("Are you sure you want to log out?")) {
+        setCurrentUser(null);
+        showToast("Logged out successfully", "info");
+        setTimeout(() => { window.location.href = "home.html"; }, 500);
+    }
 });
+
+window.addEventListener("events-synced", () => { renderUserEvents(); renderMyRegistrations(); });

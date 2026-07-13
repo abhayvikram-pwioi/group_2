@@ -1,426 +1,155 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     updateNavbar();
     renderHomeEvents();
-
-    const searchInput = document.getElementById("homeSearchInput");
-    const dateFilter = document.getElementById("homeDateFilter");
-    const categoryFilter = document.getElementById("homeCategoryFilter");
-    const resetBtn = document.getElementById("homeResetBtn");
-
-    if (searchInput) searchInput.addEventListener("input", renderHomeEvents);
-    if (dateFilter) dateFilter.addEventListener("change", renderHomeEvents);
-    if (categoryFilter) categoryFilter.addEventListener("change", renderHomeEvents);
-    
-    if (resetBtn) {
-        resetBtn.addEventListener("click", function () {
-            searchInput.value = "";
-            dateFilter.value = "";
-            categoryFilter.value = "";
-            renderHomeEvents();
-            showToast("Filters reset", "info");
-        });
-    }
-
-    // Initialize shared chatbot from db.js
+    ["homeSearchInput", "homeDateFilter", "homeCategoryFilter"].forEach(id => {
+        document.getElementById(id)?.addEventListener(id === "homeSearchInput" ? "input" : "change", renderHomeEvents);
+    });
+    document.getElementById("homeResetBtn")?.addEventListener("click", () => {
+        ["homeSearchInput", "homeDateFilter", "homeCategoryFilter"].forEach(id => document.getElementById(id).value = "");
+        renderHomeEvents();
+        showToast("Filters reset", "info");
+    });
     initChatbot();
 });
-
-/*==========================
-      DYNAMIC EVENT RENDER
-==========================*/
 function renderHomeEvents() {
     const container = document.getElementById("eventContainer");
     if (!container) return;
-
     container.innerHTML = "";
-
     const events = getEvents();
-    const searchQuery = document.getElementById("homeSearchInput")?.value.toLowerCase().trim() || "";
-    const dateQuery = document.getElementById("homeDateFilter")?.value || "";
-    const categoryQuery = document.getElementById("homeCategoryFilter")?.value || "";
-
-    const filteredEvents = events.filter(event => {
-        const matchesSearch = event.title.toLowerCase().includes(searchQuery);
-        const matchesCategory = !categoryQuery || event.category === categoryQuery;
-        const matchesDate = !dateQuery || event.date === dateQuery;
-        return matchesSearch && matchesCategory && matchesDate;
-    });
-
-    if (filteredEvents.length === 0) {
+    const search = document.getElementById("homeSearchInput")?.value.toLowerCase().trim() || "";
+    const date = document.getElementById("homeDateFilter")?.value || "";
+    const cat = document.getElementById("homeCategoryFilter")?.value || "";
+    const filtered = events.filter(e => 
+        e.title.toLowerCase().includes(search) &&
+        (!cat || e.category === cat) &&
+        (!date || e.date === date)
+    );
+    if (!filtered.length) {
         container.innerHTML = "<div class='no-events-msg'>No events found matching your criteria.</div>";
         return;
     }
-
-    filteredEvents.forEach(event => {
+    filtered.forEach(e => {
         const card = document.createElement("div");
         card.className = "event-card";
-        const imgPath = event.image || getCategoryPlaceholder(event.category);
-
         card.innerHTML = `
-            <div class="event-image">
-                <img src="${imgPath}" alt="${event.title}" onerror="this.src='assets/workshop.jpeg'">
-            </div>
+            <div class="event-image"><img src="${e.image || getCategoryPlaceholder(e.category)}" alt="${e.title}" onerror="this.src='assets/workshop.jpeg'"></div>
             <div class="event-content">
-                <span class="details-badge">${event.category}</span>
-                <h3>${event.title}</h3>
+                <span class="details-badge">${e.category}</span><h3>${e.title}</h3>
                 <div class="event-info">
-                    <p><i class="fa-solid fa-calendar"></i> ${formatDate(event.date)}</p>
-                    <p><i class="fa-solid fa-clock"></i> ${event.time || '10:00 AM'}</p>
+                    <p><i class="fa-solid fa-calendar"></i> ${formatDate(e.date)}</p>
+                    <p><i class="fa-solid fa-clock"></i> ${e.time || '10:00 AM'}</p>
+                </div><p class="location"><i class="fa-solid fa-location-dot"></i> ${e.location}</p>
+                <div class="bottom"><span>👥 ${e.attendees || 0} / ${e.maxAttendees || 100}</span>
+                    <button class="reg-btn-action" data-id="${e.id}">Register</button>
                 </div>
-                <p class="location"><i class="fa-solid fa-location-dot"></i> ${event.location}</p>
-                <div class="bottom">
-                    <span>👥 ${event.attendees || 0} / ${event.maxAttendees || 100}</span>
-                    <button class="reg-btn-action" data-id="${event.id}">Register</button>
-                </div>
-            </div>
-        `;
-
-        card.addEventListener("click", e => {
-            if (!e.target.classList.contains("reg-btn-action")) {
-                openDetailsModal(event.id);
-            }
-        });
-
+            </div>`;
+        card.addEventListener("click", ev => { if (!ev.target.classList.contains("reg-btn-action")) openDetailsModal(e.id); });
         container.appendChild(card);
     });
-
     container.querySelectorAll(".reg-btn-action").forEach(btn => {
-        btn.addEventListener("click", e => {
-            e.stopPropagation();
-            handleRegistrationTrigger(parseInt(btn.getAttribute("data-id")));
-        });
+        btn.addEventListener("click", ev => { ev.stopPropagation(); handleRegistrationTrigger(parseInt(btn.getAttribute("data-id"))); });
     });
 }
-
-/*==========================
-      DYNAMIC NAVBAR STATE
-==========================*/
 function updateNavbar() {
     const navRight = document.getElementById("navRight");
     if (!navRight) return;
-
     const user = getCurrentUser();
     if (user) {
-        let dashboardUrl = user.role === "admin" ? "admin.html" : "user.html";
-        navRight.innerHTML = `
-            <span style="font-weight: 500; color: #4a5568; margin-right: 10px;">Hi, ${user.name}</span>
-            <a href="${dashboardUrl}" class="login-btn" style="width: auto; padding: 0 15px;">Dashboard</a>
-            <a href="#" id="navLogoutBtn" class="signup-btn">Log Out</a>
-        `;
-        document.getElementById("navLogoutBtn").addEventListener("click", function (e) {
+        navRight.innerHTML = `<span style="font-weight: 500; color: #4a5568; margin-right: 10px;">Hi, ${user.name}</span>
+            <a href="${user.role === 'admin' ? 'admin.html' : 'user.html'}" class="login-btn" style="width: auto; padding: 0 15px;">Dashboard</a>
+            <a href="#" id="navLogoutBtn" class="signup-btn">Log Out</a>`;
+        document.getElementById("navLogoutBtn").addEventListener("click", e => {
             e.preventDefault();
             if (confirm("Are you sure you want to log out?")) {
-                setCurrentUser(null);
-                showToast("Logged out successfully", "info");
-                window.location.reload();
+                setCurrentUser(null); showToast("Logged out successfully", "info"); window.location.reload();
             }
         });
     } else {
-        navRight.innerHTML = `
-            <a href="#" id="loginBtn" class="login-btn">Log In</a>
-            <a href="#" id="signupBtn" class="signup-btn">Sign Up</a>
-        `;
-        bindAuthModalTriggers();
-    }
-}
-
-/*==========================
-      AUTH MODAL TRIGGERS
-==========================*/
-const loginModal = document.getElementById("loginModal");
-const roleModal = document.getElementById("roleModal");
-const closeLogin = document.getElementById("closeLogin");
-const closeRole = document.querySelector(".close-role");
-const goLoginBtn = document.getElementById("goLoginBtn");
-
-function bindAuthModalTriggers() {
-    const loginBtn = document.getElementById("loginBtn");
-    const signupBtn = document.getElementById("signupBtn");
-
-    if (loginBtn) {
-        loginBtn.addEventListener("click", function (e) {
-            e.preventDefault();
-            if (loginModal) loginModal.style.display = "flex";
-        });
-    }
-    if (signupBtn) {
-        signupBtn.addEventListener("click", function (e) {
-            e.preventDefault();
-            if (roleModal) {
-                roleModal.style.display = "flex";
-                document.getElementById("roleStep").style.display = "block";
-                document.getElementById("userStep").style.display = "none";
-                document.getElementById("adminStep").style.display = "none";
-                document.getElementById("successStep").style.display = "none";
-            }
+        navRight.innerHTML = `<a href="#" id="loginBtn" class="login-btn">Log In</a>
+            <a href="#" id="signupBtn" class="signup-btn">Sign Up</a>`;
+        document.getElementById("loginBtn")?.addEventListener("click", e => { e.preventDefault(); loginModal.style.display = "flex"; });
+        document.getElementById("signupBtn")?.addEventListener("click", e => {
+            e.preventDefault(); roleModal.style.display = "flex";
+            ["roleStep", "userStep", "adminStep", "successStep"].forEach((id, i) => document.getElementById(id).style.display = i === 0 ? "block" : "none");
         });
     }
 }
-
-if (closeLogin) closeLogin.addEventListener("click", () => loginModal.style.display = "none");
-if (closeRole) closeRole.addEventListener("click", () => roleModal.style.display = "none");
-
-window.addEventListener("click", function (e) {
-    if (e.target === loginModal) loginModal.style.display = "none";
-    if (e.target === roleModal) roleModal.style.display = "none";
-});
-
-/*==========================
-      ROLE SIGNUP FLOW
-==========================*/
-const userCard = document.getElementById("userCard");
-const adminCard = document.getElementById("adminCard");
-const continueBtn = document.getElementById("continueBtn");
-const roleStep = document.getElementById("roleStep");
-const userStep = document.getElementById("userStep");
-const adminStep = document.getElementById("adminStep");
-const userBackBtn = document.getElementById("userBackBtn");
-const adminBackBtn = document.getElementById("adminBackBtn");
-
+const loginModal = document.getElementById("loginModal"), roleModal = document.getElementById("roleModal");
+const detailsModal = document.getElementById("detailsModal"), dRegisterBtn = document.getElementById("detailsRegisterBtn");
+const confirmModal = document.getElementById("confirmRegModal"), confirmBtn = document.getElementById("confirmRegConfirmBtn");
+const close = (id, el, isCls) => (isCls ? document.querySelector("." + id) : document.getElementById(id))?.addEventListener("click", () => el.style.display = "none");
+close("closeLogin", loginModal); close("close-role", roleModal, true);
+close("closeDetails", detailsModal); close("detailsCancelBtn", detailsModal);
+close("closeConfirmReg", confirmModal); close("closeConfirmReg", confirmModal);
+window.addEventListener("click", e => { [loginModal, roleModal].forEach(m => { if (e.target === m) m.style.display = "none"; }); });
+const userCard = document.getElementById("userCard"), adminCard = document.getElementById("adminCard"), continueBtn = document.getElementById("continueBtn"), roleStep = document.getElementById("roleStep"), userStep = document.getElementById("userStep"), adminStep = document.getElementById("adminStep");
 let selectedRole = "";
-
-if (userCard) {
-    userCard.addEventListener("click", function () {
-        selectedRole = "user";
-        userCard.classList.add("active");
-        if (adminCard) adminCard.classList.remove("active");
-    });
-}
-if (adminCard) {
-    adminCard.addEventListener("click", function () {
-        selectedRole = "admin";
-        adminCard.classList.add("active");
-        if (userCard) userCard.classList.remove("active");
-    });
-}
-if (continueBtn) {
-    continueBtn.addEventListener("click", function () {
-        if (selectedRole === "") {
-            showToast("Please select your role.", "error");
-            return;
-        }
-        roleStep.style.display = "none";
-        if (selectedRole === "user") {
-            userStep.style.display = "block";
-        } else {
-            adminStep.style.display = "block";
-        }
-    });
-}
-
-if (userBackBtn) userBackBtn.addEventListener("click", () => { userStep.style.display = "none"; roleStep.style.display = "block"; });
-if (adminBackBtn) adminBackBtn.addEventListener("click", () => { adminStep.style.display = "none"; roleStep.style.display = "block"; });
-
-// User Signup Submission
-const userForm = document.getElementById("userForm");
-if (userForm) {
-    userForm.addEventListener("submit", function (e) {
+userCard?.addEventListener("click", () => { selectedRole = "user"; userCard.classList.add("active"); adminCard?.classList.remove("active"); });
+adminCard?.addEventListener("click", () => { selectedRole = "admin"; adminCard.classList.add("active"); userCard?.classList.remove("active"); });
+continueBtn?.addEventListener("click", () => {
+    if (!selectedRole) return showToast("Please select your role.", "error");
+    roleStep.style.display = "none"; (selectedRole === "user" ? userStep : adminStep).style.display = "block";
+});
+["userBackBtn", "adminBackBtn"].forEach(id => document.getElementById(id)?.addEventListener("click", () => {
+    (id === "userBackBtn" ? userStep : adminStep).style.display = "none"; roleStep.style.display = "block";
+}));
+document.getElementById("goLoginBtn")?.addEventListener("click", () => { roleModal.style.display = "none"; loginModal.style.display = "flex"; });
+function handleSignupSubmit(form, role, getFields) {
+    form?.addEventListener("submit", e => {
         e.preventDefault();
-        const inputs = userForm.querySelectorAll("input");
-        const fullName = inputs[0].value.trim();
-        const email = inputs[1].value.trim().toLowerCase();
-        const phone = inputs[2].value.trim();
-        const college = inputs[3].value.trim();
-        const password = inputs[4].value;
-        const confirmPassword = inputs[5].value;
-
-        if (!fullName || !email || !phone || !college || !password || !confirmPassword) {
-            showToast("Please fill all fields.", "error");
-            return;
-        }
-        if (password !== confirmPassword) {
-            showToast("Passwords do not match.", "error");
-            return;
-        }
-
-        const users = getUsers();
-        let emailExists = false;
-        for (let i = 0; i < users.length; i++) {
-            if (users[i].email === email) {
-                emailExists = true;
-                break;
-            }
-        }
-        if (emailExists) {
-            showToast("Email already registered.", "error");
-            return;
-        }
-
-        users.push({ name: fullName, email: email, phone: phone, college: college, password: password, role: "user" });
+        const data = getFields(form.querySelectorAll("input")), users = getUsers();
+        if (Object.values(data).some(v => !v)) return showToast("Please fill all fields.", "error");
+        if (data.password !== data.confirmPassword) return showToast("Passwords do not match.", "error");
+        if (users.some(u => u.email === data.email)) return showToast("Email already registered.", "error");
+        users.push({ role, ...data });
         saveUsers(users);
-
-        userStep.style.display = "none";
+        (role === "user" ? userStep : adminStep).style.display = "none";
         document.getElementById("successStep").style.display = "block";
-        userForm.reset();
+        form.reset();
     });
 }
-
-// Admin Signup Submission
-const adminForm = document.getElementById("adminForm");
-if (adminForm) {
-    adminForm.addEventListener("submit", function (e) {
-        e.preventDefault();
-        const inputs = adminForm.querySelectorAll("input");
-        const orgName = inputs[0].value.trim();
-        const adminName = inputs[1].value.trim();
-        const email = inputs[2].value.trim().toLowerCase();
-        const phone = inputs[3].value.trim();
-        const designation = inputs[4].value.trim();
-        const password = inputs[5].value;
-        const confirmPassword = inputs[6].value;
-
-        if (!orgName || !adminName || !email || !phone || !designation || !password || !confirmPassword) {
-            showToast("Please fill all fields.", "error");
-            return;
-        }
-        if (password !== confirmPassword) {
-            showToast("Passwords do not match.", "error");
-            return;
-        }
-
-        const users = getUsers();
-        let emailExists = false;
-        for (let i = 0; i < users.length; i++) {
-            if (users[i].email === email) {
-                emailExists = true;
-                break;
-            }
-        }
-        if (emailExists) {
-            showToast("Email already registered.", "error");
-            return;
-        }
-
-        users.push({ name: adminName, org: orgName, email: email, phone: phone, designation: designation, password: password, role: "admin" });
-        saveUsers(users);
-
-        adminStep.style.display = "none";
-        document.getElementById("successStep").style.display = "block";
-        adminForm.reset();
-    });
-}
-
-if (goLoginBtn) goLoginBtn.addEventListener("click", () => { roleModal.style.display = "none"; loginModal.style.display = "flex"; });
-
-/*==========================
-      LOGIN FLOW
-==========================*/
-const loginForm = document.querySelector("#loginModal form");
-if (loginForm) {
-    loginForm.addEventListener("submit", function (e) {
-        e.preventDefault();
-        const inputs = loginForm.querySelectorAll("input");
-        const email = inputs[0].value.trim().toLowerCase();
-        const password = inputs[1].value;
-
-        if (!email || !password) {
-            showToast("Please enter email and password.", "error");
-            return;
-        }
-
-        const users = getUsers();
-        let foundUser = null;
-        for (let i = 0; i < users.length; i++) {
-            if (users[i].email === email && users[i].password === password) {
-                foundUser = users[i];
-                break;
-            }
-        }
-
-        if (foundUser) {
-            setCurrentUser(foundUser);
-            showToast("Login successful! Redirecting...", "success");
-            setTimeout(() => {
-                loginModal.style.display = "none";
-                window.location.href = foundUser.role === "admin" ? "admin.html" : "user.html";
-            }, 1000);
-        } else {
-            showToast("Invalid email or password.", "error");
-        }
-    });
-}
-
-/*==========================
-      EVENT DETAILS MODAL
-==========================*/
-const detailsModal = document.getElementById("detailsModal");
-const closeDetails = document.getElementById("closeDetails");
-const detailsCancelBtn = document.getElementById("detailsCancelBtn");
-const detailsRegisterBtn = document.getElementById("detailsRegisterBtn");
-
+const fVal = (f, idx) => f[idx].value.trim();
+handleSignupSubmit(document.getElementById("userForm"), "user", inputs => ({
+    name: fVal(inputs, 0), email: fVal(inputs, 1).toLowerCase(),
+    phone: fVal(inputs, 2), college: fVal(inputs, 3),
+    password: inputs[4].value, confirmPassword: inputs[5].value
+}));
+handleSignupSubmit(document.getElementById("adminForm"), "admin", inputs => ({
+    org: fVal(inputs, 0), name: fVal(inputs, 1), email: fVal(inputs, 2).toLowerCase(),
+    phone: fVal(inputs, 3), designation: fVal(inputs, 4),
+    password: inputs[5].value, confirmPassword: inputs[6].value
+}));
+document.querySelector("#loginModal form")?.addEventListener("submit", e => {
+    e.preventDefault();
+    const inputs = e.target.querySelectorAll("input"), email = inputs[0].value.trim().toLowerCase(), password = inputs[1].value;
+    if (!email || !password) return showToast("Please enter email and password.", "error");
+    const found = getUsers().find(u => u.email === email && u.password === password);
+    if (!found) return showToast("Invalid email or password.", "error");
+    setCurrentUser(found);
+    showToast("Login successful! Redirecting...", "success");
+    setTimeout(() => { loginModal.style.display = "none"; window.location.href = found.role === "admin" ? "admin.html" : "user.html"; }, 1000);
+});
 function openDetailsModal(eventId) {
-    const events = getEvents();
-    let event = null;
-    for (let i = 0; i < events.length; i++) {
-        if (events[i].id === eventId) {
-            event = events[i];
-            break;
-        }
-    }
+    const event = getEvents().find(e => e.id === eventId);
     if (!event) return;
-
-    const detailsBody = document.getElementById("detailsBody");
-    if (!detailsBody) return;
-
-    let imgPath = event.image || getCategoryPlaceholder(event.category);
-    
-    detailsBody.innerHTML = `
-        <img class="details-image" src="${imgPath}" alt="${event.title}" onerror="this.src='assets/workshop.jpeg'">
-        <span class="details-badge">${event.category}</span>
-        <h2 style="font-size: 24px; color: #1a202c; margin-bottom: 15px;">${event.title}</h2>
+    const body = document.getElementById("detailsBody");
+    if (!body) return;
+    body.innerHTML = `<img class="details-image" src="${event.image || getCategoryPlaceholder(event.category)}" alt="${event.title}" onerror="this.src='assets/workshop.jpeg'">
+        <span class="details-badge">${event.category}</span><h2 style="font-size: 24px; color: #1a202c; margin-bottom: 15px;">${event.title}</h2>
         <div class="details-meta">
             <div class="details-meta-item"><i class="fa-solid fa-calendar"></i> <span>${formatDate(event.date)}</span></div>
             <div class="details-meta-item"><i class="fa-solid fa-clock"></i> <span>${event.time || '10:00 AM'}</span></div>
             <div class="details-meta-item"><i class="fa-solid fa-location-dot"></i> <span>${event.location}</span></div>
             <div class="details-meta-item"><i class="fa-solid fa-users"></i> <span>${event.attendees || 0} / ${event.maxAttendees || 100} Attendees</span></div>
-        </div>
-        <p class="details-description">${event.description || 'No description provided.'}</p>
-    `;
-
-    detailsRegisterBtn.onclick = function () {
-        detailsModal.style.display = "none";
-        handleRegistrationTrigger(eventId);
-    };
-
-    const currentUser = getCurrentUser();
-    if (currentUser) {
-        const registrations = getRegistrations();
-        let alreadyReg = false;
-        for (let i = 0; i < registrations.length; i++) {
-            if (registrations[i].userEmail === currentUser.email && registrations[i].eventId === eventId) {
-                alreadyReg = true;
-                break;
-            }
-        }
-        if (alreadyReg) {
-            detailsRegisterBtn.innerText = "✓ Registered";
-            detailsRegisterBtn.disabled = true;
-            detailsRegisterBtn.style.background = "#22C55E";
-        } else {
-            detailsRegisterBtn.innerText = "Register";
-            detailsRegisterBtn.disabled = false;
-            detailsRegisterBtn.style.background = "#6C3EF4";
-        }
-    } else {
-        detailsRegisterBtn.innerText = "Register";
-        detailsRegisterBtn.disabled = false;
-        detailsRegisterBtn.style.background = "#6C3EF4";
-    }
-
+        </div><p class="details-description">${event.description || 'No description provided.'}</p>`;
+    dRegisterBtn.onclick = () => { detailsModal.style.display = "none"; handleRegistrationTrigger(eventId); };
+    const user = getCurrentUser();
+    const registered = user && getRegistrations().some(r => r.userEmail === user.email && r.eventId === eventId);
+    dRegisterBtn.innerText = registered ? "✓ Registered" : "Register";
+    dRegisterBtn.disabled = !!registered;
+    dRegisterBtn.style.background = registered ? "#22C55E" : "#6C3EF4";
     if (detailsModal) detailsModal.style.display = "flex";
 }
-
-if (closeDetails) closeDetails.addEventListener("click", () => detailsModal.style.display = "none");
-if (detailsCancelBtn) detailsCancelBtn.addEventListener("click", () => detailsModal.style.display = "none");
-
-/*==========================
-      REGISTRATION HANDLER
-==========================*/
-const confirmRegModal = document.getElementById("confirmRegModal");
-const closeConfirmReg = document.getElementById("closeConfirmReg");
-const confirmRegCancelBtn = document.getElementById("confirmRegCancelBtn");
-const confirmRegConfirmBtn = document.getElementById("confirmRegConfirmBtn");
-
 function handleRegistrationTrigger(eventId) {
     const user = getCurrentUser();
     if (!user) {
@@ -428,75 +157,26 @@ function handleRegistrationTrigger(eventId) {
         if (loginModal) loginModal.style.display = "flex";
         return;
     }
-    if (user.role === "admin") {
-        showToast("Admins cannot register for events.", "error");
-        return;
-    }
-
-    const events = getEvents();
-    let event = null;
-    for (let i = 0; i < events.length; i++) {
-        if (events[i].id === eventId) {
-            event = events[i];
-            break;
-        }
-    }
+    if (user.role === "admin") return showToast("Admins cannot register for events.", "error");
+    const event = getEvents().find(e => e.id === eventId), regs = getRegistrations();
     if (!event) return;
-
-    const registrations = getRegistrations();
-    let alreadyReg = false;
-    for (let i = 0; i < registrations.length; i++) {
-        if (registrations[i].userEmail === user.email && registrations[i].eventId === eventId) {
-            alreadyReg = true;
-            break;
-        }
-    }
-    if (alreadyReg) {
-        showToast("You are already registered.", "info");
-        return;
-    }
-    if ((event.attendees || 0) >= (event.maxAttendees || 100)) {
-        showToast("Event is full.", "error");
-        return;
-    }
-
-    document.getElementById("confirmRegTitle").innerText = "Register for: " + event.title;
+    if (regs.some(r => r.userEmail === user.email && r.eventId === eventId)) return showToast("Already registered.", "info");
+    if ((event.attendees || 0) >= (event.maxAttendees || 100)) return showToast("Event is full.", "error");
+    document.getElementById("confirmRegTitle").innerText = `Register for: ${event.title}`;
     document.getElementById("confirmUserName").innerText = user.name;
     document.getElementById("confirmUserEmail").innerText = user.email;
-    document.getElementById("confirmEventDate").innerText = formatDate(event.date) + " at " + (event.time || '10:00 AM');
-
-    if (confirmRegModal) confirmRegModal.style.display = "flex";
-
-    confirmRegConfirmBtn.onclick = function () {
-        const currentEvents = getEvents();
-        let dbEvent = null;
-        for (let i = 0; i < currentEvents.length; i++) {
-            if (currentEvents[i].id === eventId) {
-                dbEvent = currentEvents[i];
-                break;
-            }
-        }
-        
-        if (dbEvent.attendees >= dbEvent.maxAttendees) {
-            showToast("Event is full.", "error");
-            confirmRegModal.style.display = "none";
-            return;
-        }
-
-        registrations.push({ userEmail: user.email, eventId: eventId, registeredAt: new Date().toISOString() });
-        saveRegistrations(registrations);
-
-        dbEvent.attendees = (dbEvent.attendees || 0) + 1;
-        saveEvents(currentEvents);
-
-        confirmRegModal.style.display = "none";
+    document.getElementById("confirmEventDate").innerText = `${formatDate(event.date)} at ${event.time || '10:00 AM'}`;
+    if (confirmModal) confirmModal.style.display = "flex";
+    confirmBtn.onclick = () => {
+        const events = getEvents(), e = events.find(x => x.id === eventId);
+        if (e.attendees >= e.maxAttendees) return showToast("Event is full.", "error");
+        regs.push({ userEmail: user.email, eventId, registeredAt: new Date().toISOString() });
+        saveRegistrations(regs);
+        e.attendees = (e.attendees || 0) + 1;
+        saveEvents(events);
+        confirmModal.style.display = "none";
         showToast("Successfully registered!", "success");
         renderHomeEvents();
     };
 }
-
-if (closeConfirmReg) closeConfirmReg.addEventListener("click", () => confirmRegModal.style.display = "none");
-if (confirmRegCancelBtn) confirmRegCancelBtn.addEventListener("click", () => confirmRegModal.style.display = "none");
-
-// Listen for workspace JSON synchronization event
 window.addEventListener("events-synced", renderHomeEvents);
