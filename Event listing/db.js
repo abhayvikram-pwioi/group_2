@@ -12,40 +12,6 @@ if (!localStorage.getItem("events")) localStorage.setItem("events", JSON.stringi
 if (!localStorage.getItem("users")) localStorage.setItem("users", JSON.stringify(defaultUsers));
 if (!localStorage.getItem("registrations")) localStorage.setItem("registrations", JSON.stringify([]));
 
-async function dbOp(mode, op, value, key = "directoryHandle") {
-  const db = await new Promise((res, rej) => {
-    const req = indexedDB.open("WorkspaceDB", 1);
-    req.onupgradeneeded = e => { if (!e.target.result.objectStoreNames.contains("store")) e.target.result.createObjectStore("store"); };
-    req.onsuccess = e => res(e.target.result);
-    req.onerror = e => rej(e.target.error);
-  });
-  return new Promise((res, rej) => {
-    const store = db.transaction("store", mode).objectStore("store");
-    const req = op === "get" ? store.get(key) : store.put(value, key);
-    req.onsuccess = () => res(req.result);
-    req.onerror = () => rej(req.error);
-  });
-}
-
-const getSavedDirectoryHandle = () => dbOp("readonly", "get", null);
-const saveDirectoryHandle = handle => dbOp("readwrite", "put", handle);
-
-async function syncWithConnectedWorkspace() {
-  try {
-    const dirHandle = await getSavedDirectoryHandle();
-    if (!dirHandle || await dirHandle.queryPermission({ mode: "readwrite" }) !== "granted") return false;
-    const fileHandle = await dirHandle.getFileHandle("events.json", { create: false });
-    const file = await fileHandle.getFile();
-    const events = JSON.parse(await file.text());
-    if (Array.isArray(events)) {
-      localStorage.setItem("events", JSON.stringify(events));
-      window.dispatchEvent(new CustomEvent("events-synced"));
-      return true;
-    }
-  } catch (e) { console.error("Workspace sync error:", e); }
-  return false;
-}
-
 async function loadEventsFromJSON() {
   try {
     const res = await fetch("events.json");
@@ -71,18 +37,7 @@ async function saveEvents(events) {
   localStorage.setItem("events", JSON.stringify(events));
   if (typeof renderHomeEvents === "function") renderHomeEvents();
   if (typeof renderAdminTable === "function") renderAdminTable();
-  try {
-    const dirHandle = await getSavedDirectoryHandle();
-    if (dirHandle && await dirHandle.queryPermission({ mode: "readwrite" }) === "granted") {
-      const fileHandle = await dirHandle.getFileHandle("events.json", { create: true });
-      const writable = await fileHandle.createWritable();
-      await writable.write(JSON.stringify(events, null, 2));
-      await writable.close();
-      showToast("Workspace events.json updated automatically!", "success");
-      return;
-    }
-  } catch (e) { console.error("Failed to write to events.json:", e); }
-  showToast("Saved to browser storage! Connect workspace to auto-sync events.json.", "info");
+  showToast("Saved successfully!", "success");
 }
 
 function showToast(message, type = "success") {
@@ -206,108 +161,4 @@ function initChatbot() {
   if (input) input.addEventListener("keypress", e => { if (e.key === "Enter") sendChatMessage(); });
 }
 
-async function initWorkspaceSync() {
-  const widget = document.createElement("div");
-  widget.className = "workspace-widget";
-  widget.innerHTML = `
-    <div class="workspace-btn" id="workspaceBtn" title="Sync Local JSON File">
-      <i class="fa-solid fa-folder-open"></i>
-      <div class="workspace-status-dot" id="workspaceStatusDot"></div>
-    </div>
-    <div class="workspace-panel" id="workspacePanel">
-      <h4><i class="fa-solid fa-rotate"></i> Workspace Sync</h4>
-      <p id="workspaceInfo">Connect project local directory to auto-sync events.json.</p>
-      <button class="workspace-panel-btn workspace-panel-btn-primary" id="workspaceActionBtn"><i class="fa-solid fa-link"></i> Connect Folder</button>
-      <button class="workspace-panel-btn workspace-panel-btn-secondary" id="workspaceManualBtn" style="display:none;"><i class="fa-solid fa-download"></i> Download events.json</button>
-    </div>`;
-  document.body.appendChild(widget);
-
-  const btn = document.getElementById("workspaceBtn"), panel = document.getElementById("workspacePanel");
-  const statusDot = document.getElementById("workspaceStatusDot"), info = document.getElementById("workspaceInfo");
-  const actionBtn = document.getElementById("workspaceActionBtn"), manualBtn = document.getElementById("workspaceManualBtn");
-
-  btn.addEventListener("click", e => { e.stopPropagation(); panel.style.display = panel.style.display === "flex" ? "none" : "flex"; });
-  document.addEventListener("click", e => { if (!widget.contains(e.target)) panel.style.display = "none"; });
-
-  async function updateStatusUI() {
-    const handle = await getSavedDirectoryHandle();
-    if (!handle) {
-      statusDot.className = "workspace-status-dot";
-      info.innerHTML = "Connect your project's local directory to enable automatic <b>events.json</b> saving and real-time synchronization.";
-      actionBtn.innerHTML = '<i class="fa-solid fa-link"></i> Connect Folder';
-      manualBtn.style.display = "none";
-      return;
-    }
-    try {
-      if (await handle.queryPermission({ mode: "readwrite" }) === "granted") {
-        statusDot.className = "workspace-status-dot connected";
-        info.innerHTML = `Connected to: <b>${handle.name}</b><br>✓ events.json auto-sync enabled.`;
-        actionBtn.innerHTML = '<i class="fa-solid fa-unlink"></i> Disconnect Folder';
-        manualBtn.style.display = "none";
-      } else {
-        statusDot.className = "workspace-status-dot pending";
-        info.innerHTML = `Connected to: <b>${handle.name}</b><br>⚠️ Awaiting folder permission.`;
-        actionBtn.innerHTML = '<i class="fa-solid fa-key"></i> Grant Permission';
-        manualBtn.style.display = "flex";
-      }
-    } catch (e) {
-      statusDot.className = "workspace-status-dot error";
-      info.innerHTML = "Error verifying folder permission.";
-      actionBtn.innerHTML = '<i class="fa-solid fa-link"></i> Connect Folder';
-      manualBtn.style.display = "flex";
-    }
-  }
-
-  actionBtn.addEventListener("click", async () => {
-    const handle = await getSavedDirectoryHandle();
-    if (!handle) {
-      try {
-        const newHandle = await window.showDirectoryPicker();
-        await saveDirectoryHandle(newHandle);
-        if (await newHandle.requestPermission({ mode: "readwrite" }) === "granted") {
-          showToast("Workspace folder connected successfully!", "success");
-          if (await syncWithConnectedWorkspace()) {
-            showToast("Loaded events from workspace events.json!", "success");
-            if (typeof renderHomeEvents === "function") renderHomeEvents();
-            if (typeof renderAdminTable === "function") renderAdminTable();
-          }
-        }
-      } catch (e) { showToast("Failed to connect workspace folder.", "error"); }
-    } else if (await handle.queryPermission({ mode: "readwrite" }) !== "granted") {
-      try {
-        if (await handle.requestPermission({ mode: "readwrite" }) === "granted") {
-          showToast("Workspace permission granted!", "success");
-          if (await syncWithConnectedWorkspace()) {
-            if (typeof renderHomeEvents === "function") renderHomeEvents();
-            if (typeof renderAdminTable === "function") renderAdminTable();
-          }
-        }
-      } catch (e) { showToast("Failed to obtain workspace permission.", "error"); }
-    } else {
-      if (confirm("Disconnect workspace folder? Automatic events.json saves will stop.")) {
-        await saveDirectoryHandle(null);
-        showToast("Workspace folder disconnected.", "info");
-      }
-    }
-    updateStatusUI();
-  });
-
-  manualBtn.addEventListener("click", () => {
-    const blob = new Blob([JSON.stringify(getEvents(), null, 2)], { type: "application/json" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "events.json";
-    a.click();
-    showToast("Downloaded events.json.", "success");
-  });
-
-  updateStatusUI();
-}
-
-async function initDatabase() {
-  if (!await syncWithConnectedWorkspace()) await loadEventsFromJSON();
-}
-
-initDatabase();
-if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initWorkspaceSync);
-else initWorkspaceSync();
+loadEventsFromJSON();
