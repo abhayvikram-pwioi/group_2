@@ -35,33 +35,26 @@ function renderHomeEvents() {
     container.innerHTML = "";
 
     const events = getEvents();
-    const searchQuery = document.getElementById("homeSearchInput") ? document.getElementById("homeSearchInput").value.toLowerCase().trim() : "";
-    const dateQuery = document.getElementById("homeDateFilter") ? document.getElementById("homeDateFilter").value : "";
-    const categoryQuery = document.getElementById("homeCategoryFilter") ? document.getElementById("homeCategoryFilter").value : "";
+    const searchQuery = document.getElementById("homeSearchInput")?.value.toLowerCase().trim() || "";
+    const dateQuery = document.getElementById("homeDateFilter")?.value || "";
+    const categoryQuery = document.getElementById("homeCategoryFilter")?.value || "";
 
-    let filteredEvents = [];
-    for (let i = 0; i < events.length; i++) {
-        let event = events[i];
-        let matchesSearch = event.title.toLowerCase().includes(searchQuery);
-        let matchesCategory = (categoryQuery === "") || (event.category === categoryQuery);
-        let matchesDate = (dateQuery === "") || (event.date === dateQuery);
-
-        if (matchesSearch && matchesCategory && matchesDate) {
-            filteredEvents.push(event);
-        }
-    }
+    const filteredEvents = events.filter(event => {
+        const matchesSearch = event.title.toLowerCase().includes(searchQuery);
+        const matchesCategory = !categoryQuery || event.category === categoryQuery;
+        const matchesDate = !dateQuery || event.date === dateQuery;
+        return matchesSearch && matchesCategory && matchesDate;
+    });
 
     if (filteredEvents.length === 0) {
         container.innerHTML = "<div class='no-events-msg'>No events found matching your criteria.</div>";
         return;
     }
 
-    for (let i = 0; i < filteredEvents.length; i++) {
-        let event = filteredEvents[i];
+    filteredEvents.forEach(event => {
         const card = document.createElement("div");
         card.className = "event-card";
-
-        let imgPath = event.image || getCategoryPlaceholder(event.category);
+        const imgPath = event.image || getCategoryPlaceholder(event.category);
 
         card.innerHTML = `
             <div class="event-image">
@@ -82,23 +75,21 @@ function renderHomeEvents() {
             </div>
         `;
 
-        card.addEventListener("click", function (e) {
+        card.addEventListener("click", e => {
             if (!e.target.classList.contains("reg-btn-action")) {
                 openDetailsModal(event.id);
             }
         });
 
         container.appendChild(card);
-    }
+    });
 
-    const regButtons = document.querySelectorAll(".reg-btn-action");
-    for (let i = 0; i < regButtons.length; i++) {
-        regButtons[i].addEventListener("click", function (e) {
+    container.querySelectorAll(".reg-btn-action").forEach(btn => {
+        btn.addEventListener("click", e => {
             e.stopPropagation();
-            let eventId = parseInt(this.getAttribute("data-id"));
-            handleRegistrationTrigger(eventId);
+            handleRegistrationTrigger(parseInt(btn.getAttribute("data-id")));
         });
-    }
+    });
 }
 
 /*==========================

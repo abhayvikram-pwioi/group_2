@@ -372,7 +372,7 @@ function initChatbot() {
 
   function sendChatMessage() {
       const message = userInput.value.trim();
-      if (message === "") return;
+      if (!message) return;
 
       addChatMessage(message, "user");
       userInput.value = "";
@@ -384,7 +384,7 @@ function initChatbot() {
       chatBody.appendChild(typingDiv);
       chatBody.scrollTop = chatBody.scrollHeight;
 
-      setTimeout(function () {
+      setTimeout(() => {
           const indicator = document.getElementById("chat-typing");
           if (indicator) indicator.remove();
 
@@ -392,104 +392,38 @@ function initChatbot() {
           let botResponse = "";
           const allEvents = getEvents();
 
-          if (query.includes("tech") || query.includes("technology")) {
-              let techEvents = [];
-              for (let i = 0; i < allEvents.length; i++) {
-                  if (allEvents[i].category.toLowerCase() === "technology") {
-                      techEvents.push(allEvents[i]);
-                  }
-              }
-              if (techEvents.length === 0) {
-                  botResponse = "❌ No Technology events found.";
+          const categories = ["technology", "workshop", "music", "sports"];
+          const matchedCategory = categories.find(cat => 
+              query.includes(cat) || 
+              (cat === "technology" && query.includes("tech")) || 
+              (cat === "sports" && query.includes("sport"))
+          );
+
+          if (matchedCategory) {
+              const matches = allEvents.filter(e => e.category.toLowerCase() === matchedCategory);
+              if (matches.length === 0) {
+                  botResponse = `❌ No ${matchedCategory.charAt(0).toUpperCase() + matchedCategory.slice(1)} events found.`;
               } else {
-                  let html = "💻 <b>Technology Events:</b><br><br>";
-                  for (let i = 0; i < techEvents.length; i++) {
-                      let e = techEvents[i];
-                      html += "• <b>" + e.title + "</b><br>📅 " + formatDate(e.date) + " at " + (e.time || '10:00 AM') + "<br>📍 " + e.location + "<br><br>";
-                  }
-                  botResponse = html;
-              }
-          } 
-          else if (query.includes("workshop")) {
-              let workshopEvents = [];
-              for (let i = 0; i < allEvents.length; i++) {
-                  if (allEvents[i].category.toLowerCase() === "workshop") {
-                      workshopEvents.push(allEvents[i]);
-                  }
-              }
-              if (workshopEvents.length === 0) {
-                  botResponse = "❌ No Workshops found.";
-              } else {
-                  let html = "🛠 <b>Workshop Events:</b><br><br>";
-                  for (let i = 0; i < workshopEvents.length; i++) {
-                      let e = workshopEvents[i];
-                      html += "• <b>" + e.title + "</b><br>📅 " + formatDate(e.date) + " at " + (e.time || '02:00 PM') + "<br>📍 " + e.location + "<br><br>";
-                  }
-                  botResponse = html;
-              }
-          } 
-          else if (query.includes("music")) {
-              let musicEvents = [];
-              for (let i = 0; i < allEvents.length; i++) {
-                  if (allEvents[i].category.toLowerCase() === "music") {
-                      musicEvents.push(allEvents[i]);
-                  }
-              }
-              if (musicEvents.length === 0) {
-                  botResponse = "❌ No Music events found.";
-              } else {
-                  let html = "🎵 <b>Music Events:</b><br><br>";
-                  for (let i = 0; i < musicEvents.length; i++) {
-                      let e = musicEvents[i];
-                      html += "• <b>" + e.title + "</b><br>📅 " + formatDate(e.date) + " at " + (e.time || '06:00 PM') + "<br>📍 " + e.location + "<br><br>";
-                  }
-                  botResponse = html;
-              }
-          } 
-          else if (query.includes("sport")) {
-              let sportsEvents = [];
-              for (let i = 0; i < allEvents.length; i++) {
-                  if (allEvents[i].category.toLowerCase() === "sports") {
-                      sportsEvents.push(allEvents[i]);
-                  }
-              }
-              if (sportsEvents.length === 0) {
-                  botResponse = "❌ No Sports events found.";
-              } else {
-                  let html = "⚽ <b>Sports Events:</b><br><br>";
-                  for (let i = 0; i < sportsEvents.length; i++) {
-                      let e = sportsEvents[i];
-                      html += "• <b>" + e.title + "</b><br>📅 " + formatDate(e.date) + " at " + (e.time || '09:00 AM') + "<br>📍 " + e.location + "<br><br>";
-                  }
-                  botResponse = html;
+                  const icons = { technology: "💻", workshop: "🛠", music: "🎵", sports: "⚽" };
+                  botResponse = `${icons[matchedCategory]} <b>${matchedCategory.charAt(0).toUpperCase() + matchedCategory.slice(1)} Events:</b><br><br>` +
+                      matches.map(e => `• <b>${e.title}</b><br>📅 ${formatDate(e.date)} at ${e.time || '10:00 AM'}<br>📍 ${e.location}<br><br>`).join("");
               }
           } 
           else if (query.includes("weekend")) {
-              let weekendEvents = [];
-              for (let i = 0; i < allEvents.length; i++) {
-                  let day = new Date(allEvents[i].date).getDay();
-                  if (day === 0 || day === 6) {
-                      weekendEvents.push(allEvents[i]);
-                  }
-              }
+              const weekendEvents = allEvents.filter(e => {
+                  const day = new Date(e.date).getDay();
+                  return day === 0 || day === 6;
+              });
               if (weekendEvents.length === 0) {
                   botResponse = "📅 No events scheduled for this weekend.";
               } else {
-                  let html = "✨ <b>Upcoming Weekend Activities:</b><br><br>";
-                  for (let i = 0; i < weekendEvents.length; i++) {
-                      let e = weekendEvents[i];
-                      html += "• <b>" + e.title + "</b> (" + e.category + ")<br>📅 " + formatDate(e.date) + " at " + (e.time || '10:00 AM') + "<br>📍 " + e.location + "<br><br>";
-                  }
-                  botResponse = html;
+                  botResponse = "✨ <b>Upcoming Weekend Activities:</b><br><br>" +
+                      weekendEvents.map(e => `• <b>${e.title}</b> (${e.category})<br>📅 ${formatDate(e.date)} at ${e.time || '10:00 AM'}<br>📍 ${e.location}<br><br>`).join("");
               }
           } 
           else if (query.includes("list") || query.includes("all") || query.includes("event")) {
-              let html = "📅 <b>All Scheduled Events:</b><br><br>";
-              for (let i = 0; i < allEvents.length; i++) {
-                  let e = allEvents[i];
-                  html += "• <b>" + e.title + "</b> (" + e.category + ") - " + formatDate(e.date) + "<br>";
-              }
-              botResponse = html;
+              botResponse = "📅 <b>All Scheduled Events:</b><br><br>" +
+                  allEvents.map(e => `• <b>${e.title}</b> (${e.category}) - ${formatDate(e.date)}<br>`).join("");
           } 
           else if (query.includes("hello") || query.includes("hi") || query.includes("hey")) {
               botResponse = "👋 Hello there! How can I help you find events or plan your schedule today?";

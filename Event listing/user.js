@@ -118,41 +118,28 @@ function renderUserEvents() {
     const currentUser = getCurrentUser();
     const registrations = getRegistrations();
 
-    const searchQuery = document.getElementById("searchInput") ? document.getElementById("searchInput").value.toLowerCase().trim() : "";
-    const dateQuery = document.getElementById("dateFilter") ? document.getElementById("dateFilter").value : "";
-    const categoryQuery = document.getElementById("categoryFilter") ? document.getElementById("categoryFilter").value : "";
+    const searchQuery = document.getElementById("searchInput")?.value.toLowerCase().trim() || "";
+    const dateQuery = document.getElementById("dateFilter")?.value || "";
+    const categoryQuery = document.getElementById("categoryFilter")?.value || "";
 
-    let filteredEvents = [];
-    for (let i = 0; i < events.length; i++) {
-        let event = events[i];
-        let matchesSearch = event.title.toLowerCase().includes(searchQuery);
-        let matchesCategory = (categoryQuery === "") || (event.category === categoryQuery);
-        let matchesDate = (dateQuery === "") || (event.date === dateQuery);
-
-        if (matchesSearch && matchesCategory && matchesDate) {
-            filteredEvents.push(event);
-        }
-    }
+    const filteredEvents = events.filter(event => {
+        const matchesSearch = event.title.toLowerCase().includes(searchQuery);
+        const matchesCategory = !categoryQuery || event.category === categoryQuery;
+        const matchesDate = !dateQuery || event.date === dateQuery;
+        return matchesSearch && matchesCategory && matchesDate;
+    });
 
     if (filteredEvents.length === 0) {
         container.innerHTML = "<div class='no-events-msg'>No events found matching your filters.</div>";
         return;
     }
 
-    for (let i = 0; i < filteredEvents.length; i++) {
-        let event = filteredEvents[i];
+    filteredEvents.forEach(event => {
         const card = document.createElement("div");
         card.className = "event-card";
         
-        let isRegistered = false;
-        for (let j = 0; j < registrations.length; j++) {
-            if (registrations[j].userEmail === currentUser.email && registrations[j].eventId === event.id) {
-                isRegistered = true;
-                break;
-            }
-        }
-
-        let isFull = (event.attendees || 0) >= (event.maxAttendees || 100);
+        const isRegistered = registrations.some(r => r.userEmail === currentUser.email && r.eventId === event.id);
+        const isFull = (event.attendees || 0) >= (event.maxAttendees || 100);
         
         let buttonHTML = `<button class="register-btn user-reg-btn" data-id="${event.id}">Register</button>`;
         if (isRegistered) {
@@ -161,7 +148,7 @@ function renderUserEvents() {
             buttonHTML = `<button class="register-btn user-reg-btn" style="background:#ef4444;" disabled>Full</button>`;
         }
 
-        let imgPath = event.image || getCategoryPlaceholder(event.category);
+        const imgPath = event.image || getCategoryPlaceholder(event.category);
 
         card.innerHTML = `
             <img src="${imgPath}" alt="${event.title}" onerror="this.src='assets/workshop.jpeg'">
@@ -178,23 +165,21 @@ function renderUserEvents() {
             </div>
         `;
 
-        card.addEventListener("click", function (e) {
+        card.addEventListener("click", e => {
             if (!e.target.classList.contains("user-reg-btn")) {
                 openDetailsModal(event.id);
             }
         });
 
         container.appendChild(card);
-    }
+    });
 
-    const regButtons = document.querySelectorAll(".user-reg-btn");
-    for (let i = 0; i < regButtons.length; i++) {
-        regButtons[i].addEventListener("click", function (e) {
+    container.querySelectorAll(".user-reg-btn").forEach(btn => {
+        btn.addEventListener("click", e => {
             e.stopPropagation();
-            let eventId = parseInt(this.getAttribute("data-id"));
-            handleUserRegistrationTrigger(eventId);
+            handleUserRegistrationTrigger(parseInt(btn.getAttribute("data-id")));
         });
-    }
+    });
 }
 
 /*==========================
