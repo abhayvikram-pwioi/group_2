@@ -16,11 +16,11 @@
          </div>
           <ul>
             <li><a class="active" href="#">Home</a></li>
-            <li><a href="#">Events</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="#events">Events</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#contact">Contact</a></li>
          </ul>
-         <div class="nav-right">
+          <div class="nav-right" id="navRight">
             
             <a href="#" id="loginBtn" class="login-btn">Log In</a>
             <a href="#" id="signupBtn" class="signup-btn">Sign Up</a>
@@ -40,277 +40,39 @@
     </section>
    
 <!-- ================= EVENTS SECTION ================= -->
-<section class="events">
+<section class="events" id="events">
 
     <div class="section-header">
 
         <div class="heading">
 
-            
             <h2>Upcoming Events</h2>
 
         </div>
 
-        <a href="#">View All Events <i class="fa-solid fa-arrow-right"></i></a>
-
     </div>
 
-
-    <div class="event-container">
-
-        <!-- ================= CARD 1 ================= -->
-
-        <div class="event-card">
-
-            <div class="event-image">
-
-                <img src="techmeetup.jpeg" alt="">
-
-                
-
-            </div>
-
-            <div class="event-content">
-
-                <h3>Tech Meetup 2024</h3>
-
-                <div class="event-info">
-
-                    <p>
-                       
-                        July 25, 2026
-                    </p>
-
-                    <p>
-                        
-                        10:00 AM
-                    </p>
-
-                </div>
-
-                <p class="location">
-
-                    
-                    Bangalore, India
-
-                </p>
-
-                <div class="bottom">
-
-                    <span>
-
-                       
-
-                        120 / 200
-
-                    </span>
-
-                    <button>Register</button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-
-
-        <!-- ================= CARD 2 ================= -->
-
-        <div class="event-card">
-
-            <div class="event-image">
-
-                <img src="workshop.jpeg" alt="">
-
-              
-
-            </div>
-
-            <div class="event-content">
-
-                <h3>AI & ML Workshop</h3>
-
-                <div class="event-info">
-
-                    <p>
-
-                       
-
-                        August 28, 2026
-
-                    </p>
-
-                    <p>
-
-                        
-
-                        02:00 PM
-
-                    </p>
-
-                </div>
-
-                <p class="location">
-
-                    
-
-                    Online
-
-                </p>
-
-                <div class="bottom">
-
-                    <span>
-
-                        
-
-                        80 / 150
-
-                    </span>
-
-                    <button>Register</button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-
-
-        <!-- ================= CARD 3 ================= -->
-
-        <div class="event-card">
-
-            <div class="event-image">
-
-                <img src="music.jpeg" alt="">
-
-                
-            </div>
-
-            <div class="event-content">
-
-                <h3>Music Fiesta</h3>
-
-                <div class="event-info">
-
-                    <p>
-
-                       
-
-                        July 27, 2026
-
-                    </p>
-
-                    <p>
-
-                        
-
-                        06:00 PM
-
-                    </p>
-
-                </div>
-
-                <p class="location">
-
-                    
-
-                    Mumbai, India
-
-                </p>
-
-                <div class="bottom">
-
-                    <span>
-
-                       
-                        250 / 500
-
-                    </span>
-
-                    <button>Register</button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-
-
-        <!-- ================= CARD 4 ================= -->
-
-        <div class="event-card">
-
-            <div class="event-image">
-
-                <img src="footbal.jpeg" alt="">
-
-               
-            </div>
-
-            <div class="event-content">
-
-                <h3>Football Championship</h3>
-
-                <div class="event-info">
-
-                    <p>
-
-                        
-
-                        August 05, 2026
-
-                    </p>
-
-                    <p>
-
-                       
-                        09:00 AM
-
-                    </p>
-
-                </div>
-
-                <p class="location">
-
-                    
-                    Delhi, India
-
-                </p>
-
-                <div class="bottom">
-
-                    <span>
-
-                        
-
-                        60 / 100
-
-                    </span>
-
-                    <button>Register</button>
-
-                </div>
-
-            </div>
-
-        </div>
-
+    <!-- Filter & Search Panel -->
+    <div class="home-filter-section">
+        <input type="text" id="homeSearchInput" placeholder="🔍 Search Events by Name...">
+        <input type="date" id="homeDateFilter">
+        <select id="homeCategoryFilter">
+            <option value="">All Categories</option>
+            <option>Technology</option>
+            <option>Workshop</option>
+            <option>Music</option>
+            <option>Sports</option>
+        </select>
+        <button id="homeResetBtn">Reset Filters</button>
+    </div>
+
+    <div class="event-container" id="eventContainer">
+        <!-- Rendered dynamically by main.js -->
     </div>
 
 </section>
 <!-- ================= ABOUT US ================= -->
-<section class="about">
+<section class="about" id="about">
     <div class="about-heading">
         <span>ABOUT US</span>
         <h2>Your Event Discovery Platform</h2>
@@ -371,7 +133,7 @@
      </div>
     </section>
 <!-- ================= CONTACT US ================= -->
- <section class="contact">
+ <section class="contact" id="contact">
     <div class="contact-left">
         <span>Contact </span>
         <h2>We'd Love to Hear From You!</h2>
@@ -430,9 +192,9 @@
      <h3>Quick Links</h3>
      <ul>
         <li><a href="#">Home</a></li>
-        <li><a href="#">Events</a></li>
-        <li><a href="#">About Us</a></li>
-         <li><a href="#">Contact</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#about">About Us</a></li>
+         <li><a href="#contact">Contact</a></li>
         </ul>
      </div>
  <!-- Categories -->
@@ -938,6 +700,53 @@
 </div>
 </div>
 
+<!-- Event Details Modal -->
+<div class="modal" id="detailsModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="detailsTitle">Event Details</h3>
+            <span class="modal-close" id="closeDetails">&times;</span>
+        </div>
+        <div class="modal-body" id="detailsBody">
+            <!-- Populated dynamically -->
+        </div>
+        <div class="modal-footer">
+            <button class="modal-btn-cancel" id="detailsCancelBtn">Close</button>
+            <button class="modal-btn-confirm" id="detailsRegisterBtn">Register</button>
+        </div>
+    </div>
+</div>
+
+<!-- Registration Confirmation Modal -->
+<div class="modal" id="confirmRegModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Confirm Registration</h3>
+            <span class="modal-close" id="closeConfirmReg">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="confirm-box">
+                <i class="fa-solid fa-circle-question" style="font-size:48px; color:#6C3EF4; margin-bottom:15px;"></i>
+                <h3 id="confirmRegTitle">Register for Event</h3>
+                <p>Are you sure you want to register for this event?</p>
+                <div style="background:#f3f4f6; padding:15px; border-radius:8px; text-align:left; margin-top:15px;">
+                    <p style="margin-bottom:8px;"><strong>Name:</strong> <span id="confirmUserName">John Doe</span></p>
+                    <p style="margin-bottom:8px;"><strong>Email:</strong> <span id="confirmUserEmail">user@connect.com</span></p>
+                    <p style="margin-bottom:0;"><strong>Date:</strong> <span id="confirmEventDate">2026-07-25</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-btn-cancel" id="confirmRegCancelBtn">Cancel</button>
+            <button class="modal-btn-confirm" id="confirmRegConfirmBtn">Confirm Registration</button>
+        </div>
+    </div>
+</div>
+
+<!-- Toast Notification Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="db.js"></script>
 <script src="main.js"></script>
 </body>
 </html>

@@ -185,210 +185,8 @@
 
             <h2>Upcoming Events</h2>
 
-            <div class="event-container">
-
-                <div class="event-card"
-     data-category="Technology"
-     data-date="2026-07-25">
-
-    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800"
-         alt="Event">
-
-    <div class="event-content">
-
-        
-        <h3>Tech Summit 2026</h3>
-
-        <div class="event-info">
-
-            <p>
-                
-                25 July 2026
-            </p>
-
-            <p>
-               
-                Auditorium
-            </p>
-
-            <p class="count">
-
-                👥
-
-                <span class="registered-count">
-
-                    120
-
-                </span>
-
-                / 200 Registered
-
-            </p>
-
-        </div>
-
-        <button class="register-btn">
-
-            Register
-
-        </button>
-
-    </div>
-
-</div>
-
-<div class="event-card"
-     data-category="Technology"
-     data-date="2026-07-25">
-
-    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800"
-         alt="Event">
-
-    <div class="event-content">
-
-        
-
-        <h3>Tech Summit 2026</h3>
-
-        <div class="event-info">
-
-            <p>
-               
-                25 July 2026
-            </p>
-
-            <p>
-               
-                Auditorium
-            </p>
-
-            <p class="count">
-
-                👥
-
-                <span class="registered-count">
-
-                    120
-
-                </span>
-
-                / 200 Registered
-
-            </p>
-
-        </div>
-
-        <button class="register-btn">
-
-            Register
-
-        </button>
-
-    </div>
-
-</div>
-
-<div class="event-card"
-     data-category="Technology"
-     data-date="2026-07-25">
-
-    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800"
-         alt="Event">
-
-    <div class="event-content">
-
-        
-
-        <h3>Tech Summit 2026</h3>
-
-        <div class="event-info">
-
-            <p>
-               
-                25 July 2026
-            </p>
-
-            <p>
-               
-                Auditorium
-            </p>
-
-            <p class="count">
-
-                👥
-
-                <span class="registered-count">
-
-                    120
-
-                </span>
-
-                / 200 Registered
-
-            </p>
-
-        </div>
-
-        <button class="register-btn">
-
-            Register
-
-        </button>
-
-    </div>
-
-</div>
-
-<div class="event-card"
-     data-category="Technology"
-     data-date="2026-07-25">
-
-    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800"
-         alt="Event">
-
-    <div class="event-content">
-
-        
-        <h3>Tech Summit 2026</h3>
-
-        <div class="event-info">
-
-            <p>
-                
-                25 July 2026
-            </p>
-
-            <p>
-               
-                Auditorium
-            </p>
-
-            <p class="count">
-
-                👥
-
-                <span class="registered-count">
-
-                    120
-
-                </span>
-
-                / 200 Registered
-
-            </p>
-
-        </div>
-
-        <button class="register-btn">
-
-            Register
-
-        </button>
-
-    </div>
-
-</div>
-
+            <div class="event-container" id="eventContainer">
+                <!-- Rendered dynamically by user.js -->
             </div>
 
         </section>
@@ -426,134 +224,90 @@
 
 </div>
 
-<!--==========================
-    REGISTER SUCCESS MODAL
-===========================-->
-
-<div class="modal" id="registerModal">
-
-    <div class="register-modal">
-
-        <div class="success-circle">
-
-            <i class="fa-solid fa-check"></i>
-
+<!-- Event Details Modal -->
+<div class="modal" id="detailsModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="detailsTitle">Event Details</h3>
+            <span class="modal-close" id="closeDetails">&times;</span>
         </div>
-
-        <h2>Registration Successful!</h2>
-
-        <p>
-
-            You have successfully registered for this event.
-
-        </p>
-
-        <button id="okBtn">
-
-            OK
-
-        </button>
-
+        <div class="modal-body" id="detailsBody">
+            <!-- Populated dynamically -->
+        </div>
+        <div class="modal-footer">
+            <button class="modal-btn-cancel" id="detailsCancelBtn">Close</button>
+            <button class="modal-btn-confirm" id="detailsRegisterBtn">Register</button>
+        </div>
     </div>
-
 </div>
 
+<!-- Registration Confirmation Modal -->
+<div class="modal" id="confirmRegModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Confirm Registration</h3>
+            <span class="modal-close" id="closeConfirmReg">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="confirm-box">
+                <i class="fa-solid fa-circle-question" style="font-size:48px; color:#6C3EF4; margin-bottom:15px;"></i>
+                <h3 id="confirmRegTitle">Register for Event</h3>
+                <p>Are you sure you want to register for this event?</p>
+                <div style="background:#f3f4f6; padding:15px; border-radius:8px; text-align:left; margin-top:15px;">
+                    <p style="margin-bottom:8px;"><strong>Name:</strong> <span id="confirmUserName">John Doe</span></p>
+                    <p style="margin-bottom:8px;"><strong>Email:</strong> <span id="confirmUserEmail">user@connect.com</span></p>
+                    <p style="margin-bottom:0;"><strong>Date:</strong> <span id="confirmEventDate">2026-07-25</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-btn-cancel" id="confirmRegCancelBtn">Cancel</button>
+            <button class="modal-btn-confirm" id="confirmRegConfirmBtn">Confirm Registration</button>
+        </div>
+    </div>
+</div>
+
+<!-- Toast Notification Container -->
+<div class="toast-container" id="toastContainer"></div>
+
 <!-- ================= CHATBOT ================= -->
-
 <!-- Floating Chat Button -->
-
 <div class="chatbot-btn" id="chatbotBtn">
-
     <i class="fa-solid fa-comments"></i>
-
 </div>
 
 <!-- Chatbot Popup -->
-
 <div class="chatbot" id="chatbot">
-
     <div class="chat-header">
-
         <div class="chat-info">
-
             <div class="bot-logo">
-
                 <i class="fa-solid fa-robot"></i>
-
             </div>
-
             <div>
-
                 <h3>Event Assistant</h3>
-
                 <span>🟢 Online</span>
-
             </div>
-
         </div>
-
         <i class="fa-solid fa-xmark" id="closeChat"></i>
-
     </div>
-
-    <div class="chat-body">
-
-        <div class="bot-message">
-
-            
-
-            <div class="bot-msg">
-
-👋 Welcome back!
-
-<br><br>
-
-I'm your Event Assistant.
-
-<br><br>
-
-I can help you:
-
-<br><br>
-
-🎯 Find Events
-
-<br>
-
-📝 Check Registrations
-
-<br>
-
-📅 Explore Categories
-
-<br>
-
-Ask me anything!
-
-</div>
+    <div class="chat-body" id="chatBody">
+        <div class="bot-msg">
+            👋 Welcome back! I'm your Event Assistant.<br><br>
+            I can help you:
+            <br>🎯 Find Events
+            <br>📝 Check Registrations
+            <br>📅 Explore Categories
         </div>
-
     </div>
-
     <div class="chat-input">
-
-        <input
-            type="text"
-            placeholder="Type your message..."
-        >
-
-        <button>
-
+        <input type="text" id="userInput" placeholder="Type your message...">
+        <button id="sendBtn">
             <i class="fa-solid fa-paper-plane"></i>
-
         </button>
-
     </div>
-
 </div>
 
+<script src="db.js"></script>
 <script src="user.js"></script>
-
 </body>
-
 </html>

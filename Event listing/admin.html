@@ -173,7 +173,6 @@
             </div>
 
             <!-- ================= EVENTS TABLE ================= -->
-
 <div class="event-table">
 
     <table>
@@ -183,8 +182,10 @@
             <tr>
 
                 <th>Event Name</th>
-                <th>Date</th>
+                <th>Category</th>
+                <th>Date & Time</th>
                 <th>Location</th>
+                <th>Attendees</th>
                 <th>Actions</th>
 
             </tr>
@@ -192,96 +193,7 @@
         </thead>
 
         <tbody id="eventTableBody">
-
-            <tr>
-
-                <td>Tech Summit 2026</td>
-
-                <td>25 July 2026</td>
-
-                <td>Auditorium, Block A</td>
-
-                <td>
-
-                    <button class="edit-btn">
-
-                        
-
-                        Edit
-
-                    </button>
-
-                    <button class="delete-btn">
-
-                       
-
-                        Delete
-
-                    </button>
-
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td>Web Development Workshop</td>
-
-                <td>30 July 2026</td>
-
-                <td>Lab 3</td>
-
-                <td>
-
-                    <button class="edit-btn">
-
-                       
-
-                        Edit
-
-                    </button>
-
-                    <button class="delete-btn">
-
-                        
-
-                        Delete
-
-                    </button>
-
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td>Hackathon 2026</td>
-
-                <td>15 August 2026</td>
-
-                <td>Innovation Hall</td>
-
-                <td>
-
-                    <button class="edit-btn">
-
-                       
-                        Edit
-
-                    </button>
-
-                    <button class="delete-btn">
-
-                       
-
-                        Delete
-
-                    </button>
-
-                </td>
-
-            </tr>
-
+            <!-- Rendered dynamically by admin.js -->
         </tbody>
 
     </table>
@@ -318,73 +230,59 @@
             </div>
 
             <div class="row">
-
                 <div class="input-group">
-
                     <label>Date</label>
-
                     <input type="date" id="eventDate" required>
-
                 </div>
-
                 <div class="input-group">
-
-                    <label>Location</label>
-
-                    <input type="text" id="eventLocation" placeholder="Event location" required>
-
+                    <label>Time</label>
+                    <input type="text" id="eventTime" placeholder="e.g. 10:00 AM" required>
                 </div>
+            </div>
 
+            <div class="row">
+                <div class="input-group">
+                    <label>Location / Venue</label>
+                    <input type="text" id="eventLocation" placeholder="Event location" required>
+                </div>
+                <div class="input-group">
+                    <label>Category</label>
+                    <select id="eventCategory">
+                        <option>Technology</option>
+                        <option>Workshop</option>
+                        <option>Music</option>
+                        <option>Sports</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-group">
+                    <label>Maximum Seats</label>
+                    <input type="number" id="eventSeats" placeholder="Enter maximum seats" min="1" required>
+                </div>
+                <div class="input-group">
+                    <label>Banner Image URL</label>
+                    <input type="text" id="eventImageURL" placeholder="e.g. assets/music.jpeg or unsplash URL">
+                </div>
             </div>
 
             <div class="input-group">
-
-                <label>Category</label>
-
-                <select id="eventCategory">
-
-                    <option>Technology</option>
-                    <option>Workshop</option>
-                    <option>Hackathon</option>
-                    <option>Seminar</option>
-
-                </select>
-
+                <label>Or Choose Local File</label>
+                <input type="file" id="eventImageFile" accept="image/*">
             </div>
 
             <div class="input-group">
-
-                <label>Maximum Seats</label>
-
-                <input type="number" id="eventSeats" placeholder="Enter maximum seats" required>
-
-            </div>
-
-            <div class="input-group">
-
-                <label>Event Image</label>
-
-                <input type="file" id="eventImage">
-
-            </div>
-
-            <div class="input-group">
-
                 <label>Description</label>
-
                 <textarea 
                 id="eventDescription" 
                 rows="4" 
-                placeholder="Write event description...">
-
-                </textarea>
-
+                placeholder="Write event description..."
+                required></textarea>
             </div>
 
             <button class="save-btn" id="saveBtn">
-
                 Create Event
-
             </button>
 
         </form>
@@ -393,6 +291,12 @@
 
 </div>
 
+
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="db.js"></script>
 <script src="admin.js"></script>
 
 </body>
