@@ -7,22 +7,24 @@ const defaultUsers = [
   { email: "user@connect.com", password: "password", role: "user", name: "John Doe", college: "State College" },
   { email: "admin@connect.com", password: "password", role: "admin", name: "Admin Organizer" }
 ];
-
-if (!localStorage.getItem("events")) localStorage.setItem("events", JSON.stringify(defaultEvents));
 if (!localStorage.getItem("users")) localStorage.setItem("users", JSON.stringify(defaultUsers));
 if (!localStorage.getItem("registrations")) localStorage.setItem("registrations", JSON.stringify([]));
 
-async function loadEventsFromJSON() {
-  try {
-    const res = await fetch("events.json");
-    if (res.ok) {
-      const events = await res.json();
-      if (Array.isArray(events) && events.length) {
-        localStorage.setItem("events", JSON.stringify(events));
-        window.dispatchEvent(new CustomEvent("events-synced"));
+async function initDatabase() {
+  if (!localStorage.getItem("events")) {
+    try {
+      const res = await fetch("events.json");
+      if (res.ok) {
+        const events = await res.json();
+        if (Array.isArray(events) && events.length) {
+          localStorage.setItem("events", JSON.stringify(events));
+          window.dispatchEvent(new CustomEvent("events-synced"));
+          return;
+        }
       }
-    }
-  } catch (e) { console.warn("Fetch events.json fallback to localStorage", e); }
+    } catch (e) { console.warn("Fetch events.json fallback to defaultEvents", e); }
+    localStorage.setItem("events", JSON.stringify(defaultEvents));
+  }
 }
 
 const getEvents = () => JSON.parse(localStorage.getItem("events")) || [];
@@ -161,4 +163,10 @@ function initChatbot() {
   if (input) input.addEventListener("keypress", e => { if (e.key === "Enter") sendChatMessage(); });
 }
 
-loadEventsFromJSON();
+initDatabase();
+
+window.addEventListener("storage", e => {
+  if (e.key === "events") {
+    window.dispatchEvent(new CustomEvent("events-synced"));
+  }
+});
