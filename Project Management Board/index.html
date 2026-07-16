@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow | Project Management Board</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="board.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="modal.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="header">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                <i class="fa-solid fa-layer-group"></i>
+            </div>
+
+            <div class="logo-text">
+                <h2>TaskFlow</h2>
+                <p>Project Board</p>
+            </div>
+
+        </div>
+
+
+        <!-- Search -->
+
+        <div class="search-box">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+                type="text"
+                placeholder="Search tasks..."
+            >
+
+        </div>
+
+
+        <!-- Right Actions -->
+
+        <div class="header-actions">
+
+            <button class="filter-btn">
+
+                <i class="fa-solid fa-filter"></i>
+
+                Filter
+
+            </button>
+
+            <button class="add-btn">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Add Task
+
+            </button>
+
+            <div class="profile">
+
+                <img
+                    src="https://ui-avatars.com/api/?name=Ishika&background=5B5BD6&color=fff"
+                    alt="profile">
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="board-container">
+
+        <!-- BACKLOG -->
+
+        <section class="column">
+
+            <div class="column-header">
+
+                <h3>Backlog</h3>
+
+                <span class="count">0</span>
+
+            </div>
+
+           <div class="task-list" id="backlog">
+                <div class="empty-state">
+
+                    <i class="fa-regular fa-folder-open"></i>
+
+                    <h4>No Tasks</h4>
+
+                    <p>Create your first task</p>
+
+                    <button class="mini-btn">
+
+                        + Add Task
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- TO DO -->
+
+        <section class="column">
+
+            <div class="column-header">
+
+                <h3>To Do</h3>
+
+                <span class="count">0</span>
+
+            </div>
+
+           <div class="task-list" id="todo">
+                <div class="empty-state">
+
+                    <i class="fa-regular fa-folder-open"></i>
+
+                    <h4>No Tasks</h4>
+
+                    <p>Create your first task</p>
+
+                    <button class="mini-btn">
+
+                        + Add Task
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- IN PROGRESS -->
+
+        <section class="column">
+
+            <div class="column-header">
+
+                <h3>In Progress</h3>
+
+                <span class="count">0</span>
+
+            </div>
+
+            <div class="task-list" id="progress">
+
+                <div class="empty-state">
+
+                    <i class="fa-regular fa-folder-open"></i>
+
+                    <h4>No Tasks</h4>
+
+                    <p>Create your first task</p>
+
+                    <button class="mini-btn">
+
+                        + Add Task
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- REVIEW -->
+
+        <section class="column">
+
+            <div class="column-header">
+
+                <h3>Review</h3>
+
+                <span class="count">0</span>
+
+            </div>
+
+            <div class="task-list" id="review">
+
+                <div class="empty-state">
+
+                    <i class="fa-regular fa-folder-open"></i>
+
+                    <h4>No Tasks</h4>
+
+                    <p>Create your first task</p>
+
+                    <button class="mini-btn">
+
+                        + Add Task
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- DONE -->
+
+        <section class="column">
+
+            <div class="column-header">
+
+                <h3>Done</h3>
+
+                <span class="count">0</span>
+
+            </div>
+
+            <div class="task-list" id="done">
+
+                <div class="empty-state">
+
+                    <i class="fa-regular fa-folder-open"></i>
+
+                    <h4>No Tasks</h4>
+
+                    <p>Create your first task</p>
+
+                    <button class="mini-btn">
+
+                        + Add Task
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+        ADD TASK MODAL
+========================= -->
+
+<div class="modal-overlay" id="taskModal">
+
+    <div class="task-modal">
+
+        <!-- Header -->
+
+        <div class="modal-header">
+
+            <div>
+
+                <h2>Create New Task</h2>
+
+                <p>Add a task to your project board</p>
+
+            </div>
+
+            <button class="close-modal">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+        <!-- Form Starts -->
+
+        <form id="taskForm">
+
+    <!-- Task Title -->
+
+    <div class="form-group">
+
+        <label>Task Title</label>
+
+        <input
+            type="text"
+            id="taskTitle"
+            placeholder="Enter task title..."
+        >
+
+    </div>
+
+
+    <!-- Description -->
+
+    <div class="form-group">
+
+        <label>Description</label>
+
+        <textarea
+            id="taskDescription"
+            rows="4"
+            placeholder="Describe your task..."
+        ></textarea>
+
+    </div>
+
+
+    <!-- Row -->
+
+    <div class="form-row">
+
+        <!-- Assignee -->
+
+        <div class="form-group">
+
+            <label>Assign To</label>
+
+            <select id="taskAssignee">
+
+                <option value="">Choose Member</option>
+
+                <option>Ishika</option>
+
+                <option>Rahul</option>
+
+                <option>Aman</option>
+
+                <option>Priya</option>
+
+            </select>
+
+        </div>
+
+
+        <!-- Priority -->
+
+        <div class="form-group">
+
+            <label>Priority</label>
+
+            <select id="taskPriority">
+
+                <option value="">Select Priority</option>
+
+                <option>High</option>
+
+                <option>Medium</option>
+
+                <option>Low</option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <!-- Row -->
+
+    <div class="form-row">
+
+        <!-- Due Date -->
+
+        <div class="form-group">
+
+            <label>Due Date</label>
+
+            <input
+                type="date"
+                id="taskDate"
+            >
+
+        </div>
+
+
+        <!-- Status -->
+
+        <div class="form-group">
+
+            <label>Status</label>
+
+            <select id="taskStatus">
+
+                <option>Backlog</option>
+
+                <option>To Do</option>
+
+                <option>In Progress</option>
+
+                <option>Review</option>
+
+                <option>Done</option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+    <!-- ===========================
+        ERROR MESSAGE
+=========================== -->
+
+<p class="form-error" id="formError">
+    Please fill in all required fields.
+</p>
+
+
+<!-- ===========================
+        MODAL FOOTER
+=========================== -->
+
+<div class="modal-footer">
+
+    <button type="button" class="cancel-btn">
+
+        Cancel
+
+    </button>
+
+    <button type="submit" class="create-btn" id="createTask">
+
+    <i class="fa-solid fa-plus"></i>
+
+    Create Task
+
+</button>
+
+</div>
+
+</form>
+
+    </div>
+
+</div>
+<div id="toast" class="toast">
+
+    Task Created Successfully
+
+</div>
+
+    <script src="app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,417 @@
+/* ==========================================
+            BOARD CONTAINER
+========================================== */
+
+.board-container{
+    display:flex;
+    gap:24px;
+    align-items:flex-start;
+    overflow-x:auto;
+    overflow-y:hidden;
+    padding-bottom:20px;
+}
+
+/* ==========================================
+                COLUMN
+========================================== */
+
+.column{
+    min-width:320px;
+    width:320px;
+    background:#ffffff;
+    border-radius:18px;
+    border:1px solid #e6eaf2;
+    box-shadow:0 8px 24px rgba(15,23,42,.06);
+    transition:.3s;
+    display:flex;
+    flex-direction:column;
+}
+
+.column:hover{
+    transform:translateY(-4px);
+    box-shadow:0 16px 32px rgba(15,23,42,.12);
+}
+
+/* ==========================================
+            COLUMN HEADER
+========================================== */
+
+.column-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 20px;
+    border-bottom:1px solid #eef2f7;
+}
+
+.column-header h3{
+    font-size:18px;
+    font-weight:600;
+    color:#202124;
+}
+
+/* ==========================================
+            TASK COUNT
+========================================== */
+
+.count{
+    min-width:32px;
+    height:32px;
+    border-radius:50%;
+    background:#eef2ff;
+    color:#5B5BD6;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:14px;
+    font-weight:600;
+}
+
+/* ==========================================
+            TASK LIST
+========================================== */
+
+.task-list{
+    min-height:500px;
+    padding:18px;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+/* ==========================================
+            EMPTY STATE
+========================================== */
+
+.empty-state{
+    background:#f9fbff;
+    border:2px dashed #d8dfef;
+    border-radius:16px;
+    padding:35px 20px;
+    text-align:center;
+    transition:.3s;
+}
+
+.empty-state:hover{
+    border-color:#5B5BD6;
+    background:#f4f6ff;
+}
+
+/* ==========================================
+                ICON
+========================================== */
+
+.empty-state i{
+    font-size:48px;
+    color:#5B5BD6;
+    margin-bottom:18px;
+}
+
+/* ==========================================
+            EMPTY TEXT
+========================================== */
+
+.empty-state h4{
+    font-size:18px;
+    color:#202124;
+    margin-bottom:8px;
+}
+
+.empty-state p{
+    font-size:14px;
+    color:#7b8190;
+    margin-bottom:22px;
+}
+
+/* ==========================================
+            MINI BUTTON
+========================================== */
+
+.mini-btn{
+    border:none;
+    outline:none;
+    background:#5B5BD6;
+    color:#fff;
+    padding:12px 22px;
+    border-radius:12px;
+    font-size:14px;
+    font-weight:500;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.mini-btn:hover{
+    background:#4949c9;
+    transform:translateY(-2px);
+}
+
+.mini-btn:active{
+    transform:scale(.96);
+}
+
+/* ==========================================
+            TASK CARD
+========================================== */
+
+.task-card{
+    background:#ffffff;
+    border-radius:16px;
+    padding:18px;
+    border:1px solid #e8edf5;
+    box-shadow:0 6px 16px rgba(0,0,0,.05);
+    cursor:grab;
+    transition:.3s;
+}
+
+.task-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 14px 28px rgba(0,0,0,.12);
+}
+
+.task-card:active{
+    cursor:grabbing;
+}
+
+/* ==========================================
+        TASK TITLE
+========================================== */
+
+.task-title{
+    font-size:16px;
+    font-weight:600;
+    color:#202124;
+    margin-bottom:10px;
+}
+
+/* ==========================================
+        TASK DESCRIPTION
+========================================== */
+
+.task-description{
+    font-size:14px;
+    color:#7b8190;
+    line-height:1.6;
+    margin-bottom:16px;
+}
+
+/* ==========================================
+            TASK FOOTER
+========================================== */
+
+.task-footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+/* ==========================================
+            MEMBER
+========================================== */
+
+.member{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.member img{
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+.member span{
+    font-size:13px;
+    font-weight:500;
+}
+
+/* ==========================================
+            PRIORITY
+========================================== */
+
+.priority{
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:600;
+}
+
+.priority.high{
+    background:#ffe5e5;
+    color:#e53935;
+}
+
+.priority.medium{
+    background:#fff5db;
+    color:#ff9800;
+}
+
+.priority.low{
+    background:#e6f8ec;
+    color:#2e7d32;
+}
+
+/* ==========================================
+            DUE DATE
+========================================== */
+
+.due-date{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-top:15px;
+    font-size:13px;
+    color:#7b8190;
+}
+
+/* ==========================================
+        DRAG HIGHLIGHT
+========================================== */
+
+.column.drag-over{
+    border:2px dashed #5B5BD6;
+    background:#f4f7ff;
+}
+
+/* ==========================================
+            SCROLL
+========================================== */
+
+.board-container::-webkit-scrollbar{
+    height:10px;
+}
+
+.board-container::-webkit-scrollbar-thumb{
+    background:#c7cfdf;
+    border-radius:20px;
+}
+
+.board-container::-webkit-scrollbar-track{
+    background:transparent;
+}
+
+/* =======================================
+        CARD TOP
+======================================= */
+
+.task-card-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:15px;
+
+}
+
+/* =======================================
+        ACTION BUTTONS
+======================================= */
+
+.task-actions{
+
+    display:flex;
+
+    gap:8px;
+
+}
+
+.edit-btn,
+.delete-btn{
+
+    width:34px;
+
+    height:34px;
+
+    border:none;
+
+    background:#f5f7fb;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.edit-btn:hover{
+
+    background:#5B5BD6;
+
+    color:#fff;
+
+}
+
+.delete-btn:hover{
+
+    background:#ef4444;
+
+    color:#fff;
+
+}
+
+/* =======================================
+        DEADLINE COLORS
+======================================= */
+
+.due-date.safe{
+
+    color:#16a34a;
+
+}
+
+.due-date.warning{
+
+    color:#eab308;
+
+}
+
+.due-date.overdue{
+
+    color:#dc2626;
+
+}
+
+/* =======================================
+        TOAST
+======================================= */
+
+.toast{
+
+    position:fixed;
+
+    top:25px;
+
+    right:25px;
+
+    background:#5B5BD6;
+
+    color:white;
+
+    padding:16px 24px;
+
+    border-radius:12px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.18);
+
+    opacity:0;
+
+    transform:translateY(-20px);
+
+    transition:.3s;
+
+    z-index:99999;
+
+}
+
+.toast.show{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}

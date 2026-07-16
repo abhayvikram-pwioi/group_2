@@ -1,0 +1,388 @@
+/* ===========================
+   GOOGLE FONT & RESET
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#F5F7FB;
+    color:#202124;
+    min-height:100vh;
+}
+
+/* ===========================
+        SCROLLBAR
+=========================== */
+
+::-webkit-scrollbar{
+    width:8px;
+    height:8px;
+}
+
+::-webkit-scrollbar-track{
+    background:#eceff4;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#b8c1d1;
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:#909db4;
+}
+
+/* ===========================
+        HEADER
+=========================== */
+
+.header{
+
+    width:100%;
+
+    height:85px;
+
+    background:#ffffff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 45px;
+
+    border-bottom:1px solid #E6EAF2;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:999;
+
+    box-shadow:0 4px 18px rgba(0,0,0,.05);
+
+}
+
+/* ===========================
+        LOGO
+=========================== */
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.logo-icon{
+
+    width:50px;
+
+    height:50px;
+
+    background:#5B5BD6;
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:14px;
+
+    font-size:20px;
+
+    box-shadow:0 10px 20px rgba(91,91,214,.25);
+
+}
+
+.logo-text h2{
+
+    font-size:22px;
+
+    font-weight:700;
+
+    color:#202124;
+
+}
+
+.logo-text p{
+
+    color:#7A7F88;
+
+    font-size:13px;
+
+    margin-top:2px;
+
+}
+
+/* ===========================
+        SEARCH BAR
+=========================== */
+
+.search-box{
+
+    width:420px;
+
+    height:48px;
+
+    background:#F4F6FA;
+
+    border-radius:14px;
+
+    display:flex;
+
+    align-items:center;
+
+    padding:0 18px;
+
+    gap:12px;
+
+    transition:.3s;
+
+    border:2px solid transparent;
+
+}
+
+.search-box:hover{
+
+    border-color:#d8def4;
+
+}
+
+.search-box:focus-within{
+
+    border-color:#5B5BD6;
+
+    background:#fff;
+
+}
+
+.search-box i{
+
+    color:#7A7F88;
+
+}
+
+.search-box input{
+
+    width:100%;
+
+    border:none;
+
+    background:none;
+
+    outline:none;
+
+    font-size:15px;
+
+    color:#333;
+
+}
+
+.search-box input::placeholder{
+
+    color:#9ca3af;
+
+}
+
+/* ===========================
+      HEADER ACTIONS
+=========================== */
+
+.header-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+/* ===========================
+        BUTTONS
+=========================== */
+
+.filter-btn{
+
+    height:46px;
+
+    padding:0 20px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:white;
+
+    border:1px solid #DCE2EC;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    font-size:14px;
+
+    font-weight:500;
+
+    transition:.3s;
+
+}
+
+.filter-btn:hover{
+
+    background:#F4F6FA;
+
+}
+
+.add-btn{
+
+    height:46px;
+
+    padding:0 22px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#5B5BD6;
+
+    color:white;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+    box-shadow:0 10px 20px rgba(91,91,214,.25);
+
+}
+
+.add-btn:hover{
+
+    transform:translateY(-2px);
+
+    background:#4b4bc9;
+
+}
+
+.add-btn:active{
+
+    transform:scale(.98);
+
+}
+
+/* ===========================
+        PROFILE
+=========================== */
+
+.profile{
+
+    width:48px;
+
+    height:48px;
+
+    border-radius:50%;
+
+    overflow:hidden;
+
+    cursor:pointer;
+
+    border:3px solid #ffffff;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+
+}
+
+.profile img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+}
+
+/* ===========================
+        MAIN BOARD
+=========================== */
+
+.board-container{
+
+    padding:30px;
+
+    min-height:calc(100vh - 85px);
+
+}
+
+/* ===========================
+      COMMON BUTTON
+=========================== */
+
+button{
+
+    font-family:'Poppins',sans-serif;
+
+}
+
+input{
+
+    font-family:'Poppins',sans-serif;
+
+}
+
+a{
+
+    text-decoration:none;
+
+    color:inherit;
+
+}
+
+ul{
+
+    list-style:none;
+
+}
+
+/* ===========================
+      SELECTION
+=========================== */
+
+::selection{
+
+    background:#5B5BD6;
+
+    color:white;
+
+}
