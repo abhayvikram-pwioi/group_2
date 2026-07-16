@@ -3,808 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TaskFlow | Project Management Board</title>
+    <title>TaskFlow | Trello Board</title>
 
-    <!-- Google Font -->
+    <!-- Google Font (Poppins) -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
 
-    <!-- CSS -->
+    <!-- Unified CSS -->
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="board.css">
-    <link rel="stylesheet" href="responsive.css">
-    <link rel="stylesheet" href="modal.css">
-    <link rel="stylesheet" href="activity.css">
 </head>
-
 <body>
 
     <!-- ================= HEADER ================= -->
-
     <header class="header">
-
         <div class="logo">
-
             <div class="logo-icon">
                 <i class="fa-solid fa-layer-group"></i>
             </div>
-
             <div class="logo-text">
                 <h2>TaskFlow</h2>
                 <p>Project Board</p>
             </div>
-
         </div>
 
-        <!-- ===========================
-        SEARCH & FILTER BAR
-=========================== -->
-
-<div class="toolbar">
-
-    <!-- Search -->
-
-    <div class="search-box">
-
-        <i class="fa-solid fa-magnifying-glass"></i>
-
-        <input
-            type="text"
-            placeholder="Search tasks..."
-        >
-
-    </div>
-
-    <!-- Assignee -->
-
-    <div class="filter-box">
-
-        <i class="fa-solid fa-user"></i>
-
-        <select>
-
-            <option>Assignee</option>
-
-            <option>Ishika</option>
-
-            <option>Rahul</option>
-
-            <option>Aman</option>
-
-            <option>Priya</option>
-
-        </select>
-
-    </div>
-
-    <!-- Priority -->
-
-    <div class="filter-box">
-
-        <i class="fa-solid fa-flag"></i>
-
-        <select>
-
-            <option>Priority</option>
-
-            <option>High</option>
-
-            <option>Medium</option>
-
-            <option>Low</option>
-
-        </select>
-
-    </div>
-
-    <!-- Due Date -->
-
-    <div class="filter-box">
-
-        <i class="fa-solid fa-calendar-days"></i>
-
-        <input type="date">
-
-    </div>
-
-    <!-- Status -->
-
-    <div class="filter-box">
-
-        <i class="fa-solid fa-layer-group"></i>
-
-        <select>
-
-            <option>Status</option>
-
-            <option>Backlog</option>
-
-            <option>To Do</option>
-
-            <option>In Progress</option>
-
-            <option>Review</option>
-
-            <option>Done</option>
-
-        </select>
-
-    </div>
-
-    <!-- Reset -->
-
-    <button class="reset-filter">
-
-        <i class="fa-solid fa-rotate-left"></i>
-
-        Reset
-
-    </button>
-
-</div>
-
-
-        
-        
-
-
-        <!-- Right Actions -->
-
-        <div class="header-actions">
-
-            <button class="filter-btn">
-
-                <i class="fa-solid fa-filter"></i>
-
-                Filter
-
-            </button>
-
-            <button class="add-btn">
-
-                <i class="fa-solid fa-plus"></i>
-
-                Add Task
-
-            </button>
-
-            <div class="profile">
-
-                <img
-                    src="https://ui-avatars.com/api/?name=Ishika&background=5B5BD6&color=fff"
-                    alt="profile">
-
+        <!-- SEARCH & FILTER BAR -->
+        <div class="toolbar">
+            <!-- Search by Title -->
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchBar" placeholder="Search tasks...">
             </div>
 
+            <!-- Filter Assignee -->
+            <div class="filter-box">
+                <i class="fa-solid fa-user"></i>
+                <select id="filterAssignee">
+                    <option value="">All Assignees</option>
+                    <option value="Ishika">Ishika</option>
+                    <option value="Rahul">Rahul</option>
+                    <option value="Aman">Aman</option>
+                    <option value="Priya">Priya</option>
+                </select>
+            </div>
+
+            <!-- Filter Priority -->
+            <div class="filter-box">
+                <i class="fa-solid fa-flag"></i>
+                <select id="filterPriority">
+                    <option value="">All Priorities</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                </select>
+            </div>
+
+            <!-- Filter Due Status -->
+            <div class="filter-box">
+                <i class="fa-solid fa-calendar-days"></i>
+                <select id="filterDueStatus">
+                    <option value="">All Deadlines</option>
+                    <option value="Safe">Safe</option>
+                    <option value="Warning">Near Deadline</option>
+                    <option value="Overdue">Overdue</option>
+                </select>
+            </div>
+
+            <!-- Reset Filters -->
+            <button class="reset-filter" id="resetFiltersBtn">
+                <i class="fa-solid fa-rotate-left"></i> Reset
+            </button>
         </div>
 
+        <!-- Actions & Profile -->
+        <div class="header-actions">
+            <button class="add-btn" id="openAddTaskModalBtn">
+                <i class="fa-solid fa-plus"></i> Add Task
+            </button>
+            <div class="profile">
+                <img src="https://ui-avatars.com/api/?name=Ishika&background=5B5BD6&color=fff" alt="profile">
+            </div>
+        </div>
     </header>
 
-
-    <!-- ================= MAIN ================= -->
-
+    <!-- ================= MAIN LAYOUT ================= -->
     <main class="main-layout">
+        
+        <!-- TEAM SIDEBAR -->
+        <aside class="team-sidebar">
+            <div class="sidebar-header">
+                <h3>
+                    <i class="fa-solid fa-users"></i> Team Members
+                </h3>
+                <p>Project Collaborators</p>
+            </div>
+            
+            <div id="teamMembersList">
+                <!-- Rendered dynamically by script.js -->
+            </div>
 
-        <!-- ===========================
-        TEAM SIDEBAR
-=========================== -->
+            <button class="invite-btn" id="inviteMemberBtn">
+                <i class="fa-solid fa-user-plus"></i> Invite Member
+            </button>
+        </aside>
 
-<aside class="team-sidebar">
-
-    <div class="sidebar-header">
-
-        <h3>
-            <i class="fa-solid fa-users"></i>
-            Team Members
-        </h3>
-
-        <p>Project Collaborators</p>
-
-    </div>
-
-
-    <!-- Member 1 -->
-
-    <div class="member-card">
-
-        <div class="member-avatar purple">
-
-            IG
-
-            <span class="online"></span>
-
+        <!-- BOARD AREA -->
+        <div class="board-container" id="boardContainer">
+            <!-- Columns and Add Column Card rendered dynamically by script.js -->
         </div>
 
-        <div class="member-details">
-
-            <h4>Ishika</h4>
-
-            <p>Product Manager</p>
-
-            <span>12 Tasks</span>
-
-        </div>
-
-    </div>
-
-
-    <!-- Member 2 -->
-
-    <div class="member-card">
-
-        <div class="member-avatar blue">
-
-            RK
-
-            <span class="online"></span>
-
-        </div>
-
-        <div class="member-details">
-
-            <h4>Rahul</h4>
-
-            <p>Frontend Developer</p>
-
-            <span>8 Tasks</span>
-
-        </div>
-
-    </div>
-
-
-    <!-- Member 3 -->
-
-    <div class="member-card">
-
-        <div class="member-avatar green">
-
-            AS
-
-            <span class="online"></span>
-
-        </div>
-
-        <div class="member-details">
-
-            <h4>Aman</h4>
-
-            <p>UI Designer</p>
-
-            <span>5 Tasks</span>
-
-        </div>
-
-    </div>
-
-
-    <!-- Member 4 -->
-
-    <div class="member-card">
-
-        <div class="member-avatar orange">
-
-            PS
-
-            <span class="offline"></span>
-
-        </div>
-
-        <div class="member-details">
-
-            <h4>Priya</h4>
-
-            <p>QA Tester</p>
-
-            <span>4 Tasks</span>
-
-        </div>
-
-    </div>
-
-
-    <!-- Invite Button -->
-
-    <button class="invite-btn">
-
-        <i class="fa-solid fa-user-plus"></i>
-
-        Invite Member
-
-    </button>
-
-</aside>
-        <!-- BACKLOG -->
-         <div class="board-container">
-
-        <section class="column">
-
-            <div class="column-header">
-
-                <h3>Backlog</h3>
-
-                <span class="count">0</span>
-
+        <!-- ACTIVITY SIDEBAR -->
+        <aside class="activity-sidebar">
+            <div class="activity-header">
+                <h3>
+                    <i class="fa-solid fa-clock-rotate-left"></i> Activity Log
+                </h3>
+                <p>Recent project updates</p>
             </div>
 
-           <div class="task-list" id="backlog">
-                <div class="empty-state">
-
-                    <i class="fa-regular fa-folder-open"></i>
-
-                    <h4>No Tasks</h4>
-
-                    <p>Create your first task</p>
-
-                    <button class="mini-btn">
-
-                        + Add Task
-
-                    </button>
-
-                </div>
-
+            <div class="activity-list" id="activityList">
+                <!-- Rendered dynamically by script.js -->
             </div>
-
-        </section>
-
-
-
-        <!-- TO DO -->
-
-        <section class="column">
-
-            <div class="column-header">
-
-                <h3>To Do</h3>
-
-                <span class="count">0</span>
-
-            </div>
-
-           <div class="task-list" id="todo">
-                <div class="empty-state">
-
-                    <i class="fa-regular fa-folder-open"></i>
-
-                    <h4>No Tasks</h4>
-
-                    <p>Create your first task</p>
-
-                    <button class="mini-btn">
-
-                        + Add Task
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- IN PROGRESS -->
-
-        <section class="column">
-
-            <div class="column-header">
-
-                <h3>In Progress</h3>
-
-                <span class="count">0</span>
-
-            </div>
-
-            <div class="task-list" id="progress">
-
-                <div class="empty-state">
-
-                    <i class="fa-regular fa-folder-open"></i>
-
-                    <h4>No Tasks</h4>
-
-                    <p>Create your first task</p>
-
-                    <button class="mini-btn">
-
-                        + Add Task
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- REVIEW -->
-
-        <section class="column">
-
-            <div class="column-header">
-
-                <h3>Review</h3>
-
-                <span class="count">0</span>
-
-            </div>
-
-            <div class="task-list" id="review">
-
-                <div class="empty-state">
-
-                    <i class="fa-regular fa-folder-open"></i>
-
-                    <h4>No Tasks</h4>
-
-                    <p>Create your first task</p>
-
-                    <button class="mini-btn">
-
-                        + Add Task
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- DONE -->
-
-        <section class="column">
-
-            <div class="column-header">
-
-                <h3>Done</h3>
-
-                <span class="count">0</span>
-
-            </div>
-
-            <div class="task-list" id="done">
-
-                <div class="empty-state">
-
-                    <i class="fa-regular fa-folder-open"></i>
-
-                    <h4>No Tasks</h4>
-
-                    <p>Create your first task</p>
-
-                    <button class="mini-btn">
-
-                        + Add Task
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </section>
-        </div>
-
-<!-- ==========================
-        ACTIVITY SIDEBAR
-========================== -->
-
-<aside class="activity-sidebar">
-
-    <div class="activity-header">
-
-    <div>
-
-        <h3>
-
-            <i class="fa-solid fa-clock-rotate-left"></i>
-
-            Activity Log
-
-        </h3>
-
-        <p>Recent project updates</p>
-
-    </div>
-
-    <button class="activity-more">
-
-        <i class="fa-solid fa-ellipsis"></i>
-
-    </button>
-
-</div>
-    <div class="activity-list">
-
-        <!-- Activity 1 -->
-
-        <div class="activity-card">
-
-            <div class="activity-icon create">
-
-                <i class="fa-solid fa-plus"></i>
-
-            </div>
-
-            <div class="activity-content">
-
-                <h4>Task Created</h4>
-
-                <p>Landing Page Design</p>
-
-                <span>2 min ago</span>
-
-            </div>
-
-        </div>
-
-        <!-- Activity 2 -->
-
-        <div class="activity-card">
-
-            <div class="activity-icon move">
-
-                <i class="fa-solid fa-arrow-right"></i>
-
-            </div>
-
-            <div class="activity-content">
-
-                <h4>Task Moved</h4>
-
-                <p>Dashboard UI</p>
-
-                <span>15 min ago</span>
-
-            </div>
-
-        </div>
-
-        <!-- Activity 3 -->
-
-        <div class="activity-card">
-
-            <div class="activity-icon delete">
-
-                <i class="fa-solid fa-trash"></i>
-
-            </div>
-
-            <div class="activity-content">
-
-                <h4>Task Deleted</h4>
-
-                <p>Navbar Fix</p>
-
-                <span>Yesterday</span>
-
-            </div>
-
-        </div>
-
-        <button class="view-all-btn">
-
-    View All Activity
-
-    <i class="fa-solid fa-arrow-right"></i>
-
-</button>
-
-    </div>
-
-</aside>
-
+        </aside>
 
     </main>
 
-
-    <!-- =========================
-        ADD TASK MODAL
-========================= -->
-
-<div class="modal-overlay" id="taskModal">
-
-    <div class="task-modal">
-
-        <!-- Header -->
-
-        <div class="modal-header">
-
-            <div>
-
-                <h2>Create New Task</h2>
-
-                <p>Add a task to your project board</p>
-
+    <!-- ================= ADD/EDIT TASK MODAL ================= -->
+    <div class="modal-overlay" id="taskModal">
+        <div class="task-modal">
+            <div class="modal-header">
+                <div>
+                    <h2 id="modalTitle">Create New Task</h2>
+                    <p id="modalSubtitle">Add a task to your project board</p>
+                </div>
+                <button class="close-modal" id="closeModalBtn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
 
-            <button class="close-modal">
+            <form id="taskForm">
+                <!-- Task Title -->
+                <div class="form-group">
+                    <label for="taskTitle">Task Title *</label>
+                    <input type="text" id="taskTitle" placeholder="Enter task title...">
+                </div>
 
-                <i class="fa-solid fa-xmark"></i>
+                <!-- Description -->
+                <div class="form-group">
+                    <label for="taskDescription">Description</label>
+                    <textarea id="taskDescription" rows="3" placeholder="Describe your task..."></textarea>
+                </div>
 
-            </button>
+                <!-- Assignee & Priority -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="taskAssignee">Assign To</label>
+                        <select id="taskAssignee">
+                            <option value="">Choose Member</option>
+                            <option value="Ishika">Ishika</option>
+                            <option value="Rahul">Rahul</option>
+                            <option value="Aman">Aman</option>
+                            <option value="Priya">Priya</option>
+                        </select>
+                    </div>
 
+                    <div class="form-group">
+                        <label for="taskPriority">Priority</label>
+                        <select id="taskPriority">
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Due Date & Column -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="taskDate">Due Date *</label>
+                        <input type="date" id="taskDate">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="taskStatus">Status / Column</label>
+                        <select id="taskStatus">
+                            <!-- Populated dynamically by script.js based on active columns -->
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Validation Error Message -->
+                <p class="form-error" id="formError">Please fill in all required fields.</p>
+
+                <!-- Modal Actions -->
+                <div class="modal-footer">
+                    <button type="button" class="cancel-btn" id="cancelModalBtn">Cancel</button>
+                    <button type="submit" class="create-btn" id="submitTaskBtn">Create Task</button>
+                </div>
+            </form>
         </div>
-
-        <!-- Form Starts -->
-
-        <form id="taskForm">
-
-    <!-- Task Title -->
-
-    <div class="form-group">
-
-        <label>Task Title</label>
-
-        <input
-            type="text"
-            id="taskTitle"
-            placeholder="Enter task title..."
-        >
-
     </div>
 
-
-    <!-- Description -->
-
-    <div class="form-group">
-
-        <label>Description</label>
-
-        <textarea
-            id="taskDescription"
-            rows="4"
-            placeholder="Describe your task..."
-        ></textarea>
-
-    </div>
-
-
-    <!-- Row -->
-
-    <div class="form-row">
-
-        <!-- Assignee -->
-
-        <div class="form-group">
-
-            <label>Assign To</label>
-
-            <select id="taskAssignee">
-
-                <option value="">Choose Member</option>
-
-                <option>Ishika</option>
-
-                <option>Rahul</option>
-
-                <option>Aman</option>
-
-                <option>Priya</option>
-
-            </select>
-
-        </div>
-
-
-        <!-- Priority -->
-
-        <div class="form-group">
-
-            <label>Priority</label>
-
-            <select id="taskPriority">
-
-                <option value="">Select Priority</option>
-
-                <option>High</option>
-
-                <option>Medium</option>
-
-                <option>Low</option>
-
-            </select>
-
-        </div>
-
-    </div>
-
-
-    <!-- Row -->
-
-    <div class="form-row">
-
-        <!-- Due Date -->
-
-        <div class="form-group">
-
-            <label>Due Date</label>
-
-            <input
-                type="date"
-                id="taskDate"
-            >
-
-        </div>
-
-
-        <!-- Status -->
-
-        <div class="form-group">
-
-            <label>Status</label>
-
-            <select id="taskStatus">
-
-                <option>Backlog</option>
-
-                <option>To Do</option>
-
-                <option>In Progress</option>
-
-                <option>Review</option>
-
-                <option>Done</option>
-
-            </select>
-
-        </div>
-
-    </div>
-
-    <!-- ===========================
-        ERROR MESSAGE
-=========================== -->
-
-<p class="form-error" id="formError">
-    Please fill in all required fields.
-</p>
-
-
-<!-- ===========================
-        MODAL FOOTER
-=========================== -->
-
-<div class="modal-footer">
-
-    <button type="button" class="cancel-btn">
-
-        Cancel
-
-    </button>
-
-    <button type="submit" class="create-btn" id="createTask">
-
-    <i class="fa-solid fa-plus"></i>
-
-    Create Task
-
-</button>
-
-</div>
-
-</form>
-
-    </div>
-
-</div>
-<div id="toast" class="toast">
-
-    Task Created Successfully
-
-</div>
-
-    <script src="app.js"></script>
-
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Action completed successfully</div>
+
+    <!-- Main JavaScript Logic -->
+    <script src="script.js"></script>
 </body>
 </html>
