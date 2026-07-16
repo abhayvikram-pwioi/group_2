@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="board.css">
     <link rel="stylesheet" href="responsive.css">
     <link rel="stylesheet" href="modal.css">
+    <link rel="stylesheet" href="activity.css">
 </head>
 
 <body>
@@ -38,19 +39,116 @@
 
         </div>
 
+        <!-- ===========================
+        SEARCH & FILTER BAR
+=========================== -->
 
-        <!-- Search -->
+<div class="toolbar">
 
-        <div class="search-box">
+    <!-- Search -->
 
-            <i class="fa-solid fa-magnifying-glass"></i>
+    <div class="search-box">
 
-            <input
-                type="text"
-                placeholder="Search tasks..."
-            >
+        <i class="fa-solid fa-magnifying-glass"></i>
 
-        </div>
+        <input
+            type="text"
+            placeholder="Search tasks..."
+        >
+
+    </div>
+
+    <!-- Assignee -->
+
+    <div class="filter-box">
+
+        <i class="fa-solid fa-user"></i>
+
+        <select>
+
+            <option>Assignee</option>
+
+            <option>Ishika</option>
+
+            <option>Rahul</option>
+
+            <option>Aman</option>
+
+            <option>Priya</option>
+
+        </select>
+
+    </div>
+
+    <!-- Priority -->
+
+    <div class="filter-box">
+
+        <i class="fa-solid fa-flag"></i>
+
+        <select>
+
+            <option>Priority</option>
+
+            <option>High</option>
+
+            <option>Medium</option>
+
+            <option>Low</option>
+
+        </select>
+
+    </div>
+
+    <!-- Due Date -->
+
+    <div class="filter-box">
+
+        <i class="fa-solid fa-calendar-days"></i>
+
+        <input type="date">
+
+    </div>
+
+    <!-- Status -->
+
+    <div class="filter-box">
+
+        <i class="fa-solid fa-layer-group"></i>
+
+        <select>
+
+            <option>Status</option>
+
+            <option>Backlog</option>
+
+            <option>To Do</option>
+
+            <option>In Progress</option>
+
+            <option>Review</option>
+
+            <option>Done</option>
+
+        </select>
+
+    </div>
+
+    <!-- Reset -->
+
+    <button class="reset-filter">
+
+        <i class="fa-solid fa-rotate-left"></i>
+
+        Reset
+
+    </button>
+
+</div>
+
+
+        
+        
 
 
         <!-- Right Actions -->
@@ -88,9 +186,139 @@
 
     <!-- ================= MAIN ================= -->
 
-    <main class="board-container">
+    <main class="main-layout">
 
+        <!-- ===========================
+        TEAM SIDEBAR
+=========================== -->
+
+<aside class="team-sidebar">
+
+    <div class="sidebar-header">
+
+        <h3>
+            <i class="fa-solid fa-users"></i>
+            Team Members
+        </h3>
+
+        <p>Project Collaborators</p>
+
+    </div>
+
+
+    <!-- Member 1 -->
+
+    <div class="member-card">
+
+        <div class="member-avatar purple">
+
+            IG
+
+            <span class="online"></span>
+
+        </div>
+
+        <div class="member-details">
+
+            <h4>Ishika</h4>
+
+            <p>Product Manager</p>
+
+            <span>12 Tasks</span>
+
+        </div>
+
+    </div>
+
+
+    <!-- Member 2 -->
+
+    <div class="member-card">
+
+        <div class="member-avatar blue">
+
+            RK
+
+            <span class="online"></span>
+
+        </div>
+
+        <div class="member-details">
+
+            <h4>Rahul</h4>
+
+            <p>Frontend Developer</p>
+
+            <span>8 Tasks</span>
+
+        </div>
+
+    </div>
+
+
+    <!-- Member 3 -->
+
+    <div class="member-card">
+
+        <div class="member-avatar green">
+
+            AS
+
+            <span class="online"></span>
+
+        </div>
+
+        <div class="member-details">
+
+            <h4>Aman</h4>
+
+            <p>UI Designer</p>
+
+            <span>5 Tasks</span>
+
+        </div>
+
+    </div>
+
+
+    <!-- Member 4 -->
+
+    <div class="member-card">
+
+        <div class="member-avatar orange">
+
+            PS
+
+            <span class="offline"></span>
+
+        </div>
+
+        <div class="member-details">
+
+            <h4>Priya</h4>
+
+            <p>QA Tester</p>
+
+            <span>4 Tasks</span>
+
+        </div>
+
+    </div>
+
+
+    <!-- Invite Button -->
+
+    <button class="invite-btn">
+
+        <i class="fa-solid fa-user-plus"></i>
+
+        Invite Member
+
+    </button>
+
+</aside>
         <!-- BACKLOG -->
+         <div class="board-container">
 
         <section class="column">
 
@@ -265,6 +493,117 @@
             </div>
 
         </section>
+        </div>
+
+<!-- ==========================
+        ACTIVITY SIDEBAR
+========================== -->
+
+<aside class="activity-sidebar">
+
+    <div class="activity-header">
+
+    <div>
+
+        <h3>
+
+            <i class="fa-solid fa-clock-rotate-left"></i>
+
+            Activity Log
+
+        </h3>
+
+        <p>Recent project updates</p>
+
+    </div>
+
+    <button class="activity-more">
+
+        <i class="fa-solid fa-ellipsis"></i>
+
+    </button>
+
+</div>
+    <div class="activity-list">
+
+        <!-- Activity 1 -->
+
+        <div class="activity-card">
+
+            <div class="activity-icon create">
+
+                <i class="fa-solid fa-plus"></i>
+
+            </div>
+
+            <div class="activity-content">
+
+                <h4>Task Created</h4>
+
+                <p>Landing Page Design</p>
+
+                <span>2 min ago</span>
+
+            </div>
+
+        </div>
+
+        <!-- Activity 2 -->
+
+        <div class="activity-card">
+
+            <div class="activity-icon move">
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </div>
+
+            <div class="activity-content">
+
+                <h4>Task Moved</h4>
+
+                <p>Dashboard UI</p>
+
+                <span>15 min ago</span>
+
+            </div>
+
+        </div>
+
+        <!-- Activity 3 -->
+
+        <div class="activity-card">
+
+            <div class="activity-icon delete">
+
+                <i class="fa-solid fa-trash"></i>
+
+            </div>
+
+            <div class="activity-content">
+
+                <h4>Task Deleted</h4>
+
+                <p>Navbar Fix</p>
+
+                <span>Yesterday</span>
+
+            </div>
+
+        </div>
+
+        <button class="view-all-btn">
+
+    View All Activity
+
+    <i class="fa-solid fa-arrow-right"></i>
+
+</button>
+
+    </div>
+
+</aside>
+
 
     </main>
 

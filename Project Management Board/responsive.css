@@ -317,3 +317,99 @@
     }
 
 }
+
+/* ==========================================
+        ACTIVITY SIDEBAR
+========================================== */
+
+@media (max-width:1400px){
+
+    .team-sidebar{
+
+        width:260px;
+        min-width:260px;
+
+    }
+
+    .activity-sidebar{
+
+        width:280px;
+        min-width:280px;
+
+    }
+
+}
+
+
+/* ==========================================
+            TABLET
+========================================== */
+
+@media (max-width:1200px){
+
+    .main-layout{
+
+        flex-wrap:wrap;
+
+    }
+
+    .team-sidebar{
+
+        width:100%;
+        position:relative;
+        top:0;
+        order:1;
+
+    }
+
+    .board-container{
+
+        order:2;
+
+        width:100%;
+
+    }
+
+    .activity-sidebar{
+
+        width:100%;
+        position:relative;
+        top:0;
+        order:3;
+
+        max-height:420px;
+
+    }
+
+}
+
+
+/* ==========================================
+            MOBILE
+========================================== */
+
+@media (max-width:768px){
+
+    .main-layout{
+
+        display:block;
+
+        padding:15px;
+
+    }
+
+    .team-sidebar{
+
+        margin-bottom:20px;
+
+    }
+
+    .activity-sidebar{
+
+        margin-top:20px;
+
+        max-height:350px;
+
+    }
+
+}

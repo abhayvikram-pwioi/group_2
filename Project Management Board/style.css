@@ -131,75 +131,7 @@ body{
 
 }
 
-/* ===========================
-        SEARCH BAR
-=========================== */
 
-.search-box{
-
-    width:420px;
-
-    height:48px;
-
-    background:#F4F6FA;
-
-    border-radius:14px;
-
-    display:flex;
-
-    align-items:center;
-
-    padding:0 18px;
-
-    gap:12px;
-
-    transition:.3s;
-
-    border:2px solid transparent;
-
-}
-
-.search-box:hover{
-
-    border-color:#d8def4;
-
-}
-
-.search-box:focus-within{
-
-    border-color:#5B5BD6;
-
-    background:#fff;
-
-}
-
-.search-box i{
-
-    color:#7A7F88;
-
-}
-
-.search-box input{
-
-    width:100%;
-
-    border:none;
-
-    background:none;
-
-    outline:none;
-
-    font-size:15px;
-
-    color:#333;
-
-}
-
-.search-box input::placeholder{
-
-    color:#9ca3af;
-
-}
 
 /* ===========================
       HEADER ACTIONS
@@ -384,5 +316,252 @@ ul{
     background:#5B5BD6;
 
     color:white;
+
+}
+
+/* ==========================================
+            TOOLBAR
+========================================== */
+
+.toolbar{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    flex:1;
+
+    margin:0 30px;
+
+    overflow-x:auto;
+
+    scrollbar-width:none;
+
+}
+
+.toolbar::-webkit-scrollbar{
+
+    display:none;
+
+}
+
+/* ==========================================
+            SEARCH BOX
+========================================== */
+
+.search-box{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    width:320px;
+
+    min-width:320px;
+
+    height:48px;
+
+    padding:0 18px;
+
+    background:#F7F8FC;
+
+    border:1px solid #E6EAF2;
+
+    border-radius:14px;
+
+    transition:.3s;
+
+}
+
+.search-box:hover{
+
+    border-color:#5B5BD6;
+
+}
+
+.search-box:focus-within{
+
+    background:#fff;
+
+    border-color:#5B5BD6;
+
+    box-shadow:0 0 0 4px rgba(91,91,214,.08);
+
+}
+
+.search-box i{
+
+    color:#8B95A7;
+
+    font-size:15px;
+
+}
+
+.search-box input{
+
+    width:100%;
+
+    border:none;
+
+    outline:none;
+
+    background:transparent;
+
+    font-size:14px;
+
+    color:#202124;
+
+}
+
+/* ==========================================
+            FILTER BOX
+========================================== */
+
+.filter-box{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    height:48px;
+
+    min-width:155px;
+
+    padding:0 16px;
+
+    background:#F7F8FC;
+
+    border:1px solid #E6EAF2;
+
+    border-radius:14px;
+
+    transition:.3s;
+
+}
+
+.filter-box:hover{
+
+    border-color:#5B5BD6;
+
+    background:#fff;
+
+}
+
+.filter-box i{
+
+    color:#8B95A7;
+
+    font-size:14px;
+
+}
+
+/* ==========================================
+            SELECT
+========================================== */
+
+.filter-box select{
+
+    width:100%;
+
+    border:none;
+
+    background:transparent;
+
+    outline:none;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+    color:#202124;
+
+    appearance:none;
+
+}
+
+/* ==========================================
+            DATE INPUT
+========================================== */
+
+.filter-box input{
+
+    width:100%;
+
+    border:none;
+
+    background:transparent;
+
+    outline:none;
+
+    font-size:14px;
+
+    color:#202124;
+
+}
+
+/* ==========================================
+            RESET BUTTON
+========================================== */
+
+.reset-filter{
+
+    height:48px;
+
+    min-width:120px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#EEF2FF;
+
+    color:#5B5BD6;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:8px;
+
+    transition:.3s;
+
+}
+
+.reset-filter:hover{
+
+    background:#5B5BD6;
+
+    color:white;
+
+    transform:translateY(-2px);
+
+}
+
+/* ==========================================
+        HEADER ACTIONS
+========================================== */
+
+.header-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    margin-left:20px;
+
 
 }
