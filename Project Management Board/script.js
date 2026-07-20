@@ -1,13 +1,8 @@
 // ==========================================
 // STATE MANAGEMENT & LOCAL STORAGE
 // ==========================================
-let columns = [], tasks = [], activities = [];
-const teamMembers = [
-    { name: "Ishika", role: "Product Manager", color: "purple" },
-    { name: "Rahul", role: "Frontend Developer", color: "blue" },
-    { name: "Aman", role: "UI Designer", color: "green" },
-    { name: "Priya", role: "QA Tester", color: "orange" }
-];
+let columns = [], tasks = [], activities = [], teamMembers = [];
+let currentUser = "Ishika";
 let editingTaskId = null, currentDragTaskId = null;
 
 function initData() {
@@ -16,33 +11,46 @@ function initData() {
         { id: "progress", title: "In Progress" }, { id: "review", title: "Review" }, { id: "done", title: "Done" }
     ];
     tasks = JSON.parse(localStorage.getItem("trello_tasks")) || [
-        { id: "task-1", title: "Setup Project Structure", description: "Initialize git repository, HTML skeleton, CSS styling structure and basic app routes.", assignee: "Rahul", priority: "High", dueDate: "2026-07-18", columnId: "todo" },
+        { id: "task-1", title: "Setup Project Structure", description: "Initialize git repository, HTML skeleton, CSS styling structure and basic app routes.", assignee: "Hasan", priority: "High", dueDate: "2026-07-18", columnId: "todo" },
         { id: "task-2", title: "Design Homepage Mockups", description: "Create visual mocks for the landing page hero section, features list, and call-to-actions.", assignee: "Ishika", priority: "Medium", dueDate: "2026-07-20", columnId: "progress" },
-        { id: "task-3", title: "Validate Requirements document", description: "Review current PRD against development capabilities and write implementation plan.", assignee: "Aman", priority: "High", dueDate: "2026-07-15", columnId: "review" },
-        { id: "task-4", title: "Create User Personas", description: "Interview target users to identify core requirements and map workflow behaviors.", assignee: "Priya", priority: "Low", dueDate: "2026-07-14", columnId: "done" }
+        { id: "task-3", title: "Validate Requirements document", description: "Review current PRD against development capabilities and write implementation plan.", assignee: "Utkarsh", priority: "High", dueDate: "2026-07-15", columnId: "review" },
+        { id: "task-4", title: "Create User Personas", description: "Interview target users to identify core requirements and map workflow behaviors.", assignee: "Ishika", priority: "Low", dueDate: "2026-07-14", columnId: "done" }
     ];
+    teamMembers = JSON.parse(localStorage.getItem("trello_members")) || [
+        { name: "Ishika", role: "Product Manager", color: "purple" },
+        { name: "Hasan", role: "Frontend Developer", color: "blue" },
+        { name: "Utkarsh", role: "UI Designer", color: "green" }
+    ];
+    currentUser = localStorage.getItem("trello_current_user") || "Ishika";
+    if (!teamMembers.some(m => m.name === currentUser)) currentUser = teamMembers[0]?.name || "Ishika";
+
     activities = JSON.parse(localStorage.getItem("trello_activities")) || [
-        { text: "Board initialized with default columns", time: "10:30 (July 16)" },
-        { text: "Task 'Setup Project Structure' created", time: "11:15 (July 16)" },
-        { text: "Task 'Create User Personas' moved to Done", time: "14:20 (July 16)" }
+        { text: "Ishika moved 'Landing Page Design' to Review", time: "10:30 (July 16)" },
+        { text: "Hasan assigned task 'Fix Navbar Bug' to Utkarsh", time: "11:15 (July 16)" },
+        { text: "Utkarsh updated deadline for 'Client Dashboard'", time: "14:20 (July 16)" }
     ];
     saveAll();
+    renderUserSelector();
+    renderAssigneeOptions();
 }
 
 const saveAll = () => {
     localStorage.setItem("trello_columns", JSON.stringify(columns));
     localStorage.setItem("trello_tasks", JSON.stringify(tasks));
     localStorage.setItem("trello_activities", JSON.stringify(activities));
+    localStorage.setItem("trello_members", JSON.stringify(teamMembers));
+    localStorage.setItem("trello_current_user", currentUser);
 };
 
 function logActivity(text) {
     const time = `${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} (${new Date().toLocaleDateString([], { month: 'short', day: 'numeric' })})`;
-    activities.unshift({ text, time });
+    const fullText = text.startsWith(currentUser) ? text : `${currentUser} ${text}`;
+    activities.unshift({ text: fullText, time });
     saveAll();
     renderActivities();
 }
 
-// HELPERS
+// HELPERS & SELECTORS
 const getInitials = n => n ? n.trim().split(" ").map(p => p[0]).join("").substring(0, 2).toUpperCase() : "?";
 const getMemberColor = n => (teamMembers.find(m => m.name === n) || { color: "purple" }).color;
 const parseLocalDate = d => d ? new Date(d.split("-")[0], d.split("-")[1] - 1, d.split("-")[2]) : new Date();
@@ -58,6 +66,28 @@ function showToast(message) {
     const t = document.getElementById("toast");
     t.innerText = message; t.classList.add("show");
     setTimeout(() => t.classList.remove("show"), 2500);
+}
+
+function renderUserSelector() {
+    const select = document.getElementById("currentUserSelect");
+    if (!select) return;
+    select.innerHTML = teamMembers.map(m => `<option value="${m.name}" ${m.name === currentUser ? 'selected' : ''}>${m.name}</option>`).join("");
+    document.getElementById("currentUserAvatar").innerText = getInitials(currentUser);
+}
+
+function renderAssigneeOptions() {
+    const filterSel = document.getElementById("filterAssignee");
+    const taskSel = document.getElementById("taskAssignee");
+    const options = teamMembers.map(m => `<option value="${m.name}">${m.name}</option>`).join("");
+    if (filterSel) filterSel.innerHTML = `<option value="">All Assignees</option>${options}`;
+    if (taskSel) taskSel.innerHTML = `<option value="">Choose Member</option>${options}`;
+}
+
+function changeCurrentUser(name) {
+    currentUser = name;
+    saveAll();
+    renderUserSelector();
+    showToast(`Active user: ${currentUser}`);
 }
 
 // ==========================================
@@ -77,7 +107,7 @@ function renderMembers() {
 function renderActivities() {
     document.getElementById("activityList").innerHTML = activities.slice(0, 10).map(act => {
         const text = act.text.toLowerCase();
-        const type = text.includes("move") ? "move" : text.includes("delete") ? "delete" : text.includes("edit") ? "edit" : "create";
+        const type = text.includes("move") ? "move" : text.includes("delete") ? "delete" : text.includes("edit") || text.includes("update") ? "edit" : "create";
         const icon = type === "move" ? "fa-arrow-right" : type === "delete" ? "fa-trash" : type === "edit" ? "fa-pen" : "fa-plus";
         return `
             <div class="activity-card">
@@ -152,7 +182,7 @@ function addNewColumn() {
     const input = document.getElementById("newColumnTitle"), title = input.value.trim();
     if (!title) return showToast("Column title cannot be empty");
     columns.push({ id: "col-" + Date.now(), title });
-    saveAll(); logActivity(`Column '${title}' added`); showToast("Column added");
+    saveAll(); logActivity(`added column '${title}'`); showToast("Column added");
     input.value = ""; renderBoard();
 }
 
@@ -163,7 +193,7 @@ function deleteColumn(id) {
     if (!col || !confirm(`Delete column '${col.title}'? All tasks in it will be lost.`)) return;
     columns = columns.filter(c => c.id !== id);
     tasks = tasks.filter(t => t.columnId !== id);
-    saveAll(); logActivity(`Column '${col.title}' deleted`); showToast("Column deleted");
+    saveAll(); logActivity(`deleted column '${col.title}'`); showToast("Column deleted");
     renderBoard(); renderMembers();
 }
 
@@ -178,7 +208,7 @@ function finishRenameColumn(id) {
     if (!val) return showToast("Column title cannot be empty");
     const col = columns.find(c => c.id === id);
     if (col && col.title !== val) {
-        logActivity(`Column renamed from '${col.title}' to '${val}'`);
+        logActivity(`renamed column '${col.title}' to '${val}'`);
         col.title = val; saveAll(); showToast("Column renamed");
         renderBoard();
     }
@@ -196,10 +226,9 @@ function handleDrop(e, targetColId) {
     document.querySelectorAll(".column").forEach(c => c.classList.remove("drag-over"));
     const id = e.dataTransfer.getData("text/plain") || currentDragTaskId, t = tasks.find(x => x.id === id);
     if (!t || t.columnId === targetColId) return;
-    const oldColTitle = (columns.find(c => c.id === t.columnId) || { title: "" }).title;
     const newColTitle = (columns.find(c => c.id === targetColId) || { title: "" }).title;
     t.columnId = targetColId; saveAll();
-    logActivity(`Task '${t.title}' moved to '${newColTitle}'`);
+    logActivity(`moved '${t.title}' to '${newColTitle}'`);
     showToast("Task moved"); renderBoard();
 }
 
@@ -219,6 +248,7 @@ function openModalForColumn(colId) {
     document.getElementById("submitTaskBtn").innerText = "Create Task";
     taskForm.reset(); formError.classList.remove("show");
     populateStatusSelect();
+    renderAssigneeOptions();
     document.getElementById("taskStatus").value = colId;
     document.getElementById("taskDate").value = new Date().toISOString().substring(0, 10);
     modal.classList.add("active");
@@ -233,6 +263,7 @@ function openEditModal(id) {
     const t = tasks.find(x => x.id === id);
     if (!t) return;
     populateStatusSelect();
+    renderAssigneeOptions();
     document.getElementById("taskTitle").value = t.title;
     document.getElementById("taskDescription").value = t.description;
     document.getElementById("taskAssignee").value = t.assignee;
@@ -260,18 +291,24 @@ taskForm.addEventListener("submit", function(e) {
     if (editingTaskId) {
         const t = tasks.find(x => x.id === editingTaskId);
         if (t) {
-            const oldCol = t.columnId;
+            const oldCol = t.columnId, oldAsg = t.assignee, oldDue = t.dueDate;
             Object.assign(t, { title, description: desc, assignee, priority, dueDate, columnId: statusCol });
-            saveAll(); logActivity(`Task '${title}' edited`);
+            saveAll();
             if (oldCol !== statusCol) {
                 const targetTitle = (columns.find(c => c.id === statusCol) || { title: "" }).title;
-                logActivity(`Task '${title}' moved to '${targetTitle}'`);
+                logActivity(`moved '${title}' to '${targetTitle}'`);
+            } else if (oldAsg !== assignee) {
+                logActivity(`assigned task '${title}' to ${assignee || 'Unassigned'}`);
+            } else if (oldDue !== dueDate) {
+                logActivity(`updated deadline for '${title}'`);
+            } else {
+                logActivity(`updated task '${title}'`);
             }
             showToast("Task updated");
         }
     } else {
         tasks.push({ id: "task-" + Date.now(), title, description: desc, assignee, priority, dueDate, columnId: statusCol });
-        saveAll(); logActivity(`Task '${title}' created`); showToast("Task created");
+        saveAll(); logActivity(`created task '${title}'`); showToast("Task created");
     }
     closeModal(); renderBoard(); renderMembers();
 });
@@ -280,40 +317,87 @@ function deleteTask(id) {
     const t = tasks.find(x => x.id === id);
     if (t && confirm(`Delete task '${t.title}'?`)) {
         tasks = tasks.filter(x => x.id !== id); saveAll();
-        logActivity(`Task '${t.title}' deleted`); showToast("Task deleted");
+        logActivity(`deleted task '${t.title}'`); showToast("Task deleted");
         renderBoard(); renderMembers();
     }
 }
 
-function inviteMember() {
-    const name = prompt("Enter new team member name:");
-    if (!name || !name.trim()) return;
-    const role = prompt("Enter member role:") || "Developer";
-    const colors = ["purple", "blue", "green", "orange"];
-    teamMembers.push({ name: name.trim(), role: role.trim(), color: colors[Math.floor(Math.random() * 4)] });
-    logActivity(`Team member '${name}' invited`); showToast(`Invited ${name}`);
-    
-    const opt = `<option value="${name}">${name}</option>`;
-    document.getElementById("taskAssignee").innerHTML += opt;
-    document.getElementById("filterAssignee").innerHTML += opt;
-    renderMembers();
+// ==========================================
+// INVITE MEMBER MODAL
+// ==========================================
+const inviteModal = document.getElementById("inviteModal");
+const inviteForm = document.getElementById("inviteForm");
+const inviteFormError = document.getElementById("inviteFormError");
+
+function openInviteModal() {
+    inviteForm.reset();
+    inviteFormError.classList.remove("show");
+    inviteModal.classList.add("active");
 }
 
-// EVENTS
-["searchBar", "filterAssignee", "filterPriority", "filterDueStatus"].forEach(id => {
-    document.getElementById(id).addEventListener(id === "searchBar" ? "input" : "change", renderBoard);
+function closeInviteModal() {
+    inviteModal.classList.remove("active");
+    inviteForm.reset();
+    inviteFormError.classList.remove("show");
+}
+
+inviteForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+    const name = document.getElementById("newMemberName").value.trim();
+    const role = document.getElementById("newMemberRole").value.trim() || "Developer";
+    if (!name) { inviteFormError.innerText = "Member name cannot be empty."; return inviteFormError.classList.add("show"); }
+    
+    if (teamMembers.some(m => m.name.toLowerCase() === name.toLowerCase())) {
+        inviteFormError.innerText = "Member with this name already exists.";
+        return inviteFormError.classList.add("show");
+    }
+
+    const colors = ["purple", "blue", "green", "orange"];
+    teamMembers.push({ name, role, color: colors[teamMembers.length % colors.length] });
+    saveAll();
+    logActivity(`invited team member '${name}'`);
+    showToast(`Invited ${name}`);
+    
+    renderUserSelector();
+    renderAssigneeOptions();
+    renderMembers();
+    closeInviteModal();
 });
 
-document.getElementById("resetFiltersBtn").addEventListener("click", () => {
-    ["searchBar", "filterAssignee", "filterPriority", "filterDueStatus"].forEach(id => document.getElementById(id).value = "");
+// EVENTS & INIT
+["searchBar", "filterAssignee", "filterPriority", "filterDueStatus"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener(id === "searchBar" ? "input" : "change", renderBoard);
+});
+
+document.getElementById("currentUserSelect")?.addEventListener("change", e => changeCurrentUser(e.target.value));
+
+document.getElementById("resetFiltersBtn")?.addEventListener("click", () => {
+    ["searchBar", "filterAssignee", "filterPriority", "filterDueStatus"].forEach(id => {
+        const el = document.getElementById(id); if (el) el.value = "";
+    });
     renderBoard();
 });
 
-document.getElementById("openAddTaskModalBtn").addEventListener("click", () => openModalForColumn(columns[0]?.id || "todo"));
-document.getElementById("closeModalBtn").addEventListener("click", closeModal);
-document.getElementById("cancelModalBtn").addEventListener("click", closeModal);
-document.getElementById("inviteMemberBtn").addEventListener("click", inviteMember);
+document.getElementById("openAddTaskModalBtn")?.addEventListener("click", () => openModalForColumn(columns[0]?.id || "todo"));
+document.getElementById("closeModalBtn")?.addEventListener("click", closeModal);
+document.getElementById("cancelModalBtn")?.addEventListener("click", closeModal);
+document.getElementById("inviteMemberBtn")?.addEventListener("click", openInviteModal);
+document.getElementById("closeInviteModalBtn")?.addEventListener("click", closeInviteModal);
+document.getElementById("cancelInviteModalBtn")?.addEventListener("click", closeInviteModal);
 
-window.addEventListener("click", e => e.target === modal && closeModal());
-window.addEventListener("keydown", e => e.key === "Escape" && closeModal());
-window.addEventListener("DOMContentLoaded", () => { initData(); renderBoard(); renderMembers(); renderActivities(); });
+window.addEventListener("click", e => {
+    if (e.target === modal) closeModal();
+    if (e.target === inviteModal) closeInviteModal();
+});
+
+window.addEventListener("keydown", e => {
+    if (e.key === "Escape") { closeModal(); closeInviteModal(); }
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+    initData();
+    renderBoard();
+    renderMembers();
+    renderActivities();
+});

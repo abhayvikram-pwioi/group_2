@@ -41,10 +41,6 @@
                 <i class="fa-solid fa-user"></i>
                 <select id="filterAssignee">
                     <option value="">All Assignees</option>
-                    <option value="Ishika">Ishika</option>
-                    <option value="Rahul">Rahul</option>
-                    <option value="Aman">Aman</option>
-                    <option value="Priya">Priya</option>
                 </select>
             </div>
 
@@ -76,13 +72,19 @@
             </button>
         </div>
 
-        <!-- Actions & Profile -->
+        <!-- Actions & Active User Selector -->
         <div class="header-actions">
             <button class="add-btn" id="openAddTaskModalBtn">
                 <i class="fa-solid fa-plus"></i> Add Task
             </button>
-            <div class="profile">
-                <img src="https://ui-avatars.com/api/?name=Ishika&background=5B5BD6&color=fff" alt="profile">
+            <div class="user-selector-wrapper" title="Switch Active User">
+                <div class="user-avatar-badge" id="currentUserAvatar">IS</div>
+                <div class="user-select-box">
+                    <span class="user-label">Active User:</span>
+                    <select id="currentUserSelect">
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
             </div>
         </div>
     </header>
@@ -160,11 +162,7 @@
                     <div class="form-group">
                         <label for="taskAssignee">Assign To</label>
                         <select id="taskAssignee">
-                            <option value="">Choose Member</option>
-                            <option value="Ishika">Ishika</option>
-                            <option value="Rahul">Rahul</option>
-                            <option value="Aman">Aman</option>
-                            <option value="Priya">Priya</option>
+                            <!-- Populated dynamically -->
                         </select>
                     </div>
 
@@ -200,6 +198,40 @@
                 <div class="modal-footer">
                     <button type="button" class="cancel-btn" id="cancelModalBtn">Cancel</button>
                     <button type="submit" class="create-btn" id="submitTaskBtn">Create Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= INVITE MEMBER MODAL ================= -->
+    <div class="modal-overlay" id="inviteModal">
+        <div class="task-modal" style="max-width: 440px;">
+            <div class="modal-header">
+                <div>
+                    <h2>Invite Team Member</h2>
+                    <p>Add a new collaborator to the board</p>
+                </div>
+                <button class="close-modal" id="closeInviteModalBtn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="inviteForm">
+                <div class="form-group">
+                    <label for="newMemberName">Full Name *</label>
+                    <input type="text" id="newMemberName" placeholder="e.g. Rahul Sharma" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="newMemberRole">Role</label>
+                    <input type="text" id="newMemberRole" placeholder="e.g. Developer, QA, Designer">
+                </div>
+
+                <p class="form-error" id="inviteFormError">Please enter a valid member name.</p>
+
+                <div class="modal-footer">
+                    <button type="button" class="cancel-btn" id="cancelInviteModalBtn">Cancel</button>
+                    <button type="submit" class="create-btn">Invite Member</button>
                 </div>
             </form>
         </div>
