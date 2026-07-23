@@ -127,17 +127,21 @@
 
                 <!-- Heading -->
 
-                <h1>Welcome Back!</h1>
+                <h1 id="auth-title">Welcome Back!</h1>
 
-                <p>
+                <p id="auth-subtitle">
 
                     Login to access your student dashboard
 
                 </p>
 
+                <!-- Auth Message Placeholder -->
+
+                <div id="auth-message" style="padding: 12px; border-radius: 12px; margin-bottom: 20px; font-size: 0.9rem; text-align: center; display: none;"></div>
+
                 <!-- Login Form -->
 
-                <form class="login-form">
+                <form class="login-form" id="auth-form">
 
                     <!-- Email -->
 
@@ -201,7 +205,7 @@
 
                     <!-- Options -->
 
-                    <div class="options">
+                    <div class="options" id="auth-options">
 
                         <label>
 
@@ -261,11 +265,11 @@
 
             <p class="bottom-text">
 
-                Don't have an account?
+                <span id="auth-toggle-text">Don't have an account?</span>
 
-                <a href="#">
+                <a href="#" id="auth-toggle-link">
 
-                    Contact your administrator.
+                    Sign Up
 
                 </a>
 
@@ -275,7 +279,7 @@
 
     </main>
 
-    <script src="js/login.js"></script>
+    <script type="module" src="auth.js"></script>
 
 </body>
 
