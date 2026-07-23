@@ -96,16 +96,15 @@ body::after{
 
 .left-panel{
 
-    padding:55px 70px;
+    padding:60px 80px;
 
     display:flex;
 
     flex-direction:column;
 
-    justify-content:space-between;
+    position:relative;
 
 }
-
 /* Logo */
 
 .logo{
@@ -151,6 +150,7 @@ body::after{
     font-weight:800;
 
     margin-bottom:25px;
+    padding:80px;
 
 }
 

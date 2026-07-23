@@ -2,6 +2,12 @@
 // STUDENT DASHBOARD APP ENGINE (STATE-DRIVEN)
 // ==========================================
 
+// if (localStorage.getItem("isLoggedIn") !== "true") {
+
+//     window.location.href = "login.html";
+
+// }
+
 const state = {
     student: {
         name: "Hasan (0_0)",
@@ -622,3 +628,14 @@ function renderGradesTable() {
         });
     });
 }
+document.addEventListener("DOMContentLoaded", () => {
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+
+        localStorage.removeItem("isLoggedIn");
+
+        window.location.href = "login.html";
+
+    });
+
+});
