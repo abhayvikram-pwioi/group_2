@@ -36,6 +36,20 @@
 
 <body>
 
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.3s ease;">
+        <div style="width: 50px; height: 50px; border: 5px solid #F3F4F6; border-top: 5px solid #5B5CEB; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px;"></div>
+        <h3 style="font-family: 'Poppins', sans-serif; color: #22254d; font-weight: 600;">Loading EduProgress...</h3>
+        <p style="font-family: 'Poppins', sans-serif; color: #7B7B92; font-size: 14px; margin-top: 5px;">Fetching your latest progress details.</p>
+    </div>
+    
+    <style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+
 <div class="dashboard">
 
     <!-- =========================
@@ -179,13 +193,14 @@
                     <img
                         src="/blank-profile-picture-973460_1280.png"
                         alt="Student"
+                        id="profileImage"
                     >
 
                     <div>
 
-                        <h4>Ishika Gangwar</h4>
+                        <h4 id="profileName">Ishika Gangwar</h4>
 
-                        <p>B.Tech CSE</p>
+                        <p id="profileDept">B.Tech CSE</p>
 
                     </div>
 
@@ -200,9 +215,15 @@
         ========================== -->
         <section id="dashboardPage" class="page active">
 
+        <!-- Error Banner Container -->
+        <div id="dashboardErrorBanner" style="display: none; background: #FDE8E8; color: #9B1C1C; padding: 15px 20px; border-radius: 12px; margin: 20px 0 0; font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 500; align-items: center; justify-content: space-between;">
+            <span id="dashboardErrorText">Unable to load dashboard data. Running in offline/demo mode.</span>
+            <button id="closeErrorBannerBtn" style="background: none; border: none; color: #9B1C1C; font-size: 18px; cursor: pointer; font-weight: bold; margin-left: 15px;">&times;</button>
+        </div>
+
         <section class="welcome">
 
-            <h1>
+            <h1 id="welcomeMessage">
 
                 Welcome back, Ishika! 👋
 
@@ -226,7 +247,7 @@
 
                 <h4>Overall Progress</h4>
 
-                <h2>72%</h2>
+                <h2 id="statProgress">72%</h2>
 
             </div>
 
@@ -234,7 +255,7 @@
 
                 <h4>Courses Enrolled</h4>
 
-                <h2>5</h2>
+                <h2 id="statCourses">5</h2>
 
             </div>
 
@@ -242,7 +263,7 @@
 
                 <h4>Modules Completed</h4>
 
-                <h2>28</h2>
+                <h2 id="statModules">28</h2>
 
             </div>
 
@@ -250,7 +271,7 @@
 
                 <h4>Average Grade</h4>
 
-                <h2>B+</h2>
+                <h2 id="statGrade">B+</h2>
 
             </div>
 
@@ -270,98 +291,12 @@
 
         <h3>Course Progress</h3>
 
-        <a href="#">View All</a>
+        <a href="#" data-page="coursesPage" class="view-all-courses-link">View All</a>
 
     </div>
 
-    <div class="course">
-
-        <div class="course-info">
-
-            <h4>React JS Fundamentals</h4>
-
-            <span>80%</span>
-
-        </div>
-
-        <div class="course-bar">
-
-            <div class="course-fill" style="width:80%"></div>
-
-        </div>
-
-    </div>
-
-    <div class="course">
-
-        <div class="course-info">
-
-            <h4>Data Structures & Algorithms</h4>
-
-            <span>65%</span>
-
-        </div>
-
-        <div class="course-bar">
-
-            <div class="course-fill" style="width:65%"></div>
-
-        </div>
-
-    </div>
-
-    <div class="course">
-
-        <div class="course-info">
-
-            <h4>UI/UX Design Basics</h4>
-
-            <span>90%</span>
-
-        </div>
-
-        <div class="course-bar">
-
-            <div class="course-fill" style="width:90%"></div>
-
-        </div>
-
-    </div>
-
-    <div class="course">
-
-        <div class="course-info">
-
-            <h4>Database Management</h4>
-
-            <span>60%</span>
-
-        </div>
-
-        <div class="course-bar">
-
-            <div class="course-fill" style="width:60%"></div>
-
-        </div>
-
-    </div>
-
-    <div class="course">
-
-        <div class="course-info">
-
-            <h4>Communication Skills</h4>
-
-            <span>40%</span>
-
-        </div>
-
-        <div class="course-bar">
-
-            <div class="course-fill" style="width:40%"></div>
-
-        </div>
-
+    <div id="dashboardCourseProgressList">
+        <!-- Dynamically rendered -->
     </div>
 
 </div>
@@ -442,616 +377,11 @@
     </option>
 
 </select>
-        </div>
-
     </div>
 
-    <!-- Course Cards -->
-
-    <div class="courses-grid">
- 
-        <div class="course-card">
-
-    <div class="card-top blue">
-
-        <i class="fa-brands fa-react"></i>
-
-       <span class="status pending">Not Started</span>
-
+    <div class="courses-grid" id="coursesGrid">
+        <!-- Dynamically rendered -->
     </div>
-
-    <div class="card-body">
-
-        <h3>React JS Fundamentals</h3>
-
-        <p class="instructor">
-
-    Instructor: Mark Lewis
-
-</p>
-
-<div class="course-meta">
-
-    <span>
-
-        <i class="fa-solid fa-signal"></i>
-
-       Beginner
-
-    </span>
-
-    <span>
-
-        <i class="fa-regular fa-clock"></i>
-
-        12 Hours
-
-    </span>
-
-</div>
-
-        <h4>80% Completed</h4>
-
-        <div class="progress-bar">
-
-            <div class="progress-fill" style="width:80%"></div>
-
-        </div>
-        <div class="course-footer">
-
-    <button class="continue-btn">
-
-        Continue Learning
-
-    </button>
-
-</div>
-
-    </div>
-
-</div>
-
-<div class="course-card">
-
-    <div class="card-top orange">
-
-        <i class="fa-solid fa-code"></i>
-
-       <span class="status completed">Completed</span>
-
-    </div>
-
-    <div class="card-body">
-
-        <h3>Data Structures & Algorithms</h3>
-
-        <p class="instructor">
-
-    Instructor: Sarah Johnson
-
-</p>
-
-<div class="course-meta">
-
-    <span>
-
-        <i class="fa-solid fa-signal"></i>
-
-           Intermediate
-
-    </span>
-
-    <span>
-
-        <i class="fa-regular fa-clock"></i>
-
-        30 Hours
-
-    </span>
-
-</div>
-
-        <h4>65% Completed</h4>
-
-        <div class="progress-bar">
-
-            <div class="progress-fill" style="width:65%"></div>
-
-        </div>
-        <div class="course-footer">
-
-    <button class="continue-btn">
-
-        Continue Learning
-
-    </button>
-
-</div>
-
-    </div>
-
-</div>
-
-<div class="course-card">
-
-    <div class="card-top green">
-
-        <i class="fa-solid fa-shield-halved"></i>
-
-       <span class="status pending">Not Started</span>
-
-    </div>
-
-    <div class="card-body">
-
-        <h3>UI/UX Design Basics</h3>
-
-        <p class="instructor">
-
-    Instructor: David Smith
-
-</p>
-
-<div class="course-meta">
-
-    <span>
-
-        <i class="fa-solid fa-signal"></i>
-
-        Advanced
-    </span>
-
-    <span>
-
-        <i class="fa-regular fa-clock"></i>
-
-        24 Hours
-
-    </span>
-
-</div>
-
-        <h4>90% Completed</h4>
-
-        <div class="progress-bar">
-
-            <div class="progress-fill" style="width:90%"></div>
-
-        </div>
-        <div class="course-footer">
-
-    <button class="continue-btn">
-
-        Continue Learning
-
-    </button>
-
-</div>
-
-    </div>
-
-</div>
-<div class="course-card">
-
-    <div class="card-top purple">
-
-        <i class="fa-solid fa-database"></i>
-
-       <span class="status completed">Completed</span>
-
-    </div>
-
-    <div class="card-body">
-
-        <h3>Database Management Systems</h3>
-
-       <p class="instructor">
-
-    Instructor: Michael Brown
-
-</p>
-
-<div class="course-meta">
-
-    <span>
-
-        <i class="fa-solid fa-signal"></i>
-
-        Intermediate
-
-    </span>
-
-    <span>
-
-        <i class="fa-regular fa-clock"></i>
-
-        18 Hours
-
-    </span>
-
-</div>
-
-        <h4>60% Completed</h4>
-
-        <div class="progress-bar">
-
-            <div class="progress-fill" style="width:60%"></div>
-
-        </div>
-        <div class="course-footer">
-
-    <button class="continue-btn">
-
-        Continue Learning
-
-    </button>
-
-</div>
-
-    </div>
-
-</div>
-<div class="course-card">
-
-    <div class="card-top yellow">
-
-        <i class="fa-solid fa-comments"></i>
-
-        <span class="status pending">Not Started</span>
-
-    </div>
-
-
-    <div class="card-body">
-
-        <h3>Communication Skills</h3>
-
-       <p class="instructor">
-
-    Instructor: Emily Davis
-
-</p>
-
-<div class="course-meta">
-
-    <span>
-
-        <i class="fa-solid fa-signal"></i>
-
-        Beginner
-
-    </span>
-
-    <span>
-
-        <i class="fa-regular fa-clock"></i>
-
-        8 Hours
-
-    </span>
-
-</div>
-
-        <h4>40% Completed</h4>
-
-        <div class="progress-bar">
-
-            <div class="progress-fill" style="width:40%"></div>
-
-        </div>
-        <div class="course-footer">
-
-    <button class="continue-btn">
-
-        Continue Learning
-
-    </button>
-
-</div>
-
-    </div>
-
-</div>
-
-<div class="course-card">
-
-    <div class="card-top purple">
-
-        <i class="fa-solid fa-database"></i>
-
-        <span class="status pending">Not Started</span>
-    </div>
-
-    <div class="card-body">
-
-        <h3>Database Management Systems</h3>
-
-        <p class="instructor">
-
-    Instructor: Michael brown
-
-</p>
-
-<div class="course-meta">
-
-    <span>
-
-        <i class="fa-solid fa-signal"></i>
-
-        Intermediate
-
-    </span>
-
-    <span>
-
-        <i class="fa-regular fa-clock"></i>
-
-        18 Hours
-
-    </span>
-
-</div>
-
-        <h4>60% Completed</h4>
-
-        <div class="progress-bar">
-
-            <div class="progress-fill" style="width:60%"></div>
-
-        </div>
-        <div class="course-footer">
-
-    <button class="continue-btn">
-
-        Continue Learning
-
-    </button>
-
-</div>
-
-    </div>
-
-</div>
-
-<div class="course-card">
-
-    <div class="card-top green">
-
-        <i class="fa-solid fa-shield-halved"></i>
-
-        <span class="status completed">Completed</span>
-    </div>
-
-    <div class="card-body">
-
-        <h3>UI/UX Design Basics</h3>
-
-        <p class="instructor">
-
-    Instructor: Sarah Johnson
-
-</p>
-
-<div class="course-meta">
-
-    <span>
-
-        <i class="fa-solid fa-signal"></i>
-
-        Advanced
-
-    </span>
-
-    <span>
-
-        <i class="fa-regular fa-clock"></i>
-
-        24 Hours
-
-    </span>
-
-</div>
-
-        <h4>90% Completed</h4>
-
-        <div class="progress-bar">
-
-            <div class="progress-fill" style="width:90%"></div>
-
-        </div>
-        <div class="course-footer">
-
-    <button class="continue-btn">
-
-        Continue Learning
-
-    </button>
-
-</div>
-
-    </div>
-
-</div>
-<div class="course-card">
-
-    <div class="card-top purple">
-
-        <i class="fa-solid fa-database"></i>
-
-       <span class="status pending">Not Started</span>
-
-    </div>
-
-    <div class="card-body">
-
-        <h3>Database Management Systems</h3>
-
-        <p class="instructor">
-
-    Instructor: Mark Lewis
-
-</p>
-
-<div class="course-meta">
-
-    <span>
-
-        <i class="fa-solid fa-signal"></i>
-        Intermediate
-
-    </span>
-
-    <span>
-
-        <i class="fa-regular fa-clock"></i>
-
-        18 Hours
-
-    </span>
-
-</div>
-
-        <h4>60% Completed</h4>
-
-        <div class="progress-bar">
-
-            <div class="progress-fill" style="width:60%"></div>
-
-        </div>
-        <div class="course-footer">
-
-    <button class="continue-btn">
-
-        Continue Learning
-
-    </button>
-
-</div>
-
-    </div>
-
-</div>
-<div class="course-card">
-
-    <div class="card-top yellow">
-
-        <i class="fa-solid fa-comments"></i>
-
-        <span class="status completed">Completed</span>
-    </div>
-
-    <div class="card-body">
-
-        <h3>Communication Skills</h3>
-
-       <p class="instructor">
-
-    Instructor: Emily davis
-
-</p>
-
-<div class="course-meta">
-
-    <span>
-
-        <i class="fa-solid fa-signal"></i>
-
-        Beginner
-
-    </span>
-
-    <span>
-
-        <i class="fa-regular fa-clock"></i>
-
-        8 Hours
-
-    </span>
-
-</div>
-
-        <h4>40% Completed</h4>
-
-        <div class="progress-bar">
-
-            <div class="progress-fill" style="width:40%"></div>
-
-        </div>
-        <div class="course-footer">
-
-    <button class="continue-btn">
-
-        Continue Learning
-
-    </button>
-
-</div>
-
-    </div>
-
-</div>
-
-<div class="course-card">
-
-    <div class="card-top purple">
-
-        <i class="fa-solid fa-database"></i>
-
-       <span class="status pending">Not Started</span>
-    </div>
-
-    <div class="card-body">
-
-        <h3>Database Management Systems</h3>
-
-       <p class="instructor">
-
-    Instructor: Mark Lewis
-
-</p>
-
-<div class="course-meta">
-
-    <span>
-
-        <i class="fa-solid fa-signal"></i>
-
-        Intermediate
-
-    </span>
-
-    <span>
-
-        <i class="fa-regular fa-clock"></i>
-
-        18 Hours
-
-    </span>
-
-</div>
-
-        <h4>60% Completed</h4>
-
-        <div class="progress-bar">
-
-            <div class="progress-fill" style="width:60%"></div>
-
-        </div>
-        <div class="course-footer">
-
-    <button class="continue-btn">
-
-        Continue Learning
-
-    </button>
-
-</div>
-
-    </div>
-
-</div>
-
-</div>
 
 </section>
 
@@ -1083,7 +413,7 @@
 
             <h3>Overall Completion</h3>
 
-            <h2>72%</h2>
+            <h2 id="progressPagePercentText">72%</h2>
 
             <p>Great work! You're making steady progress.</p>
 
@@ -1093,7 +423,7 @@
 
             <div class="circle">
 
-                <span>72%</span>
+                <span id="progressPageCircleText">72%</span>
 
             </div>
 
@@ -1109,7 +439,7 @@
 
             <i class="fa-solid fa-book-open"></i>
 
-            <h3>5</h3>
+            <h3 id="progressStatCourses">5</h3>
 
             <p>Courses Enrolled</p>
 
@@ -1119,7 +449,7 @@
 
             <i class="fa-solid fa-check-circle"></i>
 
-            <h3>28</h3>
+            <h3 id="progressStatModules">28</h3>
 
             <p>Modules Completed</p>
 
@@ -1129,7 +459,7 @@
 
             <i class="fa-solid fa-clock"></i>
 
-            <h3>64h</h3>
+            <h3 id="progressStatHours">64h</h3>
 
             <p>Hours Studied</p>
 
@@ -1139,7 +469,7 @@
 
             <i class="fa-solid fa-fire"></i>
 
-            <h3>12</h3>
+            <h3 id="progressStatStreak">12</h3>
 
             <p>Day Streak</p>
 
@@ -1161,94 +491,8 @@
 
             </div>
 
-            <div class="progress-item">
-
-                <div class="progress-info">
-
-                    <span>React JS</span>
-
-                    <span>80%</span>
-
-                </div>
-
-                <div class="progress-bar">
-
-                    <div class="progress-fill" style="width:80%;"></div>
-
-                </div>
-
-            </div>
-
-            <div class="progress-item">
-
-                <div class="progress-info">
-
-                    <span>JavaScript</span>
-
-                    <span>70%</span>
-
-                </div>
-
-                <div class="progress-bar">
-
-                    <div class="progress-fill" style="width:70%;"></div>
-
-                </div>
-
-            </div>
-
-            <div class="progress-item">
-
-                <div class="progress-info">
-
-                    <span>DSA</span>
-
-                    <span>65%</span>
-
-                </div>
-
-                <div class="progress-bar">
-
-                    <div class="progress-fill" style="width:65%;"></div>
-
-                </div>
-
-            </div>
-
-            <div class="progress-item">
-
-                <div class="progress-info">
-
-                    <span>DBMS</span>
-
-                    <span>60%</span>
-
-                </div>
-
-                <div class="progress-bar">
-
-                    <div class="progress-fill" style="width:60%;"></div>
-
-                </div>
-
-            </div>
-
-            <div class="progress-item">
-
-                <div class="progress-info">
-
-                    <span>Communication</span>
-
-                    <span>40%</span>
-
-                </div>
-
-                <div class="progress-bar">
-
-                    <div class="progress-fill" style="width:40%;"></div>
-
-                </div>
-
+            <div id="progressPageCourseList">
+                <!-- Dynamically rendered -->
             </div>
 
         </div>
@@ -1345,7 +589,7 @@
 
             <i class="fa-solid fa-chart-line"></i>
 
-            <h2 class="counter" data-target="8.7">0</h2>
+            <h2 class="counter" id="gradesSemesterGpa" data-target="8.7">0</h2>
 
             <h4>Semester GPA</h4>
 
@@ -1357,7 +601,7 @@
 
             <i class="fa-solid fa-award"></i>
 
-            <h2 class="counter" data-target="8.3">0</h2>
+            <h2 class="counter" id="gradesCgpa" data-target="8.3">0</h2>
 
             <h4>CGPA</h4>
 
@@ -1369,7 +613,7 @@
 
             <i class="fa-solid fa-book-open"></i>
 
-     <h2 class="counter" data-target="22">0</h2>
+     <h2 class="counter" id="gradesCredits" data-target="22">0</h2>
 
             <h4>Credits Earned</h4>
 
@@ -1381,7 +625,7 @@
 
             <i class="fa-solid fa-user-check"></i>
 
-            <h2 class="counter" data-target="92">0</h2>
+            <h2 class="counter" id="gradesAttendance" data-target="92">0</h2>
 
             <h4>Attendance</h4>
 
@@ -1425,158 +669,8 @@
 
                 </thead>
 
-                <tbody>
-
-                    <tr>
-
-                        <td>React JS</td>
-
-                        <td>4</td>
-
-                        <td>92</td>
-
-                        <td>
-
-                            <span class="grade-badge grade-a-plus">
-
-                                A+
-
-                            </span>
-
-                        </td>
-
-                        <td>
-
-                            <span class="status passed">
-
-                                Passed
-
-                            </span>
-
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>JavaScript</td>
-
-                        <td>4</td>
-
-                        <td>96</td>
-
-                        <td>
-
-                            <span class="grade-badge grade-a-plus">
-
-                                A+
-
-                            </span>
-
-                        </td>
-
-                        <td>
-
-                            <span class="status passed">
-
-                                Passed
-
-                            </span>
-
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>DSA</td>
-
-                        <td>4</td>
-
-                        <td>84</td>
-
-                        <td>
-
-                            <span class="grade-badge grade-b-plus">
-
-                                B+
-
-                            </span>
-
-                        </td>
-
-                        <td>
-
-                            <span class="status passed">
-
-                                Passed
-
-                            </span>
-
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>DBMS</td>
-
-                        <td>5</td>
-
-                        <td>90</td>
-
-                        <td>
-
-                            <span class="grade-badge grade-a">
-
-                                A
-
-                            </span>
-
-                        </td>
-
-                        <td>
-
-                            <span class="status passed">
-
-                                Passed
-
-                            </span>
-
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Communication</td>
-
-                        <td>3</td>
-
-                        <td>95</td>
-
-                        <td>
-
-                            <span class="grade-badge grade-a-plus">
-
-                                A+
-
-                            </span>
-
-                        </td>
-
-                        <td>
-
-                            <span class="status passed">
-
-                                Passed
-
-                            </span>
-
-                        </td>
-
-                    </tr>
-
+                <tbody id="gradesTableBody">
+                    <!-- Dynamically rendered -->
                 </tbody>
 
             </table>
@@ -1605,38 +699,8 @@
 
         <h3>Recent Assessments</h3>
 
-        <div class="assessment-grid">
-
-            <div class="assessment-card">
-
-                <h4>Mid-Term Examination</h4>
-
-                <span class="score">92%</span>
-
-                <p>Completed Yesterday</p>
-
-            </div>
-
-            <div class="assessment-card">
-
-                <h4>JavaScript Assignment</h4>
-
-                <span class="score">96%</span>
-
-                <p>3 Days Ago</p>
-
-            </div>
-
-            <div class="assessment-card">
-
-                <h4>Database Quiz</h4>
-
-                <span class="score">90%</span>
-
-                <p>Last Week</p>
-
-            </div>
-
+        <div class="assessment-grid" id="assessmentGrid">
+            <!-- Dynamically rendered -->
         </div>
 
     </section>
@@ -1813,48 +877,8 @@ Today's Schedule
 
         </div>
 
-        <div class="events-grid">
-
-            <div class="event-card">
-
-                <i class="fa-solid fa-book"></i>
-
-                <h4>Java Assignment</h4>
-
-                <p>25 July • 11:59 PM</p>
-
-            </div>
-
-            <div class="event-card">
-
-                <i class="fa-solid fa-code"></i>
-
-                <h4>DSA Coding Contest</h4>
-
-                <p>27 July • 09:00 AM</p>
-
-            </div>
-
-            <div class="event-card">
-
-                <i class="fa-solid fa-file-lines"></i>
-
-                <h4>Mid Semester Exam</h4>
-
-                <p>30 July • 10:00 AM</p>
-
-            </div>
-
-            <div class="event-card">
-
-                <i class="fa-solid fa-microphone"></i>
-
-                <h4>Communication Presentation</h4>
-
-                <p>02 August • 01:00 PM</p>
-
-            </div>
-
+        <div class="events-grid" id="upcomingEventsGrid">
+            <!-- Dynamically rendered -->
         </div>
 
     </section>
@@ -1865,7 +889,7 @@ Today's Schedule
 
         <div class="stat-card">
 
-            <h2>5</h2>
+            <h2 id="calStatAssignments">5</h2>
 
             <p>Assignments</p>
 
@@ -1873,7 +897,7 @@ Today's Schedule
 
         <div class="stat-card">
 
-            <h2>2</h2>
+            <h2 id="calStatExams">2</h2>
 
             <p>Upcoming Exams</p>
 
@@ -1881,7 +905,7 @@ Today's Schedule
 
         <div class="stat-card">
 
-            <h2>4</h2>
+            <h2 id="calStatClasses">4</h2>
 
             <p>Classes Today</p>
 
@@ -1889,7 +913,7 @@ Today's Schedule
 
         <div class="stat-card">
 
-            <h2>92%</h2>
+            <h2 id="calStatAttendance">92%</h2>
 
             <p>Attendance</p>
 
@@ -1908,7 +932,7 @@ Today's Schedule
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<script src="dashboard.js"></script>
+<script type="module" src="dashboard.js"></script>
 
 </body>
 
