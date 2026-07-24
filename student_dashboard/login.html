@@ -4,6 +4,7 @@
 <head>
 
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>EduProgress | Login</title>
@@ -14,47 +15,33 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-
-    <!-- CSS -->
-
-    <link rel="stylesheet" href="login.css">
 
     <!-- Font Awesome -->
 
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="login.css">
+
 </head>
 
 <body>
 
     <!-- =========================
-            Login Container
+            LOGIN SECTION
     ========================== -->
 
-    <main class="login-container">
+    <section class="login-section">
 
-        <!-- =========================
-                Left Section
-        ========================== -->
+        <!-- Left Panel -->
 
-        <section class="left-panel">
+        <div class="left-panel">
 
-            <!-- Logo -->
-
-            <div class="logo">
-
-                <i class="fa-solid fa-graduation-cap"></i>
-
-                <h2>EduProgress</h2>
-
-            </div>
-
-            <!-- Hero Content -->
-
-            <div class="hero-content">
+            <div class="content">
 
                 <h1>
 
@@ -62,117 +49,87 @@
                     <br>
 
                     Learning Progress
-
                     <br>
 
-                    with
-
-                    <span>EduProgress</span>
+                    with Ease
 
                 </h1>
 
                 <p>
 
-                    Your all-in-one dashboard to monitor
-                    courses, grades and academic performance.
+                    Login to access your dashboard
+                    and continue your learning journey.
 
                 </p>
 
             </div>
 
-        </section>
+            <div class="illustration">
 
-        <!-- =========================
-                Right Section
-        ========================== -->
+                <img src="/3d-graduate-character-achieving-study-goal-png.webp"
+                    alt="Graduation Illustration">
 
-        <section class="right-panel">
+            </div>
 
-            <!-- Login Card -->
+        </div>
+
+        <!-- Right Panel -->
+
+        <div class="right-panel">
 
             <div class="login-card">
 
                 <!-- Icon -->
 
-                <div class="login-icon">
+                <div class="card-icon">
 
-                    <i class="fa-solid fa-graduation-cap"></i>
+                    <i class="fa-solid fa-book-open"></i>
 
                 </div>
 
                 <!-- Heading -->
 
-                <h1 id="auth-title">Welcome Back!</h1>
+                <h2>EduProgress</h2>
 
-                <p id="auth-subtitle">
+                <p class="subtitle">
 
-                    Login to access your student dashboard
+                    Login to your account
 
                 </p>
 
-                <!-- Auth Message Placeholder -->
+                <!-- Form -->
 
-                <div id="auth-message" style="padding: 12px; border-radius: 12px; margin-bottom: 20px; font-size: 0.9rem; text-align: center; display: none;"></div>
-
-                <!-- Login Form -->
-
-                <form class="login-form" id="auth-form">
+                <form id="loginForm">
 
                     <!-- Email -->
 
-                    <div class="input-group">
+                    <div class="form-group">
 
                         <label>Email Address</label>
 
-                        <div class="input-box">
-
-                            <i class="fa-regular fa-envelope"></i>
-
-                            <input
-
-                                type="email"
-
-                                placeholder="Enter your email"
-
-                                id="email"
-
-                            >
-
-                        </div>
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="student@example.com"
+                        >
 
                     </div>
 
                     <!-- Password -->
 
-                    <div class="input-group">
+                    <div class="form-group">
 
                         <label>Password</label>
 
-                        <div class="input-box">
-
-                            <i class="fa-solid fa-lock"></i>
+                        <div class="password-box">
 
                             <input
-
                                 type="password"
-
-                                placeholder="Enter your password"
-
                                 id="password"
-
+                                placeholder="Enter password"
                             >
 
-                            <button
-
-                                type="button"
-
-                                class="toggle-password"
-
-                            >
-
-                                <i class="fa-regular fa-eye"></i>
-
-                            </button>
+                            <i class="fa-regular fa-eye toggle-password"></i>
 
                         </div>
 
@@ -180,7 +137,7 @@
 
                     <!-- Options -->
 
-                    <div class="options" id="auth-options">
+                    <div class="options">
 
                         <label>
 
@@ -194,9 +151,11 @@
 
                     </div>
 
-                    <!-- Login -->
+                    <!-- Login Button -->
 
-                    <button class="login-btn">
+                    <button
+                        type="submit"
+                        class="login-btn">
 
                         Login
 
@@ -204,47 +163,13 @@
 
                 </form>
 
-                <!-- Divider -->
-
-                <div class="divider">
-
-                    <span>OR CONTINUE WITH</span>
-
-                </div>
-
-                <!-- Google -->
-
-                <button class="google-btn">
-
-                    
-
-                    Continue with Google
-
-                </button>
-
-        
-
             </div>
 
-            <!-- Bottom -->
+        </div>
 
-            <p class="bottom-text">
+    </section>
 
-                <span id="auth-toggle-text">Don't have an account?</span>
-
-                <a href="#" id="auth-toggle-link">
-
-                    Sign Up
-
-                </a>
-
-            </p>
-
-        </section>
-
-    </main>
-
-    <script type="module" src="auth.js"></script>
+    <script src="login.js"></script>
 
 </body>
 
