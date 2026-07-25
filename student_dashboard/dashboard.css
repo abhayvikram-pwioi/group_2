@@ -424,7 +424,108 @@ grid-template-columns:1fr;
 
 .sidebar{
 
+display:flex !important;
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+width:100%;
+height:65px;
+background:#ffffff;
+border-top:1px solid #E6E8F2;
+z-index:9999;
+flex-direction:row;
+justify-content:space-around;
+align-items:center;
+padding:0 10px;
+box-shadow:0 -4px 16px rgba(0,0,0,0.06);
+
+}
+
+.sidebar .logo{
+
 display:none;
+
+}
+
+.sidebar nav{
+
+flex:1;
+margin:0;
+
+}
+
+.sidebar nav ul{
+
+display:flex;
+flex-direction:row;
+justify-content:space-around;
+list-style:none;
+padding:0;
+margin:0;
+width:100%;
+gap:4px;
+
+}
+
+.sidebar nav ul li{
+
+margin:0;
+padding:0;
+
+}
+
+.sidebar nav ul li a{
+
+display:flex;
+flex-direction:column;
+align-items:center;
+font-size:10px;
+color:#7B7B92;
+gap:4px;
+padding:6px 10px;
+border-radius:8px;
+font-weight:500;
+
+}
+
+.sidebar nav ul li a i{
+
+font-size:18px;
+margin:0;
+
+}
+
+.sidebar nav ul li.active a{
+
+background:rgba(91,92,235,0.08);
+color:#5B5CEB;
+
+}
+
+.sidebar .logout-btn{
+
+width:auto;
+height:auto;
+padding:6px 10px;
+margin:0;
+background:transparent;
+color:#EF4444;
+border:none;
+box-shadow:none;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:4px;
+font-size:10px;
+font-weight:500;
+
+}
+
+.sidebar .logout-btn i{
+
+font-size:18px;
+margin:0;
 
 }
 
@@ -432,10 +533,15 @@ display:none;
 
 flex-direction:column;
 
-gap:20px;
+gap:15px;
 
-align-items:flex-start;
+align-items:stretch;
 
+}
+
+.top-right{
+justify-content:space-between;
+width:100%;
 }
 
 .search-box{
@@ -452,7 +558,7 @@ grid-template-columns:1fr;
 
 .main-content{
 
-padding:25px;
+padding:20px 15px 85px;
 
 }
 
@@ -462,14 +568,21 @@ padding:25px;
 
 .welcome h1{
 
-font-size:30px;
+font-size:26px;
 
 }
 
-.profile{
+.profile h4, .profile p {
 
 display:none;
 
+}
+
+.profile {
+gap:0;
+padding:4px;
+background:none;
+border:none;
 }
 
 }
@@ -3111,4 +3224,115 @@ margin-bottom:15px;
 
 color:#4F46E5;
 
+}
+
+/* =====================================
+        DARK THEME OVERRIDES
+===================================== */
+body.dark-theme {
+    background-color: #0f172a !important;
+    color: #f1f5f9 !important;
+}
+
+body.dark-theme .sidebar {
+    background-color: #1e293b !important;
+    border-right: 1px solid #334155 !important;
+}
+
+body.dark-theme .topbar {
+    background-color: #1e293b !important;
+    border-bottom: 1px solid #334155 !important;
+}
+
+body.dark-theme .card,
+body.dark-theme .gpa-card,
+body.dark-theme .course-progress-card,
+body.dark-theme .weekly-progress,
+body.dark-theme .grades-table-card,
+body.dark-theme .performance-chart,
+body.dark-theme .assessment-card,
+body.dark-theme .calendar-card,
+body.dark-theme .schedule-card,
+body.dark-theme .event-card,
+body.dark-theme .stat-card,
+body.dark-theme .overall-progress-card,
+body.dark-theme .achievement-card,
+body.dark-theme .course-card {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2) !important;
+}
+
+body.dark-theme h1,
+body.dark-theme h2,
+body.dark-theme h3,
+body.dark-theme h4,
+body.dark-theme .sidebar .logo span,
+body.dark-theme .profile h4,
+body.dark-theme .course-info h4,
+body.dark-theme .grades-table th,
+body.dark-theme .grades-table td,
+body.dark-theme .calendar-top h2,
+body.dark-theme .schedule-item h4 {
+    color: #f1f5f9 !important;
+}
+
+body.dark-theme p,
+body.dark-theme span,
+body.dark-theme .subtitle,
+body.dark-theme .course-meta span,
+body.dark-theme .instructor,
+body.dark-theme .profile p,
+body.dark-theme .schedule-item p {
+    color: #94a3b8 !important;
+}
+
+body.dark-theme .search-box input,
+body.dark-theme .course-search input,
+body.dark-theme #courseFilter {
+    background-color: #334155 !important;
+    border-color: #475569 !important;
+    color: #f1f5f9 !important;
+}
+
+body.dark-theme .search-box i,
+body.dark-theme .course-search i {
+    color: #94a3b8 !important;
+}
+
+body.dark-theme .grades-table tr {
+    border-bottom: 1px solid #334155 !important;
+}
+
+body.dark-theme .calendar-day {
+    color: #cbd5e1 !important;
+}
+
+body.dark-theme .calendar-day.today {
+    background-color: rgba(91,92,235,0.2) !important;
+    border: 1px solid #5B5CEB !important;
+}
+
+body.dark-theme .weekdays div {
+    color: #94a3b8 !important;
+}
+
+body.dark-theme .grades-table th {
+    background-color: #334155 !important;
+}
+
+body.dark-theme .sidebar nav ul li a {
+    color: #94a3b8 !important;
+}
+
+body.dark-theme .sidebar nav ul li.active a {
+    background: rgba(91,92,235,0.25) !important;
+    color: #ffffff !important;
+}
+
+@media(max-width:900px){
+    body.dark-theme .sidebar {
+        background-color: #1e293b !important;
+        border-top: 1px solid #334155 !important;
+    }
 }
