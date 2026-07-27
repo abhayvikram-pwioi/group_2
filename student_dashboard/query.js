@@ -74,14 +74,17 @@ export async function getStudentData(uid) {
             : null;
 
 
-        // Return everything together
-        return {
+        const result = {
             profile,
             courses,
             grades,
             progress,
             calendar
         };
+
+        console.log("Fetched Student Data:", result);
+
+        return result;
 
     } catch (error) {
         console.error(error);
