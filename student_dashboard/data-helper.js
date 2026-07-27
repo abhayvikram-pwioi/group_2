@@ -80,25 +80,25 @@ export function extractNameFromEmail(email) {
   }).join(" ") || "New Student";
 }
 
-// Seeding Default Student Data into Firestore root collections
+// Seeding Default Student Data into Firestore root collections (with blank/zero/null values for a new user)
 export async function seedDefaultStudentData(uid, email) {
   const name = extractNameFromEmail(email);
   
   const depts = ["B.Tech CSE", "B.Tech IT", "B.Tech ECE", "B.Tech ME", "B.Tech Civil"];
   const department = depts[Math.floor(Math.random() * depts.length)];
   
-  const overallProgress = Math.floor(Math.random() * 36) + 50; // 50 to 85%
-  const coursesEnrolledCount = 5;
-  const modulesCompletedCount = Math.floor(Math.random() * 21) + 15; // 15 to 35
+  const overallProgress = 0;
+  const coursesEnrolledCount = 0;
+  const modulesCompletedCount = 0;
   
-  const cgpa = parseFloat((Math.random() * 2.0 + 7.5).toFixed(1)); // 7.5 to 9.5
-  const semesterGpa = parseFloat((Math.random() * 2.0 + 7.8).toFixed(1)); // 7.8 to 9.8
-  const averageGrade = cgpa >= 9.0 ? "A+" : cgpa >= 8.0 ? "A" : cgpa >= 7.0 ? "B+" : "B";
+  const cgpa = 0.0;
+  const semesterGpa = 0.0;
+  const averageGrade = "N/A";
   
-  const creditsEarned = Math.floor(Math.random() * 5) + 20; // 20 to 24
-  const attendance = Math.floor(Math.random() * 18) + 80; // 80 to 97
-  const dayStreak = Math.floor(Math.random() * 23) + 3; // 3 to 25
-  const hoursStudied = Math.floor(Math.random() * 51) + 30; // 30 to 80
+  const creditsEarned = 0;
+  const attendance = 0;
+  const dayStreak = 0;
+  const hoursStudied = 0;
 
   const profile = {
     name,
@@ -117,95 +117,30 @@ export async function seedDefaultStudentData(uid, email) {
     photoUrl: ""
   };
 
-  const courseProgresses = [
-    Math.floor(Math.random() * 21) + 75, // 75 to 95%
-    Math.floor(Math.random() * 26) + 50, // 50 to 75%
-    Math.floor(Math.random() * 21) + 80, // 80 to 100%
-    Math.floor(Math.random() * 31) + 50, // 50 to 80%
-    Math.floor(Math.random() * 41) + 30  // 30 to 70%
-  ];
-
-  const courses = [
-    { title: "React JS Fundamentals", instructor: "Mark Lewis", progress: courseProgresses[0], level: "Beginner", duration: "12 Hours", status: "In Progress", icon: "fa-brands fa-react", color: "blue" },
-    { title: "Data Structures & Algorithms", instructor: "Sarah Johnson", progress: courseProgresses[1], level: "Intermediate", duration: "30 Hours", status: "In Progress", icon: "fa-solid fa-code", color: "orange" },
-    { title: "UI/UX Design Basics", instructor: "David Smith", progress: courseProgresses[2], level: "Advanced", duration: "24 Hours", status: "In Progress", icon: "fa-solid fa-shield-halved", color: "green" },
-    { title: "Database Management Systems", instructor: "Michael Brown", progress: courseProgresses[3], level: "Intermediate", duration: "18 Hours", status: "In Progress", icon: "fa-solid fa-database", color: "purple" },
-    { title: "Communication Skills", instructor: "Emily Davis", progress: courseProgresses[4], level: "Beginner", duration: "8 Hours", status: "In Progress", icon: "fa-solid fa-comments", color: "yellow" }
-  ];
-
-  const getGradeFromMarks = (marks) => {
-    if (marks >= 95) return "A+";
-    if (marks >= 90) return "A";
-    if (marks >= 80) return "B+";
-    if (marks >= 70) return "B";
-    return "C";
-  };
-
-  const courseMarks = [
-    Math.floor(Math.random() * 15) + 84, // 84 to 98
-    Math.floor(Math.random() * 15) + 84,
-    Math.floor(Math.random() * 15) + 80,
-    Math.floor(Math.random() * 15) + 80,
-    Math.floor(Math.random() * 15) + 80
-  ];
-
-  const grades = [
-    { subject: "React JS", credits: 4, marks: courseMarks[0], grade: getGradeFromMarks(courseMarks[0]), status: "Passed" },
-    { subject: "JavaScript", credits: 4, marks: courseMarks[1], grade: getGradeFromMarks(courseMarks[1]), status: "Passed" },
-    { subject: "DSA", credits: 4, marks: courseMarks[2], grade: getGradeFromMarks(courseMarks[2]), status: "Passed" },
-    { subject: "DBMS", credits: 5, marks: courseMarks[3], grade: getGradeFromMarks(courseMarks[3]), status: "Passed" },
-    { subject: "Communication", credits: 3, marks: courseMarks[4], grade: getGradeFromMarks(courseMarks[4]), status: "Passed" }
-  ];
-
-  const weeklyLearning = Array.from({ length: 7 }, () => Math.floor(Math.random() * 7) + 1);
-  const gradeOverview = Array.from({ length: 6 }, () => Math.floor(Math.random() * 25) + 70);
-  const performanceTrend = Array.from({ length: 6 }, () => Math.floor(Math.random() * 25) + 70);
+  const courses = [];
+  const grades = [];
 
   const progress = {
-    weeklyLearning,
-    gradeOverview,
-    performanceTrend,
-    recentAssessments: [
-      { title: "Mid-Term Examination", score: `${courseMarks[0]}%`, date: "Completed Yesterday" },
-      { title: "JavaScript Assignment", score: `${courseMarks[1]}%`, date: "3 Days Ago" },
-      { title: "Database Quiz", score: `${courseMarks[3]}%`, date: "Last Week" }
-    ]
+    weeklyLearning: [0, 0, 0, 0, 0, 0, 0],
+    gradeOverview: [0, 0, 0, 0, 0, 0],
+    performanceTrend: [0, 0, 0, 0, 0, 0],
+    recentAssessments: []
   };
 
   const calendar = {
-    events: [
-      { title: "Java Assignment", date: "25 July", time: "11:59 PM", icon: "fa-solid fa-book" },
-      { title: "DSA Coding Contest", date: "27 July", time: "09:00 AM", icon: "fa-solid fa-code" },
-      { title: "Mid Semester Exam", date: "30 July", time: "10:00 AM", icon: "fa-solid fa-file-lines" },
-      { title: "Communication Presentation", date: "02 August", time: "01:00 PM", icon: "fa-solid fa-microphone" }
-    ],
-    dailySchedules: {
-      5: [
-        { title: "React JS Class", time: "09:00 AM - 10:30 AM", color: "purple" },
-        { title: "DSA Lab", time: "11:00 AM - 01:00 PM", color: "blue" }
-      ],
-      12: [
-        { title: "Java Assignment", time: "10:00 AM", color: "orange" }
-      ],
-      18: [
-        { title: "DBMS Quiz", time: "02:30 PM", color: "orange" },
-        { title: "Assignment Deadline", time: "11:59 PM", color: "red" }
-      ],
-      25: [
-        { title: "Communication Workshop", time: "09:30 AM", color: "purple" }
-      ]
-    }
+    events: [],
+    dailySchedules: {}
   };
 
   // Set Profile in root collection
   await setDoc(doc(db, "students", uid), profile);
 
-  // Set Courses in root collection
+  // Set Courses in root collection (none since array is empty)
   for (let i = 0; i < courses.length; i++) {
     await setDoc(doc(db, "courses", `${uid}_course_${i}`), { ...courses[i], studentId: uid });
   }
 
-  // Set Grades in root collection
+  // Set Grades in root collection (none since array is empty)
   for (let i = 0; i < grades.length; i++) {
     await setDoc(doc(db, "grades", `${uid}_grade_${i}`), { ...grades[i], studentId: uid });
   }
